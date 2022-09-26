@@ -7,7 +7,7 @@ import {
   Toolbar, 
   AppBar,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from "react-router-dom"
 
 const Navbar = () => {
   return(
@@ -15,20 +15,11 @@ const Navbar = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-            <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', textDecoration: 'none' }} to='/' component={Link} >
               Learners arena
             </Typography>
-            <Button color="inherit">Signin</Button>
-            <Button color="inherit">Signup</Button>
+            <Button color="inherit" to='/sign_up' component={Link} >Sign Up</Button>
+            <Button color="inherit" to='/sign_in' component={Link} >Sign In</Button>
           </Toolbar>
         </AppBar>
       </Box>

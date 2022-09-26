@@ -1,16 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Typography, Container} from '@mui/material';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from '../components/NavBar'
-import SignUp from '../components/auth/SignUp'
+import routes from '../components/routes/index'
 
 const App = () => {
   return(
     <>
-      <NavBar />
-      <Container> 
-        <SignUp />
-      </Container>
+      <Router>
+        <NavBar />
+        <Routes>
+          {routes}
+        </Routes>
+      </Router>
     </>
   );
 }
