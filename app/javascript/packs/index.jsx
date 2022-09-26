@@ -2,15 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Typography, Container} from '@mui/material';
 import NavBar from '../components/NavBar'
+import SignUp from '../components/auth/SignUp'
 
 const App = () => {
   return(
     <>
       <NavBar />
       <Container> 
-        <Typography variant="h3" component="h3" mt={2}>
-          Hello from react!
-        </Typography>
+        <SignUp />
       </Container>
     </>
   );
