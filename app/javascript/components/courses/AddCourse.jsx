@@ -9,11 +9,13 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {useNavigate} from "react-router-dom"
 
 const AddCourses = () => {
+  const navigate = useNavigate();
   const [displayName, setDisplayName] = useState('')
   const [description, setDescription] = useState('')
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
@@ -35,11 +37,21 @@ const AddCourses = () => {
         setDisplayName('');
         setDescription('');
         setSelectedImage('');
+        navigate("/")
      })
      .catch(error => {
-        toast.error(error.response.data);
+        console.log(error.response.data)
+        toast.error(<Errors errors={error.response.data}/>);
      });
   };
+
+  const Errors = ({ closeToast, toastProps, errors }) => (
+    <div>
+      {errors.map((error) => 
+        <li key={error}>{error}</li>
+      )}
+    </div>
+  )
 
   return (
     <Container component="main" maxWidth="xs">

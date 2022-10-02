@@ -17,7 +17,7 @@ class Api::V1::CoursesController < ApplicationController
     if @course.save
       render json: @course   
     else
-      render json: beautify_errors(@course.errors), status: :unprocessable_entity
+      render json: @course.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -39,10 +39,6 @@ class Api::V1::CoursesController < ApplicationController
 
   private
     def course_params
-      params.require(:course).permit(:display_name, :description, :image)
-    end
-
-    def beautify_errors(errors)
-      errors.full_messages.map{ |err| "#{err}" }.join("\n")
+      params.require(:course).permit(:display_name, :description, :image).select {|x,v| v.present?}
     end
 end
