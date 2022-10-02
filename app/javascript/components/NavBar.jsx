@@ -20,6 +20,7 @@ const Navbar = () => {
             </Typography>
             <Button color="inherit" to='/sign_up' component={Link} >Sign Up</Button>
             <Button color="inherit" to='/sign_in' component={Link} >Sign In</Button>
+            <Button color="inherit" to='/add_course' component={Link} >Add Course</Button>
           </Toolbar>
         </AppBar>
       </Box>
