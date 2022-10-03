@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import routes from "../components/routes/index";
+import routes from "../routes/index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createStore } from "redux";
 import allRecducers from "../reducers";
 import { Provider } from "react-redux";
-
+import createRoutes from "../routes/index";
 const App = () => {
   return (
     <>
