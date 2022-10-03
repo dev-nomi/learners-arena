@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   Avatar,
   Button,
@@ -8,20 +8,20 @@ import {
   Box,
   Typography,
   Container,
-  Checkbox
-} from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+  Checkbox,
+} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
 
-const SignIn = () =>{
+const SignIn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
@@ -32,12 +32,12 @@ const SignIn = () =>{
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary" }}>
             <PersonIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -68,12 +68,7 @@ const SignIn = () =>{
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
           </Box>
@@ -81,6 +76,6 @@ const SignIn = () =>{
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default SignIn;

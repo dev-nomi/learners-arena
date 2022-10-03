@@ -1,13 +1,13 @@
-import React from 'react'
-import { Container }  from '@mui/material';
-import Courses from './courses/Courses'
+import React from "react";
+import { Container } from "@mui/material";
+import Courses from "./courses/Courses";
 
 const Home = () => {
-  return(
+  return (
     <Container>
       <Courses />
     </Container>
   );
-}
+};
 
 export default Home;

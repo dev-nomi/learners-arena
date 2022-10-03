@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { 
-  Avatar, 
+import * as React from "react";
+import {
+  Avatar,
   Button,
   CssBaseline,
   TextField,
@@ -9,21 +9,25 @@ import {
   Grid,
   Box,
   Container,
-  Typography
-} from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+  Typography,
+} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../actions";
 
 const theme = createTheme();
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data = new FormData();
+    data.append("user[email]", "dev-nomi@gmail.com");
+    data.append("user[password]", "123456");
+    data.append("user[password_confirmation]", "123456");
+    dispatch(registerUser(data));
   };
 
   return (
@@ -33,12 +37,12 @@ const SignUp = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary" }}>
             <PersonIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -89,12 +93,7 @@ const SignUp = () => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
           </Box>
@@ -102,6 +101,6 @@ const SignUp = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default SignUp;
