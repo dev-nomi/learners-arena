@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  TextField,
-  FormControlLabel,
-  Box,
-  Typography,
-  Container,
-  Checkbox,
-} from "@mui/material";
+import { Avatar, Button, CssBaseline, TextField, Box, Typography, Container } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
@@ -37,7 +27,6 @@ const SignIn = () => {
         setEmail("");
         setPassword("");
         dispatch(signInUser(response));
-        console.log(response.headers.authorization);
         axios.defaults.headers.common["Authorization"] = response.headers.authorization;
         localStorage.setItem("auth_token", response.headers.authorization);
       })
@@ -88,10 +77,6 @@ const SignIn = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In

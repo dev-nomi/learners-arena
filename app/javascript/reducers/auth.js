@@ -23,6 +23,13 @@ const authRecducer = (state = initialState, action) => {
         auth_token: action.payload.headers.authorization,
         isLoggedIn: true,
       };
+    case "SIGNOUT_USER":
+      return {
+        ...state,
+        user: null,
+        auth_token: null,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }

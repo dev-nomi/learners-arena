@@ -11,3 +11,9 @@ export const signInUser = (payload) => {
     payload: payload,
   };
 };
+
+export const signOutUser = () => {
+  return {
+    type: "SIGNOUT_USER",
+  };
+};
