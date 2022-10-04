@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../actions";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 const SignUp = () => {
@@ -22,6 +23,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -40,6 +42,7 @@ const SignUp = () => {
         dispatch(registerUser(response));
         axios.defaults.headers.common["Authorization"] = response.headers.authorization;
         localStorage.setItem("auth_token", response.headers.authorization);
+        navigate("/sign_in");
       })
       .catch((error) => {
         toast.error(error.response);

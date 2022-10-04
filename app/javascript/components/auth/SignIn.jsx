@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { signInUser } from "../../actions";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -13,6 +14,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,6 +31,7 @@ const SignIn = () => {
         dispatch(signInUser(response));
         axios.defaults.headers.common["Authorization"] = response.headers.authorization;
         localStorage.setItem("auth_token", response.headers.authorization);
+        navigate("/");
       })
       .catch((error) => {
         toast.error(error.response);

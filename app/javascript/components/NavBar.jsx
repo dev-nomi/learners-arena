@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Typography, Box, Button, Toolbar, AppBar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -6,10 +6,13 @@ import { signOutUser } from "../actions";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const auth_token = useSelector((state) => state.auth_token);
+  const auth_token = useSelector((state) => state.auth.auth_token);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const signOut = () => {
     const config = {
@@ -24,6 +27,7 @@ const Navbar = () => {
         dispatch(signOutUser());
         localStorage.removeItem("auth_token");
         axios.defaults.headers.common["Authorization"] = null;
+        navigate("/sign_in");
       })
       .catch((error) => {});
   };
@@ -40,18 +44,25 @@ const Navbar = () => {
             >
               Learners arena
             </Typography>
-            <Button color="inherit" to="/sign_up" component={Link}>
-              Sign Up
-            </Button>
-            <Button color="inherit" to="/sign_in" component={Link}>
-              Sign In
-            </Button>
-            <Button color="inherit" onClick={() => signOut()}>
-              Sign Out
-            </Button>
-            <Button color="inherit" to="/add_course" component={Link}>
-              Add Course
-            </Button>
+            {isLoggedIn && auth_token ? (
+              <Fragment>
+                <Button color="inherit" onClick={() => signOut()}>
+                  Sign Out
+                </Button>
+                <Button color="inherit" to="/add_course" component={Link}>
+                  Add Course
+                </Button>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Button color="inherit" to="/sign_up" component={Link}>
+                  Sign Up
+                </Button>
+                <Button color="inherit" to="/sign_in" component={Link}>
+                  Sign In
+                </Button>
+              </Fragment>
+            )}
           </Toolbar>
         </AppBar>
       </Box>
