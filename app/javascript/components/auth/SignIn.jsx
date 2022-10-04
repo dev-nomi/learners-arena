@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -12,17 +12,38 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../../actions";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const theme = createTheme();
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const user = new FormData();
+    user.append("user[email]", email);
+    user.append("user[password]", password);
+
+    axios
+      .post("users/sign_in", user)
+      .then((response) => {
+        toast.success("Successfully Signed In.");
+        setEmail("");
+        setPassword("");
+        dispatch(signInUser(response));
+        console.log(response.headers.authorization);
+        axios.defaults.headers.common["Authorization"] = response.headers.authorization;
+        localStorage.setItem("auth_token", response.headers.authorization);
+      })
+      .catch((error) => {
+        toast.error(error.response);
+      });
   };
 
   return (
@@ -53,6 +74,8 @@ const SignIn = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -63,6 +86,8 @@ const SignIn = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

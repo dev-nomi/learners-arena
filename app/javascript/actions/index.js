@@ -1,18 +1,13 @@
-import axios from "axios";
+export const registerUser = (payload) => {
+  return {
+    type: "REGISTER_USER",
+    payload: payload,
+  };
+};
 
-export const registerUser = (user) => {
-  axios
-    .post("/users", user)
-    .then((response) => {
-      return {
-        type: "REGISTER_USER",
-        payload: response.data,
-      };
-    })
-    .catch((error) => {
-      return {
-        type: "REGISTER_USER",
-        payload: "error",
-      };
-    });
+export const signInUser = (payload) => {
+  return {
+    type: "SIGNIN_USER",
+    payload: payload,
+  };
 };

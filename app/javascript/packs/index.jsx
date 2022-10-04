@@ -8,7 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { createStore } from "redux";
 import allRecducers from "../reducers";
 import { Provider } from "react-redux";
-import createRoutes from "../routes/index";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/integration/react";
+
 const App = () => {
   return (
     <>
@@ -20,16 +23,35 @@ const App = () => {
     </>
   );
 };
+const persistConfig = {
+  key: "root",
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, allRecducers);
 
 const store = createStore(
-  allRecducers,
+  persistedReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+const persistor = persistStore(store);
+
+let localAuthToken = localStorage.auth_token;
+let cookieExists = localAuthToken !== "undefined" && localAuthToken !== null;
+if (cookieExists) {
+  const auth_token = localStorage.getItem("auth_token");
+  const authTokenExists = auth_token !== "undefined" && auth_token !== null;
+  if (authTokenExists) {
+    console.log(auth_token);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>,
     document.body.appendChild(document.createElement("div"))
   );

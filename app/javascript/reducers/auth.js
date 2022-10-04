@@ -1,7 +1,6 @@
-import { StarsTwoTone } from "@mui/icons-material";
-
 const initialState = {
   auth_token: null,
+  isLoggedIn: false,
   user: {
     id: null,
     username: null,
@@ -12,9 +11,18 @@ const initialState = {
 const authRecducer = (state = initialState, action) => {
   switch (action.type) {
     case "REGISTER_USER":
-      return { ...state, user: action.payload };
-    case "DECREMENT":
-      return { ...state, user: action.payload };
+      return {
+        ...state,
+        user: action.payload.data.user,
+        auth_token: action.payload.headers.authorization,
+      };
+    case "SIGNIN_USER":
+      return {
+        ...state,
+        user: action.payload.data.user,
+        auth_token: action.payload.headers.authorization,
+        isLoggedIn: true,
+      };
     default:
       return state;
   }
