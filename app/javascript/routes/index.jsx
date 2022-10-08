@@ -1,30 +1,30 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import SignUp from "../components/auth/SignUp";
 import SignIn from "../components/auth/SignIn";
-import AddCourse from "../components/courses/AddCourse";
 import Home from "../components/Home";
 import PageNotFound from "../components/PageNotFound";
+import Landing from "../components/Landing";
 import { useSelector } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AllRoutes = () => {
-  const auth_token = useSelector((state) => state.auth.auth_token);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <Routes>
+      <Route index element={<Landing />} />
+      <Route path="landing" element={<Landing />} />
       <Route path="*" element={<PageNotFound />} />
-      {isLoggedIn && auth_token ? (
-        <Fragment>
-          <Route path="/add_course" element={<AddCourse />} />
-        </Fragment>
-      ) : (
-        <Fragment>
-          <Route path="/" element={<Home />} />
-          <Route path="/sign_up" element={<SignUp />} />
-          <Route path="/sign_in" element={<SignIn />} />
-        </Fragment>
-      )}
+
+      <Route element={<ProtectedRoute isAllowed={user} />}>
+        <Route path="/home" element={<Home />} />
+      </Route>
+
+      <Route element={<ProtectedRoute isAllowed={!user} />}>
+        <Route path="/sign_up" element={<SignUp />} />
+        <Route path="/sign_in" element={<SignIn />} />
+      </Route>
     </Routes>
   );
 };

@@ -1,11 +1,16 @@
 import React from "react";
 import { Container } from "@mui/material";
-import Courses from "./courses/Courses";
+import { useSelector } from "react-redux";
+import StudentDashboard from "../components/student/StudentDashboard";
+import TeacherDashboard from "../components/teacher/TeacherDashboard";
 
 const Home = () => {
+  const role = useSelector((state) => state.auth.user.role);
+
   return (
     <Container>
-      <Courses />
+      {role == "teacher" && <TeacherDashboard />}
+      {role == "student" && <StudentDashboard />}
     </Container>
   );
 };

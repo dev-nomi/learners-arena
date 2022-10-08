@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { signInUser } from "../../actions";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -31,7 +31,7 @@ const SignIn = () => {
         dispatch(signInUser(response));
         axios.defaults.headers.common["Authorization"] = response.headers.authorization;
         localStorage.setItem("auth_token", response.headers.authorization);
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         toast.error(error.response);
@@ -86,6 +86,9 @@ const SignIn = () => {
             </Button>
           </Box>
         </Box>
+        <Typography>
+          New to LearnersArena <Link to="/sign_up">Sign up now.</Link>
+        </Typography>
       </Container>
     </ThemeProvider>
   );

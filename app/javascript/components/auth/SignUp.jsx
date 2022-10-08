@@ -8,8 +8,9 @@ import {
   Box,
   Container,
   Typography,
+  MenuItem,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../actions";
@@ -22,6 +23,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [role, setRole] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,6 +33,7 @@ const SignUp = () => {
     user.append("user[email]", email);
     user.append("user[password]", password);
     user.append("user[password_confirmation]", passwordConfirmation);
+    user.append("user[role]", role);
 
     axios
       .post("users", user)
@@ -42,7 +45,7 @@ const SignUp = () => {
         dispatch(registerUser(response));
         axios.defaults.headers.common["Authorization"] = response.headers.authorization;
         localStorage.setItem("auth_token", response.headers.authorization);
-        navigate("/sign_in");
+        navigate("/home");
       })
       .catch((error) => {
         toast.error(error.response);
@@ -61,35 +64,14 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary" }}>
-            <PersonIcon />
+          <Avatar sx={{ bgcolor: "secondary" }}>
+            <PersonAddIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -127,6 +109,20 @@ const SignUp = () => {
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="outlined-select-role"
+                  select
+                  required
+                  fullWidth
+                  label="Role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <MenuItem value={"student"}>Student</MenuItem>
+                  <MenuItem value={"teacher"}>Teacher</MenuItem>
+                </TextField>
               </Grid>
             </Grid>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

@@ -15,6 +15,7 @@ const authRecducer = (state = initialState, action) => {
         ...state,
         user: action.payload.data.user,
         auth_token: action.payload.headers.authorization,
+        isLoggedIn: true,
       };
     case "SIGNIN_USER":
       return {
