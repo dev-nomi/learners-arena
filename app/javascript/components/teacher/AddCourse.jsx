@@ -31,7 +31,7 @@ const AddCourses = () => {
         setDisplayName("");
         setDescription("");
         setSelectedImage("");
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error.response.data);

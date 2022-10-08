@@ -12,6 +12,7 @@ import {
   Divider,
   IconButton,
   Tooltip,
+  Drawer,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { signOutUser } from "../actions";
@@ -20,14 +21,22 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import Logout from "@mui/icons-material/Logout";
+import MenuIcon from "@mui/icons-material/Menu";
+import TeacherSideNav from "./TeacherSideNav";
+import StudentSideNav from "./StudentSideNav";
 
 const Navbar = () => {
   const auth_token = useSelector((state) => state.auth.auth_token);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.auth.user);
+  const [state, setState] = React.useState({
+    drawer: false,
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,13 +58,36 @@ const Navbar = () => {
         axios.defaults.headers.common["Authorization"] = null;
         navigate("/sign_in");
       })
-      .catch((error) => {});
+      .catch((error) => {
+        toast.error(error);
+      });
   };
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const teacherList = (anchor) => <TeacherSideNav anchor={anchor} toggleDrawer={toggleDrawer} />;
+  const studentList = (anchor) => <StudentSideNav anchor={anchor} toggleDrawer={toggleDrawer} />;
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer("drawer", true)}
+            >
+              <MenuIcon />
+            </IconButton>
             <Typography variant="h6" sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}>
               Learners arena
             </Typography>
@@ -121,6 +153,13 @@ const Navbar = () => {
                     Logout
                   </MenuItem>
                 </Menu>
+                <Drawer
+                  anchor={"left"}
+                  open={state["drawer"]}
+                  onClose={toggleDrawer("drawer", false)}
+                >
+                  {user.role === "teacher" ? teacherList("drawer") : studentList("drawer")}
+                </Drawer>
               </Fragment>
             ) : (
               <Fragment>

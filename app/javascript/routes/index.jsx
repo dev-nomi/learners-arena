@@ -7,6 +7,8 @@ import PageNotFound from "../components/PageNotFound";
 import Landing from "../components/Landing";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
+import AddCourse from "../components/teacher/AddCourse";
+import Course from "../components/teacher/Course";
 
 const AllRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -19,6 +21,11 @@ const AllRoutes = () => {
 
       <Route element={<ProtectedRoute isAllowed={user} />}>
         <Route path="/home" element={<Home />} />
+      </Route>
+
+      <Route element={<ProtectedRoute isAllowed={user && user.role == "teacher"} />}>
+        <Route path="/add_course" element={<AddCourse />} />
+        <Route path="/course/:id" element={<Course />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={!user} />}>
