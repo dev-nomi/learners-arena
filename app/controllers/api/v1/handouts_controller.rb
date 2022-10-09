@@ -38,6 +38,6 @@ class Api::V1::HandoutsController < ApplicationController
 
   private
     def handout_params
-      params.require(:handout).permit(:display_name, :description, :pdf).select {|x,v| v.present?}
+      params.require(:handout).permit(:display_name, :description, :pdf, :course_id).select {|x,v| v.present?}
     end
 end

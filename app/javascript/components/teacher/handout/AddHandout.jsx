@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextField, Box, Typography, Container } from "@mui/material";
+import { Button, TextField, Box, Typography, Container, MenuItem } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +9,13 @@ const AddHandout = () => {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
+  const [course, setCourse] = useState("");
+  const [courses, setCourses] = useState([]);
   const [selectedPdf, setSelectedPdf] = useState("");
   const [pdfUrl, setPdfUrl] = useState(null);
 
   useEffect(() => {
+    initialize();
     if (selectedPdf) {
       setPdfUrl(URL.createObjectURL(selectedPdf));
     }
@@ -24,6 +27,7 @@ const AddHandout = () => {
     handout.append("handout[display_name]", displayName);
     handout.append("handout[description]", description);
     handout.append("handout[pdf]", selectedPdf);
+    handout.append("handout[course_id]", course);
 
     axios
       .post("/api/v1/handouts", handout)
@@ -39,11 +43,19 @@ const AddHandout = () => {
       });
   };
 
+  const initialize = () => {
+    axios
+      .get("/api/v1/courses")
+      .then((response) => {
+        setCourses(response.data);
+      })
+      .catch((error) => {});
+  };
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -64,6 +76,21 @@ const AddHandout = () => {
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
+          <TextField
+            id="outlined-select-role"
+            select
+            required
+            fullWidth
+            label="Course"
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
+          >
+            {courses.map((row) => (
+              <MenuItem key={row.id} value={row.id}>
+                {row.display_name}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             margin="normal"
             required
@@ -91,7 +118,7 @@ const AddHandout = () => {
             onChange={(e) => setSelectedPdf(e.target.files[0])}
           />
           <label htmlFor="select-image">
-            <Button variant="contained" color="primary" component="span">
+            <Button variant="contained" color="primary" component="span" sx={{ mt: 2 }}>
               Upload Pdf
             </Button>
           </label>

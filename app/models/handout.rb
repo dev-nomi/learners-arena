@@ -5,4 +5,6 @@ class Handout < ApplicationRecord
   validates :pdf, {
     presence: true
   }
+
+  belongs_to :course
 end
