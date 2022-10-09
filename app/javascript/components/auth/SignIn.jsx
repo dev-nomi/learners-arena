@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Avatar, Button, CssBaseline, TextField, Box, Typography, Container } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Box,
+  Typography,
+  Container,
+  Link as MuiLink,
+} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch } from "react-redux";
 import { signInUser } from "../../actions";
@@ -85,7 +94,10 @@ const SignIn = () => {
         </Box>
       </Box>
       <Typography>
-        New to LearnersArena <Link to="/sign_up">Sign up now.</Link>
+        New to Learners Arena{" "}
+        <MuiLink to="/sign_up" component={Link}>
+          Sign up now
+        </MuiLink>
       </Typography>
     </Container>
   );

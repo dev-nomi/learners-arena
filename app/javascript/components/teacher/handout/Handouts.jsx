@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
-
+import { Link as MuiLink } from "@mui/material";
 const Handouts = () => {
   const [handouts, setHandouts] = useState([]);
   const [open, setOpen] = useState(false);
@@ -99,9 +99,9 @@ const Handouts = () => {
                   <TableCell>{row.display_name}</TableCell>
                   <TableCell>{truncate(row.description)}</TableCell>
                   <TableCell>
-                    <Typography to={`/course/${row.course.id}`} component={Link}>
+                    <MuiLink to={`/course/${row.course.id}`} component={Link}>
                       {row.course.display_name}
-                    </Typography>
+                    </MuiLink>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
