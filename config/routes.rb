@@ -12,6 +12,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :courses
       resources :handouts
+      resources :enrolled_courses, only: [:index] do
+        collection do
+          post 'enroll'
+        end
+      end
     end
   end
 

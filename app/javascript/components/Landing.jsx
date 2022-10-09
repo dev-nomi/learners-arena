@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Card,
@@ -7,18 +7,19 @@ import {
   CardActions,
   Typography,
   Button,
-  Box,
-  IconButton,
   Container,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Errors from "../components/Errors";
 
 const Landing = () => {
   const [courses, setCourses] = useState([]);
+  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const navigate = useNavigate();
 
   useEffect(() => {
     initialize();
@@ -35,6 +36,22 @@ const Landing = () => {
         setCourses(response.data);
       })
       .catch((error) => {});
+  };
+
+  const enroll = (course_id) => {
+    const enroll_course = new FormData();
+    enroll_course.append("enroll_course[course_id]", course_id);
+    enroll_course.append("enroll_course[user_id]", user.id);
+
+    axios
+      .post("/api/v1/enrolled_courses/enroll", enroll_course)
+      .then((response) => {
+        toast.success("Successfully Enrolled a course.");
+        navigate("/home");
+      })
+      .catch((error) => {
+        toast.error(<Errors errors={error.response.data} />);
+      });
   };
   return (
     <Container>
@@ -57,9 +74,18 @@ const Landing = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small" color="success" variant="contained">
-                  Enroll
-                </Button>
+                {isLoggedIn && user?.role === "student" ? (
+                  <Button
+                    size="small"
+                    color="success"
+                    variant="contained"
+                    onClick={() => enroll(course.id)}
+                  >
+                    Enroll
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
               </CardActions>
             </Card>
           </Grid>
