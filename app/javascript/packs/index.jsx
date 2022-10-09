@@ -11,16 +11,24 @@ import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: "Ubuntu",
+      textTransform: "none",
+    },
+  },
+});
 const App = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <ToastContainer theme="colored" />
       <Router>
         <NavBar />
         <AllRoutes />
       </Router>
-    </>
+    </ThemeProvider>
   );
 };
 const persistConfig = {

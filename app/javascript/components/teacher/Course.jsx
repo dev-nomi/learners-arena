@@ -29,12 +29,12 @@ const Course = () => {
       <Card
         sx={{
           margin: 3,
-          maxWidth: 800,
+          width: "40%",
         }}
       >
         <CardMedia
           component="img"
-          height="250"
+          height="200"
           image={`http://localhost:3000` + course.image}
           alt="course image"
         />
