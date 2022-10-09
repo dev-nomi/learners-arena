@@ -1,8 +1,6 @@
 class Api::V1::CoursesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def index
-    @courses = Course.all.with_attached_image.order(created_at: :desc)
+    @courses = current_user.courses.all.with_attached_image.order(created_at: :desc)
     render json: @courses 
   end
 
@@ -13,7 +11,7 @@ class Api::V1::CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
-
+    @course.user = current_user
     if @course.save
       render json: @course   
     else

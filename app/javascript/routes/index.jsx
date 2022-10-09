@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import AddCourse from "../components/teacher/AddCourse";
 import Course from "../components/teacher/Course";
+import AddHandout from "../components/teacher/handout/AddHandout";
+import Handouts from "../components/teacher/handout/Handouts";
+import Handout from "../components/teacher/handout/Handout";
 
 const AllRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -26,6 +29,10 @@ const AllRoutes = () => {
       <Route element={<ProtectedRoute isAllowed={user && user.role == "teacher"} />}>
         <Route path="/add_course" element={<AddCourse />} />
         <Route path="/course/:id" element={<Course />} />
+
+        <Route path="/add_handout" element={<AddHandout />} />
+        <Route path="/handouts" element={<Handouts />} />
+        <Route path="/handout/:id" element={<Handout />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={!user} />}>

@@ -3,36 +3,36 @@ import { Button, TextField, Box, Typography, Container } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Errors from "../Errors";
+import Errors from "../../Errors";
 
-const AddCourses = () => {
+const AddHandout = () => {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [selectedPdf, setSelectedPdf] = useState("");
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   useEffect(() => {
-    if (selectedImage) {
-      setImageUrl(URL.createObjectURL(selectedImage));
+    if (selectedPdf) {
+      setPdfUrl(URL.createObjectURL(selectedPdf));
     }
-  }, [selectedImage]);
+  }, [selectedPdf]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const course = new FormData();
-    course.append("course[display_name]", displayName);
-    course.append("course[description]", description);
-    course.append("course[image]", selectedImage);
+    const handout = new FormData();
+    handout.append("handout[display_name]", displayName);
+    handout.append("handout[description]", description);
+    handout.append("handout[pdf]", selectedPdf);
 
     axios
-      .post("/api/v1/courses", course)
+      .post("/api/v1/handouts", handout)
       .then((response) => {
-        toast.success("Successfully created the course.");
+        toast.success("Successfully created the handout.");
         setDisplayName("");
         setDescription("");
-        setSelectedImage("");
-        navigate("/home");
+        setSelectedPdf("");
+        navigate("/handouts");
       })
       .catch((error) => {
         toast.error(<Errors errors={error.response.data} />);
@@ -50,7 +50,7 @@ const AddCourses = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Add Course
+          Add Handout
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -77,22 +77,22 @@ const AddCourses = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          {imageUrl && selectedImage && (
+          {pdfUrl && selectedPdf && (
             <Box mt={2} textAlign="center">
-              <div>Image Preview:</div>
-              <img src={imageUrl} alt={selectedImage.name} height="100px" />
+              <div>Pdf Preview:</div>
+              <img src={pdfUrl} alt={selectedPdf.name} height="100px" />
             </Box>
           )}
           <input
-            accept="image/*"
+            accept="application/pdf"
             type="file"
             id="select-image"
             style={{ display: "none" }}
-            onChange={(e) => setSelectedImage(e.target.files[0])}
+            onChange={(e) => setSelectedPdf(e.target.files[0])}
           />
           <label htmlFor="select-image">
             <Button variant="contained" color="primary" component="span">
-              Upload Image
+              Upload Pdf
             </Button>
           </label>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
@@ -104,4 +104,4 @@ const AddCourses = () => {
   );
 };
 
-export default AddCourses;
+export default AddHandout;

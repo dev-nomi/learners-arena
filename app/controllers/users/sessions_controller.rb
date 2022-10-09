@@ -2,6 +2,10 @@
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
 
+  def destroy
+    sign_out @user
+  end
+
   private
 
   def respond_with(_resource, _opts = {})

@@ -6,4 +6,5 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   enum role: [:student, :teacher, :admin]
+  has_many :courses
 end

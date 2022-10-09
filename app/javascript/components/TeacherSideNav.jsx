@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
   Box,
   ListItemIcon,
@@ -37,9 +38,26 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemText primary={"Add Course"} />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/add_handout" component={Link}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Add Handout"} />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
-      <List></List>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton to="/handouts" component={Link}>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All handouts "} />
+          </ListItemButton>
+        </ListItem>
+      </List>
     </Box>
   );
 };
