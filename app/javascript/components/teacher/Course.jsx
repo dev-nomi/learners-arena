@@ -46,11 +46,13 @@ const Course = () => {
             {course.description}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Number of students enrolled : {course.enroll_courses_count}
+            <strong>Number of students enrolled :</strong> {course.enroll_courses_count}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          <Button size="small" variant="contained">
+            Learn More
+          </Button>
         </CardActions>
       </Card>
     </Box>

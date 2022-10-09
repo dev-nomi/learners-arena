@@ -12,11 +12,30 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { red, green } from "@mui/material/colors";
+
 const theme = createTheme({
   typography: {
     allVariants: {
       fontFamily: "Ubuntu",
       textTransform: "none",
+    },
+  },
+  palette: {
+    primary: {
+      main: "#1A374D",
+      light: "#406882",
+    },
+    secondary: {
+      main: "#B1D0E0",
+      dark: "#6998AB",
+    },
+    error: {
+      main: red[400],
+    },
+    success: {
+      main: green[400],
+      contrastText: "#fff",
     },
   },
 });

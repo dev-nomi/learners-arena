@@ -4,6 +4,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Card,
@@ -24,7 +25,7 @@ const Handout = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -93,10 +94,15 @@ const Handout = () => {
             marginRight: 1,
           }}
         >
-          <Button disabled={pageNumber <= 1} onClick={previousPage} className="Pre">
+          <Button
+            disabled={pageNumber <= 1}
+            onClick={previousPage}
+            className="Pre"
+            variant="contained"
+          >
             Previous
           </Button>
-          <Button disabled={pageNumber >= numPages} onClick={nextPage}>
+          <Button disabled={pageNumber >= numPages} onClick={nextPage} variant="contained">
             Next
           </Button>
         </Box>
@@ -143,8 +149,10 @@ const Handout = () => {
           {"Are you sure you want to delete this handout?"}
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => handleDelete(handout.id)}>Yes</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={() => handleDelete(handout.id)} variant="contained" color="success">
+            Yes
+          </Button>
+          <Button onClick={handleClose} autoFocus variant="contained" color="error">
             No
           </Button>
         </DialogActions>

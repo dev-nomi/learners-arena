@@ -14,12 +14,14 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Errors from "../components/Errors";
+import { useTheme } from "@mui/material/styles";
 
 const Landing = () => {
   const [courses, setCourses] = useState([]);
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     initialize();
@@ -77,8 +79,8 @@ const Landing = () => {
                 {isLoggedIn && user?.role === "student" ? (
                   <Button
                     size="small"
-                    color="success"
                     variant="contained"
+                    sx={{ bgcolor: theme.palette.primary.light }}
                     onClick={() => enroll(course.id)}
                   >
                     Enroll

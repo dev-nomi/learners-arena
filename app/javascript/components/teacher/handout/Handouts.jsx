@@ -21,11 +21,12 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useTheme } from "@mui/material/styles";
 
 const Handouts = () => {
   const [handouts, setHandouts] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const theme = useTheme();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -79,13 +80,15 @@ const Handouts = () => {
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Course</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell sx={{ color: "white" }}>ID</TableCell>
+              <TableCell sx={{ color: "white" }}>Name</TableCell>
+              <TableCell sx={{ color: "white" }}>Description</TableCell>
+              <TableCell sx={{ color: "white" }}>Course</TableCell>
+              <TableCell sx={{ color: "white" }} align="center">
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -105,11 +108,17 @@ const Handouts = () => {
                       size="small"
                       color="info"
                       to={`/handout/${row.id}`}
+                      sx={{ color: theme.palette.primary.light }}
                       component={Link}
                     >
                       <VisibilityIcon />
                     </IconButton>
-                    <IconButton size="small" color="error" onClick={handleClickOpen}>
+                    <IconButton
+                      sx={{ color: theme.palette.error.main }}
+                      size="small"
+                      color="error"
+                      onClick={handleClickOpen}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -124,8 +133,14 @@ const Handouts = () => {
                     {"Are you sure you want to delete this handout?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button onClick={() => handleDelete(row.id)}>Yes</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button
+                      onClick={() => handleDelete(row.id)}
+                      variant="contained"
+                      color="success"
+                    >
+                      Yes
+                    </Button>
+                    <Button onClick={handleClose} autoFocus variant="contained" color="error">
                       No
                     </Button>
                   </DialogActions>

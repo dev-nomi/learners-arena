@@ -20,11 +20,11 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+import { useTheme } from "@mui/material/styles";
 const TeacherDashboard = () => {
   const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const theme = useTheme();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -59,7 +59,7 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -78,12 +78,14 @@ const TeacherDashboard = () => {
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell sx={{ color: "white" }}>ID</TableCell>
+              <TableCell sx={{ color: "white" }}>Name</TableCell>
+              <TableCell sx={{ color: "white" }}>Description</TableCell>
+              <TableCell align="center" sx={{ color: "white" }}>
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -94,10 +96,19 @@ const TeacherDashboard = () => {
                   <TableCell>{row.display_name}</TableCell>
                   <TableCell>{truncate(row.description)}</TableCell>
                   <TableCell align="center">
-                    <IconButton size="small" color="info" to={`/course/${row.id}`} component={Link}>
+                    <IconButton
+                      size="small"
+                      sx={{ color: theme.palette.primary.light }}
+                      to={`/course/${row.id}`}
+                      component={Link}
+                    >
                       <VisibilityIcon />
                     </IconButton>
-                    <IconButton size="small" color="error" onClick={handleClickOpen}>
+                    <IconButton
+                      size="small"
+                      sx={{ color: theme.palette.error.main }}
+                      onClick={handleClickOpen}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -112,8 +123,14 @@ const TeacherDashboard = () => {
                     {"Are you sure you want to delete this course?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button onClick={() => handleDelete(row.id)}>Yes</Button>
-                    <Button onClick={handleClose} autoFocus>
+                    <Button
+                      onClick={() => handleDelete(row.id)}
+                      variant="contained"
+                      color="success"
+                    >
+                      Yes
+                    </Button>
+                    <Button onClick={handleClose} autoFocus variant="contained" color="error">
                       No
                     </Button>
                   </DialogActions>
@@ -123,7 +140,7 @@ const TeacherDashboard = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Fragment>
+    </>
   );
 };
 

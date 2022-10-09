@@ -8,6 +8,6 @@ class CourseSerializer < ActiveModel::Serializer
   end
 
   def enroll_courses_count
-    object.enrolled_courses.count
+    object.enrolled_courses.size
   end
 end

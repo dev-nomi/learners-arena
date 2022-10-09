@@ -17,7 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Errors from "../Errors";
-
+import { useTheme } from "@mui/material/styles";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +27,7 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -67,7 +68,7 @@ const SignUp = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ bgcolor: "secondary" }}>
+        <Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
           <PersonAddIcon />
         </Avatar>
         <Typography component="h1" variant="h5">

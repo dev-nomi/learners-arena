@@ -24,7 +24,7 @@ import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import TeacherSideNav from "./TeacherSideNav";
 import StudentSideNav from "./StudentSideNav";
-
+import { useTheme } from "@mui/material/styles";
 const Navbar = () => {
   const auth_token = useSelector((state) => state.auth.auth_token);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -36,7 +36,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+  const theme = useTheme();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -108,7 +108,9 @@ const Navbar = () => {
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
                     >
-                      <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                      <Avatar
+                        sx={{ width: 32, height: 32, bgcolor: theme.palette.secondary.main }}
+                      ></Avatar>
                     </IconButton>
                   </Tooltip>
                 </Box>
@@ -168,7 +170,12 @@ const Navbar = () => {
               </Fragment>
             ) : (
               <Fragment>
-                <Button to="/sign_in" component={Link} color="inherit">
+                <Button
+                  to="/sign_in"
+                  component={Link}
+                  color="inherit"
+                  sx={{ bgcolor: theme.palette.secondary.dark }}
+                >
                   Sign In
                 </Button>
               </Fragment>
