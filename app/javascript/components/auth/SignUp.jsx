@@ -25,6 +25,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [role, setRole] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +37,8 @@ const SignUp = () => {
     user.append("user[password]", password);
     user.append("user[password_confirmation]", passwordConfirmation);
     user.append("user[role]", role);
+    user.append("user[last_name]", lastName);
+    user.append("user[first_name]", firstName);
 
     axios
       .post("users", user)
@@ -60,7 +64,7 @@ const SignUp = () => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 3,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -74,6 +78,32 @@ const SignUp = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="lastname"
+                  required
+                  fullWidth
+                  id="lastname"
+                  label="Last Name"
+                  autoFocus
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required

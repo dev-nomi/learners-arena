@@ -97,6 +97,7 @@ const Navbar = () => {
             </Typography>
             {isLoggedIn ? (
               <Fragment>
+                <Typography>{user.first_name + " " + user.last_name}</Typography>
                 <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
                   <Tooltip title="Account settings">
                     <IconButton
