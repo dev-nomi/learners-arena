@@ -84,6 +84,7 @@ const Handouts = () => {
               <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
+              <TableCell>Course</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -94,6 +95,11 @@ const Handouts = () => {
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.display_name}</TableCell>
                   <TableCell>{truncate(row.description)}</TableCell>
+                  <TableCell>
+                    <Typography to={`/course/${row.course.id}`} component={Link}>
+                      {row.course.display_name}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       size="small"

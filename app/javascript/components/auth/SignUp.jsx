@@ -17,6 +17,7 @@ import { registerUser } from "../../actions";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Errors from "../Errors";
 const theme = createTheme();
 
 const SignUp = () => {
@@ -49,6 +50,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         toast.error(error.response);
+        toast.error(<Errors errors={error.response.data} />);
       });
   };
 

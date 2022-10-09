@@ -45,6 +45,9 @@ const Course = () => {
           <Typography variant="body2" color="text.secondary">
             {course.description}
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Number of students enrolled : {course.enroll_courses_count}
+          </Typography>
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>

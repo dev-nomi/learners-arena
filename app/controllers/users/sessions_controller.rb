@@ -9,6 +9,7 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(_resource, _opts = {})
+    return render json: { message: "Can't be logged in!!"}, status: :unauthorized if current_user.nil?
     render json: {
       message: 'You are logged in.',
       user: current_user

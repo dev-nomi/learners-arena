@@ -1,7 +1,7 @@
 class Api::V1::HandoutsController < ApplicationController
   respond_to :json
   def index
-    @handouts = Handout.all.order(created_at: :desc)
+    @handouts = current_user.handouts.with_attached_pdf.all.order(created_at: :desc)
     render json: @handouts 
   end
 
@@ -12,6 +12,7 @@ class Api::V1::HandoutsController < ApplicationController
 
   def create
     @handout = Handout.new(handout_params)
+    @handout.user = current_user
     
     if @handout.save
       render json: @handout   

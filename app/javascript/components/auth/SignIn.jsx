@@ -7,7 +7,6 @@ import { signInUser } from "../../actions";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-
 const theme = createTheme();
 
 const SignIn = () => {
@@ -34,7 +33,7 @@ const SignIn = () => {
         navigate("/home");
       })
       .catch((error) => {
-        toast.error(error.response);
+        toast.error(error.response.data.message);
       });
   };
 

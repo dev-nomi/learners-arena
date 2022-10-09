@@ -50,7 +50,7 @@ const Navbar = () => {
       },
     };
     axios
-      .delete("users/sign_out", config)
+      .delete("/users/sign_out", config)
       .then(() => {
         toast.success("Successfully Signed Out.");
         dispatch(signOutUser());
@@ -78,16 +78,20 @@ const Navbar = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer("drawer", true)}
-            >
-              <MenuIcon />
-            </IconButton>
+            {isLoggedIn ? (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={toggleDrawer("drawer", true)}
+              >
+                <MenuIcon />
+              </IconButton>
+            ) : (
+              <></>
+            )}
             <Typography variant="h6" sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}>
               Learners arena
             </Typography>
@@ -158,7 +162,7 @@ const Navbar = () => {
                   open={state["drawer"]}
                   onClose={toggleDrawer("drawer", false)}
                 >
-                  {user.role === "teacher" ? teacherList("drawer") : studentList("drawer")}
+                  {user?.role === "teacher" ? teacherList("drawer") : studentList("drawer")}
                 </Drawer>
               </Fragment>
             ) : (
