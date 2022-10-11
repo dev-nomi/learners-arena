@@ -6,7 +6,7 @@ class Api::V1::HandoutsController < ApplicationController
   end
 
   def show
-    @handout = Handout.find_by_id(params[:id])
+    @handout = Handout.with_attached_pdf.find_by_id(params[:id])
     render json: @handout
   end
 

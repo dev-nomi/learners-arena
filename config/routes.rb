@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           post 'enroll'
         end
       end
+      resources :quizzes
     end
   end
 

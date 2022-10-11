@@ -71,7 +71,7 @@ const SignUp = () => {
         <Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
           <PersonAddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Sign up
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>

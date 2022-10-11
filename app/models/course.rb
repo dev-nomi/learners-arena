@@ -10,4 +10,5 @@ class Course < ApplicationRecord
   has_many :handouts
   has_many :enrolled_courses
   has_many :users, through: :enrolled_courses, source: :user
+  has_many :quizzes
 end

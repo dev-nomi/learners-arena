@@ -14,6 +14,7 @@ import {
   DialogTitle,
   Box,
   IconButton,
+  Container,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -21,8 +22,10 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
-const TeacherDashboard = () => {
-  const [courses, setCourses] = useState([]);
+import { Link as MuiLink } from "@mui/material";
+
+const Quizzes = () => {
+  const [quizzes, setQuizzes] = useState([]);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const handleClickOpen = () => {
@@ -43,23 +46,23 @@ const TeacherDashboard = () => {
 
   const initialize = () => {
     axios
-      .get("/api/v1/courses")
+      .get("/api/v1/quizzes")
       .then((response) => {
-        setCourses(response.data);
+        setQuizzes(response.data);
       })
       .catch((error) => {});
   };
 
   const handleDelete = (id) => {
-    axios.delete(`/api/v1/courses/${id}`).then(() => {
-      toast.success("Successfully Delete the course.");
+    axios.delete(`/api/v1/quizzes/${id}`).then(() => {
+      toast.success("Successfully delete the quiz.");
       initialize();
       setOpen(false);
     });
   };
 
   return (
-    <>
+    <Container>
       <Box
         sx={{
           display: "flex",
@@ -70,10 +73,10 @@ const TeacherDashboard = () => {
         }}
       >
         <Typography component="h1" variant="h4">
-          Teacher Dashboard
+          List of Quizzes
         </Typography>
-        <Button to="/add_course" component={Link} variant="contained">
-          Add Course
+        <Button to="/add_quiz" component={Link} variant="contained">
+          Add Quiz
         </Button>
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: 4 }}>
@@ -83,30 +86,38 @@ const TeacherDashboard = () => {
               <TableCell sx={{ color: "white" }}>ID</TableCell>
               <TableCell sx={{ color: "white" }}>Name</TableCell>
               <TableCell sx={{ color: "white" }}>Description</TableCell>
-              <TableCell align="center" sx={{ color: "white" }}>
+              <TableCell sx={{ color: "white" }}>Course</TableCell>
+              <TableCell sx={{ color: "white" }} align="center">
                 Action
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses.map((row) => (
+            {quizzes.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.display_name}</TableCell>
                   <TableCell>{truncate(row.description)}</TableCell>
+                  <TableCell>
+                    <MuiLink to={`/course/${row.course.id}`} component={Link}>
+                      {row.course.display_name}
+                    </MuiLink>
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       size="small"
+                      color="info"
+                      to={`/quiz/${row.id}`}
                       sx={{ color: theme.palette.primary.light }}
-                      to={`/course/${row.id}`}
                       component={Link}
                     >
                       <VisibilityIcon />
                     </IconButton>
                     <IconButton
-                      size="small"
                       sx={{ color: theme.palette.error.main }}
+                      size="small"
+                      color="error"
                       onClick={handleClickOpen}
                     >
                       <DeleteIcon />
@@ -120,7 +131,7 @@ const TeacherDashboard = () => {
                   aria-describedby="alert-dialog-description"
                 >
                   <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete this course?"}
+                    {"Are you sure you want to delete this quiz?"}
                   </DialogTitle>
                   <DialogActions>
                     <Button
@@ -140,8 +151,8 @@ const TeacherDashboard = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Container>
   );
 };
 
-export default TeacherDashboard;
+export default Quizzes;

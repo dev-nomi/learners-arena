@@ -60,7 +60,7 @@ const SignIn = () => {
         <Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
           <PersonIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

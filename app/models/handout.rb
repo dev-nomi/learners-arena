@@ -1,5 +1,5 @@
 class Handout < ApplicationRecord
-  validates :display_name, :description, presence: true, uniqueness: { case_sensitive: false }
+  validates :display_name, :description, presence: true
   has_one_attached :pdf
 
   validates :pdf, {

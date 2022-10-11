@@ -1,42 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextField, Box, Typography, Container } from "@mui/material";
+import { Button, TextField, Box, Typography, Container, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Errors from "../Errors";
+import Errors from "../../Errors";
 
-const AddCourse = () => {
+const AddQuiz = () => {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [course, setCourse] = useState("");
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    if (selectedImage) {
-      setImageUrl(URL.createObjectURL(selectedImage));
-    }
-  }, [selectedImage]);
+    initialize();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const course = new FormData();
-    course.append("course[display_name]", displayName);
-    course.append("course[description]", description);
-    course.append("course[image]", selectedImage);
+    const quiz = new FormData();
+    quiz.append("quiz[display_name]", displayName);
+    quiz.append("quiz[description]", description);
+    quiz.append("quiz[course_id]", course);
 
     axios
-      .post("/api/v1/courses", course)
+      .post("/api/v1/quizzes", quiz)
       .then((response) => {
-        toast.success("Successfully created the course.");
+        toast.success("Successfully created the quiz.");
         setDisplayName("");
         setDescription("");
-        setSelectedImage("");
-        navigate("/home");
+        setCourse("");
+        navigate("/quizzes");
       })
       .catch((error) => {
         toast.error(<Errors errors={error.response.data} />);
       });
+  };
+
+  const initialize = () => {
+    axios
+      .get("/api/v1/courses")
+      .then((response) => {
+        setCourses(response.data);
+      })
+      .catch((error) => {});
   };
 
   return (
@@ -50,7 +57,7 @@ const AddCourse = () => {
         }}
       >
         <Typography component="h1" variant="h4">
-          Add Course
+          Add Quiz
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -77,24 +84,21 @@ const AddCourse = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          {imageUrl && selectedImage && (
-            <Box mt={2} textAlign="center">
-              <div>Image Preview:</div>
-              <img src={imageUrl} alt={selectedImage.name} height="100px" />
-            </Box>
-          )}
-          <input
-            accept="image/*"
-            type="file"
-            id="select-image"
-            style={{ display: "none" }}
-            onChange={(e) => setSelectedImage(e.target.files[0])}
-          />
-          <label htmlFor="select-image">
-            <Button variant="contained" color="primary" component="span">
-              Upload Image
-            </Button>
-          </label>
+          <TextField
+            id="outlined-select-role"
+            select
+            required
+            fullWidth
+            label="Course"
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
+          >
+            {courses.map((course) => (
+              <MenuItem key={course.id} value={course.id}>
+                {course.display_name}
+              </MenuItem>
+            ))}
+          </TextField>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Add
           </Button>
@@ -104,4 +108,4 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default AddQuiz;

@@ -25,6 +25,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import TeacherSideNav from "./TeacherSideNav";
 import StudentSideNav from "./StudentSideNav";
 import { useTheme } from "@mui/material/styles";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 const Navbar = () => {
   const auth_token = useSelector((state) => state.auth.auth_token);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -150,6 +151,9 @@ const Navbar = () => {
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
                   <MenuItem to="/home" component={Link}>
+                    <ListItemIcon>
+                      <DashboardIcon fontSize="small" />
+                    </ListItemIcon>
                     Dashboard
                   </MenuItem>
                   <Divider />

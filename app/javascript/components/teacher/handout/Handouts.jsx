@@ -71,7 +71,7 @@ const Handouts = () => {
           marginTop: 3,
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           List of Handouts
         </Typography>
         <Button to="/add_handout" component={Link} variant="contained">

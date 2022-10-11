@@ -31,6 +31,25 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
+          <ListItemButton to="/handouts" component={Link}>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All handouts "} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/quizzes" component={Link}>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Quizzes"} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        <ListItem disablePadding>
           <ListItemButton to="/add_course" component={Link}>
             <ListItemIcon>
               <AddIcon />
@@ -46,15 +65,12 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemText primary={"Add Handout"} />
           </ListItemButton>
         </ListItem>
-      </List>
-      <Divider />
-      <List>
         <ListItem disablePadding>
-          <ListItemButton to="/handouts" component={Link}>
+          <ListItemButton to="/add_quiz" component={Link}>
             <ListItemIcon>
-              <FormatListBulletedIcon />
+              <AddIcon />
             </ListItemIcon>
-            <ListItemText primary={"All handouts "} />
+            <ListItemText primary={"Add Quiz"} />
           </ListItemButton>
         </ListItem>
       </List>

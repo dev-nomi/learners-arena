@@ -5,8 +5,8 @@ class Api::V1::CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.find_by_id(params[:id])
-    render json: @course
+    @course = Course.with_attached_image.find_by_id(params[:id])
+    render json: @course, include: [:users]
   end
 
   def create

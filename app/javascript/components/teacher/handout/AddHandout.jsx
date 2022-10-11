@@ -36,6 +36,7 @@ const AddHandout = () => {
         setDisplayName("");
         setDescription("");
         setSelectedPdf("");
+        setCourse("");
         navigate("/handouts");
       })
       .catch((error) => {
@@ -61,7 +62,7 @@ const AddHandout = () => {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Add Handout
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -85,9 +86,9 @@ const AddHandout = () => {
             value={course}
             onChange={(e) => setCourse(e.target.value)}
           >
-            {courses.map((row) => (
-              <MenuItem key={row.id} value={row.id}>
-                {row.display_name}
+            {courses.map((course) => (
+              <MenuItem key={course.id} value={course.id}>
+                {course.display_name}
               </MenuItem>
             ))}
           </TextField>
