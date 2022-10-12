@@ -29,6 +29,7 @@ const theme = createTheme({
     secondary: {
       main: "#B1D0E0",
       dark: "#6998AB",
+      contrastText: "#fff",
     },
     error: {
       main: red[400],
