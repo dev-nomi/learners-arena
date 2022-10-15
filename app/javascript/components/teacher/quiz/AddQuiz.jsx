@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Errors from "../../Errors";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useTheme } from "@mui/material/styles";
+import { TextFieldsRounded } from "@mui/icons-material";
 
 const AddQuiz = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const AddQuiz = () => {
   const [course, setCourse] = useState("");
   const [courses, setCourses] = useState([]);
   const [formValues, setFormValues] = useState([
-    { question: "", answer: "", question_type: "short_question" },
+    { title: "", ans_key: "", question_type: "short_question" },
   ]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -38,6 +39,7 @@ const AddQuiz = () => {
     quiz.append("quiz[display_name]", displayName);
     quiz.append("quiz[description]", description);
     quiz.append("quiz[course_id]", course);
+    quiz.append("questions", JSON.stringify(formValues));
 
     axios
       .post("/api/v1/quizzes", quiz)
@@ -69,7 +71,7 @@ const AddQuiz = () => {
   };
 
   let addShortQuestionFields = () => {
-    setFormValues([...formValues, { question: "", answer: "", question_type: "short_question" }]);
+    setFormValues([...formValues, { title: "", ans_key: "", question_type: "short_question" }]);
     handleClose();
   };
 
@@ -77,7 +79,8 @@ const AddQuiz = () => {
     setFormValues([
       ...formValues,
       {
-        question: "",
+        title: "",
+        ans_key: "",
         option1: "",
         option2: "",
         option3: "",
@@ -153,21 +156,21 @@ const AddQuiz = () => {
                     margin="normal"
                     required
                     fullWidth
-                    name="question"
+                    name="title"
                     label="Question"
-                    type="question"
-                    id="question"
-                    value={element.question || ""}
+                    type="title"
+                    id="title"
+                    value={element.title || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
                   <TextField
                     required
                     fullWidth
-                    name="answer"
+                    name="ans_key"
                     label="Answer"
-                    type="answer"
-                    id="answer"
-                    value={element.answer || ""}
+                    type="ans_key"
+                    id="ans_key"
+                    value={element.ans_key || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
                 </>
@@ -177,14 +180,24 @@ const AddQuiz = () => {
                     margin="normal"
                     required
                     fullWidth
-                    name="question"
+                    name="title"
                     label="Question"
-                    type="question"
-                    id="question"
-                    value={element.question || ""}
+                    type="title"
+                    id="title"
+                    value={element.title || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
-                  <Grid container spacing={2}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="ans_key"
+                    label="Answer"
+                    type="ans_key"
+                    id="ans_key"
+                    value={element.ans_key || ""}
+                    onChange={(e) => handleChange(index, e)}
+                  />
+                  <Grid container spacing={2} sx={{ mt: 1 }}>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         autoComplete="given-name"

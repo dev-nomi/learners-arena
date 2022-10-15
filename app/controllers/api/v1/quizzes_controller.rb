@@ -3,7 +3,7 @@ class Api::V1::QuizzesController < ApplicationController
 
   def index
     @quizzes = current_user.quizzes.all.order(created_at: :desc)
-    render json: @quizzes 
+    render json: @quizzes
   end
 
   def show
@@ -14,7 +14,19 @@ class Api::V1::QuizzesController < ApplicationController
   def create
     @quiz = Quiz.new(quiz_params)
     @quiz.user = current_user
-    
+    @questions = JSON.parse(params[:questions])
+
+    @questions.each do |question|
+      if question['question_type'] == 'multi_question'
+        attributes = question.slice('title','ans_key','question_type')
+        options = question.slice('option1','option2','option3','option4')
+        attributes.store('options', options)
+        @quiz.questions.build(attributes)
+      else
+        @quiz.questions.build(question)
+      end
+    end  
+
     if @quiz.save
       render json: @quiz   
     else

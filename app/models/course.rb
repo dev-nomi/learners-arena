@@ -5,7 +5,8 @@ class Course < ApplicationRecord
   validates :image, {
     presence: true
   }
-  
+  enum level: [:beginner, :intermediate, :advanced]
+
   belongs_to :user
   has_many :handouts
   has_many :enrolled_courses

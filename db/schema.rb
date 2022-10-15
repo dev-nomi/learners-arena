@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_11_215524) do
+ActiveRecord::Schema.define(version: 2022_10_15_120700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,9 @@ ActiveRecord::Schema.define(version: 2022_10_11_215524) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.string "outline"
+    t.integer "level"
+    t.integer "total_hours"
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
@@ -87,6 +90,8 @@ ActiveRecord::Schema.define(version: 2022_10_11_215524) do
     t.json "options"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "quiz_id"
+    t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 
   create_table "quizzes", force: :cascade do |t|
@@ -120,6 +125,7 @@ ActiveRecord::Schema.define(version: 2022_10_11_215524) do
   add_foreign_key "courses", "users"
   add_foreign_key "handouts", "courses"
   add_foreign_key "handouts", "users"
+  add_foreign_key "questions", "quizzes"
   add_foreign_key "quizzes", "courses"
   add_foreign_key "quizzes", "users"
 end

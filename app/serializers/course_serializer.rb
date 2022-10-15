@@ -1,8 +1,9 @@
 class CourseSerializer < ActiveModel::Serializer
-  attributes :id, :display_name, :description, :image
+  attributes :id, :display_name, :description, :image, :level, :total_hours, :outline
 
   has_many :handouts
   has_many :users
+  has_many :quizzes
   
   def image
     if object.image.attached?

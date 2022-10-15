@@ -1,12 +1,12 @@
 class Api::V1::CoursesController < ApplicationController
   def index
     @courses = current_user.courses.all.with_attached_image.order(created_at: :desc)
-    render json: @courses 
+    render json: @courses
   end
 
   def show
     @course = Course.with_attached_image.find_by_id(params[:id])
-    render json: @course, include: [:users]
+    render json: @course, include: [:users, :handouts, :quizzes]
   end
 
   def create
@@ -37,6 +37,6 @@ class Api::V1::CoursesController < ApplicationController
 
   private
     def course_params
-      params.require(:course).permit(:display_name, :description, :image).select {|x,v| v.present?}
+      params.require(:course).permit(:display_name, :description, :image, :level, :total_hours, :outline).select {|x,v| v.present?}
     end
 end
