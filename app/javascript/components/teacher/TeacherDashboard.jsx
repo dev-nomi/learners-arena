@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
+
 const TeacherDashboard = () => {
   const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
