@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_16_000344) do
+ActiveRecord::Schema.define(version: 2022_10_16_020032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,15 @@ ActiveRecord::Schema.define(version: 2022_10_16_000344) do
     t.integer "week_no"
     t.index ["course_id"], name: "index_quizzes_on_course_id"
     t.index ["user_id"], name: "index_quizzes_on_user_id"
+  end
+
+  create_table "reference_links", force: :cascade do |t|
+    t.string "display_name"
+    t.string "description"
+    t.string "url"
+    t.integer "week_no"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

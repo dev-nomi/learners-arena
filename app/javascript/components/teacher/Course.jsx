@@ -35,7 +35,7 @@ const Course = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContentContent: "space-between",
+          justifyContent: "space-between",
         }}
       >
         <Card
@@ -119,7 +119,7 @@ const Course = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContentContent: "space-between",
+          justifyContent: "space-between",
         }}
       >
         <Card

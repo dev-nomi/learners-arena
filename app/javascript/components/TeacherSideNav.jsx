@@ -46,6 +46,14 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemText primary={"All Quizzes"} />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/reference_links" component={Link}>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Reference Links"} />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
       <List>
@@ -71,6 +79,14 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
               <AddIcon />
             </ListItemIcon>
             <ListItemText primary={"Add Quiz"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/add_reference_link" component={Link}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Add Reference Link"} />
           </ListItemButton>
         </ListItem>
       </List>

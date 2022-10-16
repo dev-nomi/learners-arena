@@ -14,6 +14,9 @@ import Handouts from "../components/teacher/handout/Handouts";
 import Handout from "../components/teacher/handout/Handout";
 import AddQuiz from "../components/teacher/quiz/AddQuiz";
 import Quizzes from "../components/teacher/quiz/Quizzes";
+import AddReferenceLink from "../components/teacher/reference_link/AddReferenceLink";
+import ReferenceLinks from "../components/teacher/reference_link/ReferenceLinks";
+import ReferenceLink from "../components/teacher/reference_link/ReferenceLink";
 
 import ShowCourse from "../components/student/course/ShowCourse";
 
@@ -40,6 +43,10 @@ const AllRoutes = () => {
 
         <Route path="/add_quiz" element={<AddQuiz />} />
         <Route path="/quizzes" element={<Quizzes />} />
+
+        <Route path="/add_reference_link" element={<AddReferenceLink />} />
+        <Route path="/reference_links" element={<ReferenceLinks />} />
+        <Route path="/reference_link/:id" element={<ReferenceLink />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={user && user.role == "student"} />}>

@@ -6,8 +6,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+  
   get '/member-data', to: 'members#show'
   get '/all_courses', to: 'pages#index'
+
   namespace :api do
     namespace :v1 do
       resources :courses
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
         end
       end
       resources :quizzes
+      resources :reference_links
     end
   end
 
