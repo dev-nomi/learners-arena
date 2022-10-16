@@ -14,6 +14,7 @@ const AddCourse = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [level, setLevel] = useState("");
   const [totalHours, setTotalHours] = useState("");
+  const [totalWeeks, setTotalWeeks] = useState("");
   const editorRef = useRef(null);
 
   const log = () => {
@@ -35,6 +36,7 @@ const AddCourse = () => {
     course.append("course[image]", selectedImage);
     course.append("course[level]", level);
     course.append("course[total_hours]", totalHours);
+    course.append("course[total_weeks]", totalWeeks);
     course.append("course[outline]", editorRef.current.getContent());
 
     axios
@@ -44,6 +46,9 @@ const AddCourse = () => {
         setDisplayName("");
         setDescription("");
         setSelectedImage("");
+        setTotalHours("");
+        setTotalWeeks("");
+        setLevel("");
         navigate("/home");
       })
       .catch((error) => {
@@ -52,7 +57,7 @@ const AddCourse = () => {
   };
 
   return (
-    <Container component="main">
+    <Container component="main" maxWidth="sm">
       <Box
         sx={{
           marginTop: 4,
@@ -112,12 +117,23 @@ const AddCourse = () => {
             value={totalHours}
             onChange={(e) => setTotalHours(e.target.value)}
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="total_weeks"
+            label="Total Weeks"
+            type="number"
+            id="total_weeks"
+            value={totalWeeks}
+            onChange={(e) => setTotalWeeks(e.target.value)}
+          />
           <Editor
             apiKey="1ng284s517ux8frzhkttvwkv4uk1qkiu8kebp5uddx6o8wuc"
             onInit={(evt, editor) => (editorRef.current = editor)}
             initialValue="<p>This is the initial content of the editor.</p>"
             init={{
-              height: 200,
+              height: 300,
               menubar: false,
               plugins: [
                 "advlist",

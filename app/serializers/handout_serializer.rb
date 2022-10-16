@@ -1,5 +1,5 @@
 class HandoutSerializer < ActiveModel::Serializer
-  attributes :id, :display_name, :description, :pdf
+  attributes :id, :display_name, :description, :pdf, :week_no
   belongs_to :course
 
   def pdf
