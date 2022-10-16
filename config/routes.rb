@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       end
       resources :quizzes
       resources :reference_links
+      resources :videos
     end
   end
 

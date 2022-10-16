@@ -17,6 +17,9 @@ import Quizzes from "../components/teacher/quiz/Quizzes";
 import AddReferenceLink from "../components/teacher/reference_link/AddReferenceLink";
 import ReferenceLinks from "../components/teacher/reference_link/ReferenceLinks";
 import ReferenceLink from "../components/teacher/reference_link/ReferenceLink";
+import AddVideo from "../components/teacher/video/AddVideo";
+import Videos from "../components/teacher/video/Videos";
+import Video from "../components/teacher/video/Video";
 
 import ShowCourse from "../components/student/course/ShowCourse";
 
@@ -47,6 +50,10 @@ const AllRoutes = () => {
         <Route path="/add_reference_link" element={<AddReferenceLink />} />
         <Route path="/reference_links" element={<ReferenceLinks />} />
         <Route path="/reference_link/:id" element={<ReferenceLink />} />
+
+        <Route path="/add_video" element={<AddVideo />} />
+        <Route path="/videos" element={<Videos />} />
+        <Route path="/video/:id" element={<Video />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={user && user.role == "student"} />}>

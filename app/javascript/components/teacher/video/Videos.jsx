@@ -24,11 +24,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
 
-const ReferenceLinks = () => {
-  const [referenceLinks, setReferenceLinks] = useState([]);
+const Videos = () => {
+  const [videos, setVideos] = useState([]);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,16 +46,16 @@ const ReferenceLinks = () => {
 
   const initialize = () => {
     axios
-      .get("/api/v1/reference_links")
+      .get("/api/v1/videos")
       .then((response) => {
-        setReferenceLinks(response.data);
+        setVideos(response.data);
       })
       .catch((error) => {});
   };
 
   const handleDelete = (id) => {
-    axios.delete(`/api/v1/reference_links/${id}`).then(() => {
-      toast.success("Successfully delete the reference link.");
+    axios.delete(`/api/v1/videos/${id}`).then(() => {
+      toast.success("Successfully delete the video.");
       initialize();
       setOpen(false);
     });
@@ -74,10 +73,10 @@ const ReferenceLinks = () => {
         }}
       >
         <Typography component="h1" variant="h4">
-          List of Reference Links
+          List of Videos
         </Typography>
-        <Button to="/add_reference_link" component={Link} variant="contained">
-          Add Reference Link
+        <Button to="/add_video" component={Link} variant="contained">
+          Add Video
         </Button>
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: 4 }}>
@@ -87,7 +86,6 @@ const ReferenceLinks = () => {
               <TableCell sx={{ color: "white" }}>ID</TableCell>
               <TableCell sx={{ color: "white" }}>Name</TableCell>
               <TableCell sx={{ color: "white" }}>Description</TableCell>
-              <TableCell sx={{ color: "white" }}>Url</TableCell>
               <TableCell sx={{ color: "white" }}>Course</TableCell>
               <TableCell sx={{ color: "white" }} align="center">
                 Action
@@ -95,13 +93,12 @@ const ReferenceLinks = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {referenceLinks.map((row) => (
+            {videos.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.display_name}</TableCell>
                   <TableCell>{truncate(row.description)}</TableCell>
-                  <TableCell>{truncate(row.url)}</TableCell>
                   <TableCell>
                     <MuiLink to={`/course/${row.course.id}`} component={Link}>
                       {row.course.display_name}
@@ -111,7 +108,7 @@ const ReferenceLinks = () => {
                     <IconButton
                       size="small"
                       color="info"
-                      to={`/reference_link/${row.id}`}
+                      to={`/video/${row.id}`}
                       sx={{ color: theme.palette.primary.light }}
                       component={Link}
                     >
@@ -134,7 +131,7 @@ const ReferenceLinks = () => {
                   aria-describedby="alert-dialog-description"
                 >
                   <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete this reference link?"}
+                    {"Are you sure you want to delete this video?"}
                   </DialogTitle>
                   <DialogActions>
                     <Button
@@ -158,4 +155,4 @@ const ReferenceLinks = () => {
   );
 };
 
-export default ReferenceLinks;
+export default Videos;

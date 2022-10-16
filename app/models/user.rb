@@ -14,4 +14,5 @@ class User < ApplicationRecord
   has_many :courses_enrolled, through: :enrolled_courses, source: :course
   has_many :quizzes
   has_many :reference_links
+  has_many :videos
 end
