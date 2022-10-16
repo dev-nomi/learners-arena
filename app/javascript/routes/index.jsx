@@ -22,6 +22,7 @@ import Videos from "../components/teacher/video/Videos";
 import Video from "../components/teacher/video/Video";
 
 import ShowCourse from "../components/student/course/ShowCourse";
+import ShowVideo from "../components/student/video/ShowVideo";
 
 const AllRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -58,6 +59,7 @@ const AllRoutes = () => {
 
       <Route element={<ProtectedRoute isAllowed={user && user.role == "student"} />}>
         <Route path="/show_course/:id" element={<ShowCourse />} />
+        <Route path="/show_video/:id" element={<ShowVideo />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={!user} />}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import {
   Typography,
@@ -24,8 +24,10 @@ const ShowCourse = () => {
   const [handouts, setHandouts] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
   const [referenceLinks, setReferenceLinks] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [expanded, setExpanded] = useState("");
   const [expandedRL, setExpandedRL] = useState("");
+  const [expandedV, setExpandedV] = useState("");
   const theme = useTheme();
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -34,6 +36,10 @@ const ShowCourse = () => {
 
   const handleChangeRL = (panel) => (event, newExpanded) => {
     setExpandedRL(newExpanded ? panel : false);
+  };
+
+  const handleChangeV = (panel) => (event, newExpanded) => {
+    setExpandedV(newExpanded ? panel : false);
   };
 
   useEffect(() => {
@@ -48,6 +54,7 @@ const ShowCourse = () => {
         setHandouts(response.data.handouts);
         setQuizzes(response.data.quizzes);
         setReferenceLinks(response.data.reference_links);
+        setVideos(response.data.videos);
       })
       .catch((error) => {});
   };
@@ -58,6 +65,10 @@ const ShowCourse = () => {
 
   const weekWiseReferenceLinks = (i) => {
     return referenceLinks.filter((reference_link) => reference_link.week_no === i);
+  };
+
+  const weekVideos = (i) => {
+    return videos.filter((video) => video.week_no === i);
   };
 
   return (
@@ -149,6 +160,46 @@ const ShowCourse = () => {
                           href={reference_link.url}
                         >
                           {reference_link.display_name}
+                        </MuiLink>
+                      </li>
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </CardContent>
+          </Card>
+          <Card
+            sx={{
+              marginTop: 2,
+              width: "100%",
+              bgcolor: theme.palette.primary.main,
+              color: "white",
+              boxShadow: 3,
+            }}
+          >
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                List of Videos
+              </Typography>
+              {[...Array(course.total_weeks)].map((x, i) => (
+                <Accordion
+                  sx={{ color: theme.palette.secondary.dark }}
+                  key={i + 1}
+                  expanded={expandedV === `panel${i + 1}`}
+                  onChange={handleChangeV(`panel${i + 1}`)}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={`panel${i + 1}d-content`}
+                    id={`panel${i + 1}d-header`}
+                  >
+                    <Typography>Week {i + 1}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {weekVideos(i + 1).map((video) => (
+                      <li key={video.id}>
+                        <MuiLink underline="hover" to={`/show_video/${video.id}`} component={Link}>
+                          {video.display_name}
                         </MuiLink>
                       </li>
                     ))}
