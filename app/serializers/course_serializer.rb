@@ -4,6 +4,7 @@ class CourseSerializer < ActiveModel::Serializer
   has_many :handouts
   has_many :users
   has_many :quizzes
+  has_many :reference_links
   
   def image
     if object.image.attached?

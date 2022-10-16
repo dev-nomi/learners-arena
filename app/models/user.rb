@@ -10,8 +10,8 @@ class User < ApplicationRecord
   enum role: [:student, :teacher, :admin]
   has_many :courses
   has_many :handouts
-
   has_many :enrolled_courses
   has_many :courses_enrolled, through: :enrolled_courses, source: :course
   has_many :quizzes
+  has_many :reference_links
 end

@@ -13,4 +13,5 @@ class Course < ApplicationRecord
   has_many :enrolled_courses
   has_many :users, through: :enrolled_courses, source: :user
   has_many :quizzes
+  has_many :reference_links
 end

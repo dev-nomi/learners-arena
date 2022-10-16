@@ -23,11 +23,17 @@ const ShowCourse = () => {
   const [course, setCourse] = useState([]);
   const [handouts, setHandouts] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+  const [referenceLinks, setReferenceLinks] = useState([]);
   const [expanded, setExpanded] = useState("");
+  const [expandedRL, setExpandedRL] = useState("");
   const theme = useTheme();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
+  };
+
+  const handleChangeRL = (panel) => (event, newExpanded) => {
+    setExpandedRL(newExpanded ? panel : false);
   };
 
   useEffect(() => {
@@ -41,6 +47,7 @@ const ShowCourse = () => {
         setCourse(response.data);
         setHandouts(response.data.handouts);
         setQuizzes(response.data.quizzes);
+        setReferenceLinks(response.data.reference_links);
       })
       .catch((error) => {});
   };
@@ -49,12 +56,16 @@ const ShowCourse = () => {
     return handouts.filter((handout) => handout.week_no === i);
   };
 
+  const weekWiseReferenceLinks = (i) => {
+    return referenceLinks.filter((reference_link) => reference_link.week_no === i);
+  };
+
   return (
     <Container sx={{ marginTop: 3 }}>
       <Typography component="h1" variant="h4">
         {course.display_name}
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mb={3}>
         <Grid item xs={6}>
           <Card
             sx={{
@@ -93,6 +104,51 @@ const ShowCourse = () => {
                           href={`http://localhost:3000${handout.pdf}`}
                         >
                           {handout.display_name}
+                        </MuiLink>
+                      </li>
+                    ))}
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </CardContent>
+          </Card>
+          <Card
+            sx={{
+              marginTop: 2,
+              width: "100%",
+              bgcolor: theme.palette.primary.main,
+              color: "white",
+              boxShadow: 3,
+            }}
+          >
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                List of Reference Links
+              </Typography>
+              {[...Array(course.total_weeks)].map((x, i) => (
+                <Accordion
+                  sx={{ color: theme.palette.secondary.dark }}
+                  key={i + 1}
+                  expanded={expandedRL === `panel${i + 1}`}
+                  onChange={handleChangeRL(`panel${i + 1}`)}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={`panel${i + 1}d-content`}
+                    id={`panel${i + 1}d-header`}
+                  >
+                    <Typography>Week {i + 1}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {weekWiseReferenceLinks(i + 1).map((reference_link) => (
+                      <li key={reference_link.id}>
+                        <MuiLink
+                          target="_blank"
+                          underline="hover"
+                          rel="noreferrer"
+                          href={reference_link.url}
+                        >
+                          {reference_link.display_name}
                         </MuiLink>
                       </li>
                     ))}
