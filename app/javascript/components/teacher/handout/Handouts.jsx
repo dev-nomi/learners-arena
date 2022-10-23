@@ -23,6 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Handouts = () => {
   const [handouts, setHandouts] = useState([]);
@@ -113,6 +114,14 @@ const Handouts = () => {
                       component={Link}
                     >
                       <VisibilityIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      sx={{ color: theme.palette.success.main }}
+                      to={`/handout/${row.id}/edit`}
+                      component={Link}
+                    >
+                      <EditIcon />
                     </IconButton>
                     <IconButton
                       sx={{ color: theme.palette.error.main }}

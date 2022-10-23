@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -96,6 +95,16 @@ const Video = () => {
           </Typography>
         </CardContent>
         <CardActions>
+          <Button
+            size="small"
+            to={`/video/${video.id}/edit`}
+            color="success"
+            variant="contained"
+            component={Link}
+            sx={{ mr: 1 }}
+          >
+            Edit
+          </Button>
           <Button size="small" color="error" variant="contained" onClick={handleClickOpen}>
             Delete
           </Button>

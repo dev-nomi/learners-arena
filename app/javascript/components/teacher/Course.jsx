@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -68,8 +68,15 @@ const Course = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" variant="contained">
-              Learn More
+            <Button
+              size="small"
+              to={`/course/${course.id}/edit`}
+              color="success"
+              variant="contained"
+              component={Link}
+              sx={{ mr: 1 }}
+            >
+              Edit
             </Button>
           </CardActions>
         </Card>

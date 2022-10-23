@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   Box,
@@ -85,6 +85,16 @@ const ReferenceLink = () => {
             </MuiLink>
           </CardContent>
           <CardActions>
+            <Button
+              size="small"
+              to={`/reference_link/${reference_link.id}/edit`}
+              color="success"
+              variant="contained"
+              component={Link}
+              sx={{ mr: 1 }}
+            >
+              Edit
+            </Button>
             <Button size="small" variant="contained" color="error" onClick={handleClickOpen}>
               Delete
             </Button>

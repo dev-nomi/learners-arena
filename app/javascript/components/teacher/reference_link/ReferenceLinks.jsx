@@ -23,6 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 const ReferenceLinks = () => {
   const [referenceLinks, setReferenceLinks] = useState([]);
@@ -116,6 +117,15 @@ const ReferenceLinks = () => {
                       component={Link}
                     >
                       <VisibilityIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      color="info"
+                      to={`/reference_link/${row.id}/edit`}
+                      sx={{ color: theme.palette.success.main }}
+                      component={Link}
+                    >
+                      <EditIcon />
                     </IconButton>
                     <IconButton
                       sx={{ color: theme.palette.error.main }}

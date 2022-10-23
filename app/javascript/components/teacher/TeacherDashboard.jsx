@@ -20,19 +20,16 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 import { useTheme } from "@mui/material/styles";
 
 const TeacherDashboard = () => {
   const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     initialize();
@@ -104,6 +101,14 @@ const TeacherDashboard = () => {
                       component={Link}
                     >
                       <VisibilityIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      sx={{ color: theme.palette.success.main }}
+                      to={`/course/${row.id}/edit`}
+                      component={Link}
+                    >
+                      <EditIcon />
                     </IconButton>
                     <IconButton
                       size="small"
