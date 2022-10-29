@@ -47,6 +47,7 @@ const Handout = () => {
     setNumPages(numPages);
     setPageNumber(1);
   }
+
   function changePage(offset) {
     setPageNumber((prevPageNumber) => prevPageNumber + offset);
   }
@@ -58,6 +59,7 @@ const Handout = () => {
   function nextPage() {
     changePage(1);
   }
+
   useEffect(() => {
     initialize();
   }, []);

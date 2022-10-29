@@ -221,7 +221,7 @@ const ShowCourse = () => {
               {quizzes &&
                 quizzes.map((quiz) => (
                   <li key={quiz.id}>
-                    <MuiLink target="_blank" underline="hover" rel="noreferrer">
+                    <MuiLink underline="hover" to={`/show_quiz/${quiz.id}`} component={Link}>
                       {quiz.display_name}
                     </MuiLink>
                   </li>
