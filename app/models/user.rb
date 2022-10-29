@@ -15,4 +15,5 @@ class User < ApplicationRecord
   has_many :quizzes
   has_many :reference_links
   has_many :videos
+  has_many :assignments
 end

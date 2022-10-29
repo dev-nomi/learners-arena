@@ -30,6 +30,9 @@ import Videos from "../components/teacher/video/Videos";
 import Video from "../components/teacher/video/Video";
 import EditVideo from "../components/teacher/video/EditVideo";
 
+import AddAssignment from "../components/teacher/assignment/AddAssignment";
+import Assignments from "../components/teacher/assignment/Assignments";
+
 import ShowCourse from "../components/student/course/ShowCourse";
 import ShowVideo from "../components/student/video/ShowVideo";
 import ShowQuiz from "../components/student/quiz/ShowQuiz";
@@ -69,6 +72,9 @@ const AllRoutes = () => {
         <Route path="/videos" element={<Videos />} />
         <Route path="/video/:id" element={<Video />} />
         <Route path="/video/:id/edit" element={<EditVideo />} />
+
+        <Route path="/add_assignment" element={<AddAssignment />} />
+        <Route path="/assignments" element={<Assignments />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={user && user.role == "student"} />}>

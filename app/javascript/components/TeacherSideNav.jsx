@@ -62,6 +62,14 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemText primary={"All Videos"} />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/assignments" component={Link}>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Assignments"} />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
       <List>
@@ -103,6 +111,14 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
               <AddIcon />
             </ListItemIcon>
             <ListItemText primary={"Add Video"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/add_assignment" component={Link}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Add Assignment"} />
           </ListItemButton>
         </ListItem>
       </List>

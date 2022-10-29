@@ -6,7 +6,7 @@ class Api::V1::CoursesController < ApplicationController
 
   def show
     @course = Course.with_attached_image.find_by_id(params[:id])
-    render json: @course, include: [:users, :handouts, :quizzes, :reference_links, :videos]
+    render json: @course, include: [:users, :handouts, :quizzes, :reference_links, :videos, :assignments]
   end
 
   def create
