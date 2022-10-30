@@ -63,6 +63,7 @@ const SignUp = () => {
       <Box
         sx={{
           marginTop: 3,
+          marginBottom: 3,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

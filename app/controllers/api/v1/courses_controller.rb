@@ -1,6 +1,6 @@
 class Api::V1::CoursesController < ApplicationController
   def index
-    @courses = current_user.courses.with_attached_image.order(created_at: :desc).includes(:users, :handouts, :quizzes, :user)
+    @courses = current_user.courses.with_attached_image.order(created_at: :desc).includes(:users, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
     render json: @courses
   end
 

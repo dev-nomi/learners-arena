@@ -36,6 +36,7 @@ import Assignments from "../components/teacher/assignment/Assignments";
 import ShowCourse from "../components/student/course/ShowCourse";
 import ShowVideo from "../components/student/video/ShowVideo";
 import ShowQuiz from "../components/student/quiz/ShowQuiz";
+import ShowAssignment from "../components/student/assignment/ShowAssignment";
 
 const AllRoutes = () => {
   const user = useSelector((state) => state.auth.user);
@@ -81,6 +82,7 @@ const AllRoutes = () => {
         <Route path="/show_course/:id" element={<ShowCourse />} />
         <Route path="/show_video/:id" element={<ShowVideo />} />
         <Route path="/show_quiz/:id" element={<ShowQuiz />} />
+        <Route path="/show_assignment/:id" element={<ShowAssignment />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={!user} />}>

@@ -25,6 +25,7 @@ const ShowCourse = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [referenceLinks, setReferenceLinks] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [assignments, setAssignments] = useState([]);
   const [expanded, setExpanded] = useState("");
   const [expandedRL, setExpandedRL] = useState("");
   const [expandedV, setExpandedV] = useState("");
@@ -55,6 +56,7 @@ const ShowCourse = () => {
         setQuizzes(response.data.quizzes);
         setReferenceLinks(response.data.reference_links);
         setVideos(response.data.videos);
+        setAssignments(response.data.assignments);
       })
       .catch((error) => {});
   };
@@ -223,6 +225,30 @@ const ShowCourse = () => {
                   <li key={quiz.id}>
                     <MuiLink underline="hover" to={`/show_quiz/${quiz.id}`} component={Link}>
                       {quiz.display_name}
+                    </MuiLink>
+                  </li>
+                ))}
+            </CardContent>
+          </Card>
+          <Card
+            sx={{
+              marginTop: 2,
+              width: "100%",
+            }}
+          >
+            <CardContent>
+              <Typography gutterBottom variant="h6" component="div">
+                List of Assignments
+              </Typography>
+              {assignments &&
+                assignments.map((assignment) => (
+                  <li key={assignment.id}>
+                    <MuiLink
+                      underline="hover"
+                      to={`/show_assignment/${assignment.id}`}
+                      component={Link}
+                    >
+                      {assignment.display_name}
                     </MuiLink>
                   </li>
                 ))}
