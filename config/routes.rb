@@ -23,6 +23,11 @@ Rails.application.routes.draw do
       resources :reference_links
       resources :videos
       resources :assignments
+      resources :user_quizzes, only: [:index] do
+        collection do
+          post 'attempt'
+        end
+      end
     end
   end
 

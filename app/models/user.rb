@@ -16,4 +16,6 @@ class User < ApplicationRecord
   has_many :reference_links
   has_many :videos
   has_many :assignments
+  has_many :user_quizzes
+  has_many :todo_quizzes, through: :user_quizzes, source: :quiz
 end

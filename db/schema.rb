@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_29_151501) do
+ActiveRecord::Schema.define(version: 2022_10_30_094843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,19 @@ ActiveRecord::Schema.define(version: 2022_10_29_151501) do
     t.bigint "course_id"
     t.index ["course_id"], name: "index_reference_links_on_course_id"
     t.index ["user_id"], name: "index_reference_links_on_user_id"
+  end
+
+  create_table "user_quizzes", force: :cascade do |t|
+    t.boolean "attempted", default: false
+    t.integer "status"
+    t.integer "marks", default: 0
+    t.text "ans_keys"
+    t.bigint "user_id"
+    t.bigint "quiz_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["quiz_id"], name: "index_user_quizzes_on_quiz_id"
+    t.index ["user_id"], name: "index_user_quizzes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

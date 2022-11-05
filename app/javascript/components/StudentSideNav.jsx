@@ -40,6 +40,14 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemText primary={"All courses"} />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/all_quizzes" component={Link}>
+            <ListItemIcon>
+              <CategoryIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Quizzes"} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

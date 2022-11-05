@@ -9,11 +9,11 @@ class Course < ApplicationRecord
 
   has_one_attached :image
   belongs_to :user
-  has_many :handouts
-  has_many :enrolled_courses
+  has_many :handouts, dependent: :destroy
+  has_many :enrolled_courses, dependent: :destroy
   has_many :users, through: :enrolled_courses, source: :user
-  has_many :quizzes
-  has_many :reference_links
-  has_many :videos
-  has_many :assignments
+  has_many :quizzes, dependent: :destroy
+  has_many :reference_links, dependent: :destroy
+  has_many :videos, dependent: :destroy
+  has_many :assignments, dependent: :destroy
 end

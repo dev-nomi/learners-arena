@@ -13,11 +13,20 @@ import {
   Avatar,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { toast } from "react-toastify";
 
 const ShowQuiz = () => {
   let { id } = useParams();
   const [quiz, setQuiz] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [todoQuiz, setTodoQuiz] = useState("");
+  const [formValues, setFormValues] = useState([]);
+  const [chipColor, setChipColor] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+  });
   const theme = useTheme();
 
   useEffect(() => {
@@ -30,15 +39,103 @@ const ShowQuiz = () => {
       .then(({ data }) => {
         setQuiz(data);
         setQuestions(data.questions);
+        setTodoQuiz(data.todo_quiz);
+        for (let i = 0; i < data.questions.length; i++) {
+          if (formValues.length !== data.questions.length) {
+            formValues.push({ q_id: data.questions[i].id, ans: "" });
+          }
+        }
       })
       .catch((error) => {});
   };
 
+  const attempted = () => {
+    return todoQuiz?.attempted === false ? true : false;
+  };
+
+  const attempt = (todo_quiz_id) => {
+    const todo_quiz = new FormData();
+    todo_quiz.append("id", todo_quiz_id);
+
+    axios
+      .post("/api/v1/user_quizzes/attempt", todo_quiz)
+      .then((response) => {
+        toast.success("You! successfully start a quiz.");
+        initialize();
+      })
+      .catch((error) => {
+        toast.error(<Errors errors={error.response.data} />);
+      });
+  };
+
+  const formValue = (id) => {
+    formValue = formValues.find((a) => a.q_id === id);
+    return formValue.ans;
+  };
+
+  const handleChange = (id, e) => {
+    const newFormValues = [...formValues];
+    const formValue = newFormValues.find((a) => a.q_id === id);
+    formValue[e.target.name] = e.target.value;
+    setFormValues(newFormValues);
+  };
+
+  const handleChip = (name, id, e) => {
+    const newFormValues = [...formValues];
+    const formValue = newFormValues.find((a) => a.q_id === id);
+    formValue["ans"] = e.target?.children[0]?.textContent;
+    switch (name) {
+      case "option1":
+        chipColor.option1 = false;
+        chipColor.option2 = true;
+        chipColor.option3 = true;
+        chipColor.option4 = true;
+        break;
+      case "option2":
+        chipColor.option2 = false;
+        chipColor.option1 = true;
+        chipColor.option3 = true;
+        chipColor.option4 = true;
+        break;
+      case "option3":
+        chipColor.option3 = false;
+        chipColor.option2 = true;
+        chipColor.option1 = true;
+        chipColor.option4 = true;
+        break;
+      case "option4":
+        chipColor.option4 = false;
+        chipColor.option2 = true;
+        chipColor.option3 = true;
+        chipColor.option1 = true;
+        break;
+      default:
+        break;
+    }
+    setChipColor(chipColor);
+    setFormValues(newFormValues);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
+      {todoQuiz.attempted === false && (
+        <Box
+          sx={{
+            marginTop: 2,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button variant="contained" color="success" onClick={() => attempt(todoQuiz.id)}>
+            Attempt
+          </Button>
+        </Box>
+      )}
       <Box
+        className={todoQuiz.attempted === false ? "blur-quiz" : ""}
         sx={{
-          marginTop: 4,
+          marginTop: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -77,10 +174,11 @@ const ShowQuiz = () => {
                     <TextField
                       sx={{ mt: 1 }}
                       fullWidth
-                      id="answer"
+                      id="ans"
                       label="Answer"
-                      name="answer"
+                      name="ans"
                       variant="standard"
+                      onChange={(e) => handleChange(question.id, e)}
                     />
                   </>
                 ) : (
@@ -107,15 +205,19 @@ const ShowQuiz = () => {
                       <Chip
                         sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
                         label={question.options.option1}
-                        variant="outlined"
+                        variant={chipColor?.option1 ? "outlined" : "contained"}
+                        disabled={chipColor?.option1}
                         color="primary"
+                        onClick={(e) => handleChip("option1", question.id, e)}
                       />
                       2.
                       <Chip
                         sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
                         label={question.options.option2}
-                        variant="outlined"
+                        variant={chipColor?.option2 ? "outlined" : "contained"}
+                        disabled={chipColor?.option2}
                         color="primary"
+                        onClick={(e) => handleChip("option2", question.id, e)}
                       />
                     </Box>
                     <Box
@@ -130,15 +232,19 @@ const ShowQuiz = () => {
                       <Chip
                         sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
                         label={question.options.option3}
-                        variant="outlined"
+                        disabled={chipColor?.option3}
+                        variant={chipColor?.option3 ? "outlined" : "contained"}
                         color="primary"
+                        onClick={(e) => handleChip("option3", question.id, e)}
                       />
                       4.
                       <Chip
                         sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
                         label={question.options.option4}
-                        variant="outlined"
+                        disabled={chipColor?.option4}
+                        variant={chipColor?.option4 ? "outlined" : "contained"}
                         color="primary"
+                        onClick={(e) => handleChip("option4", question.id, e)}
                       />
                     </Box>
                   </>
@@ -147,6 +253,9 @@ const ShowQuiz = () => {
             ))}
           </CardContent>
         </Card>
+        <Button sx={{ marginBottom: 2 }} disabled={attempted()} variant="contained">
+          Submit
+        </Button>
       </Box>
     </Container>
   );
