@@ -1,5 +1,5 @@
 class QuizSerializer < ActiveModel::Serializer
-  attributes :id, :display_name, :description, :todo_quiz
+  attributes :id, :display_name, :description, :todo_quiz, :week_no
 
   belongs_to :course
   has_many :questions

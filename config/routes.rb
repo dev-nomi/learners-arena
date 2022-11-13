@@ -25,7 +25,11 @@ Rails.application.routes.draw do
       end
       resources :quizzes
       resources :reference_links
-      resources :videos
+      resources :videos do
+        collection do
+          post 'view'
+        end
+      end
       resources :assignments
       resources :user_quizzes, only: [:index] do
         collection do

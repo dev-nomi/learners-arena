@@ -4,6 +4,7 @@ import axios from "axios";
 import { Box, Card, CardActions, CardContent, Typography, Container, Button } from "@mui/material";
 import ReactPlayer from "react-player";
 import { useTheme } from "@mui/material/styles";
+import { toast } from "react-toastify";
 
 const ShowVideo = () => {
   let { id } = useParams();
@@ -20,6 +21,18 @@ const ShowVideo = () => {
       .get(`/api/v1/videos/${id}`)
       .then((response) => {
         setVideo(response.data);
+      })
+      .catch((error) => {});
+  };
+
+  const viewVideo = () => {
+    const video = new FormData();
+    video.append("id", id);
+
+    axios
+      .post(`/api/v1/videos/view`, video)
+      .then(({ data }) => {
+        toast.success("You! successfully completed the video.");
       })
       .catch((error) => {});
   };
@@ -47,13 +60,18 @@ const ShowVideo = () => {
             >
               {video.display_name}
             </Typography>
-            <ReactPlayer width="100%" url={"http://localhost:3000" + video.file} controls={true} />
+            <ReactPlayer
+              onEnded={() => viewVideo()}
+              width="100%"
+              url={"http://localhost:3000" + video.file}
+              controls={true}
+            />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
               {video.description}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button color="secondary" variant="contained" onClick={() => navigate(-1)}>
+            <Button color="secondary" variant="contained" onClick={() => navigate("/home")}>
               Back
             </Button>
           </CardActions>

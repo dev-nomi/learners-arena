@@ -36,6 +36,13 @@ class Api::V1::VideosController < ApplicationController
     render json: { message: 'Successfully delete the video.' }
   end
 
+  def view
+    @video = Video.find_by_id(params[:id])
+    user_video = @video.user_videos.build(viewed: true, user: current_user)
+    user_video.save!
+    render json: { message: 'Successfully complete the video.' }
+  end
+
   private
     def video_params
       params.require(:video).permit(:display_name, :description, :file, :week_no, :course_id).select {|x,v| v.present?}
