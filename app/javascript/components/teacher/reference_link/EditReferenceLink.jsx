@@ -11,28 +11,16 @@ const EditReferenceLink = () => {
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
-  const [week, setWeek] = useState("");
-  const [course, setCourse] = useState("");
-  const [courses, setCourses] = useState([]);
-  const [totalWeeks, setTotalWeeks] = useState([]);
 
   useEffect(() => {
     initialize();
   }, []);
-
-  const handleChange = (event) => {
-    setCourse(event.target.value);
-    const course = courses.find((c) => c.id === event.target.value);
-    setTotalWeeks(course.total_weeks);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const reference_link = new FormData();
     reference_link.append("reference_link[display_name]", displayName);
     reference_link.append("reference_link[description]", description);
-    reference_link.append("reference_link[course_id]", course);
-    reference_link.append("reference_link[week_no]", week);
     reference_link.append("reference_link[url]", url);
 
     axios
@@ -41,8 +29,6 @@ const EditReferenceLink = () => {
         toast.success("Successfully update the reference link.");
         setDisplayName("");
         setDescription("");
-        setCourse("");
-        setWeek("");
         navigate("/reference_links");
       })
       .catch((error) => {
@@ -56,17 +42,7 @@ const EditReferenceLink = () => {
       .then(({ data }) => {
         setDisplayName(data.display_name);
         setDescription(data.description);
-        setCourse(data.course.id);
-        setTotalWeeks(data.course.total_weeks);
         setUrl(data.url);
-        setWeek(data.week_no);
-      })
-      .catch((error) => {});
-
-    axios
-      .get("/api/v1/courses")
-      .then((response) => {
-        setCourses(response.data);
       })
       .catch((error) => {});
   };
@@ -95,36 +71,6 @@ const EditReferenceLink = () => {
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
-          <TextField
-            margin="normal"
-            select
-            required
-            fullWidth
-            label="Course"
-            value={course}
-            onChange={(e) => handleChange(e)}
-          >
-            {courses.map((course) => (
-              <MenuItem key={course.id} value={course.id}>
-                {course.display_name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            margin="normal"
-            select
-            required
-            fullWidth
-            label="Week"
-            value={week}
-            onChange={(e) => setWeek(e.target.value)}
-          >
-            {[...Array(totalWeeks)].map((x, i) => (
-              <MenuItem key={i + 1} value={i + 1}>
-                {"Week " + (i + 1)}
-              </MenuItem>
-            ))}
-          </TextField>
           <TextField
             margin="normal"
             required

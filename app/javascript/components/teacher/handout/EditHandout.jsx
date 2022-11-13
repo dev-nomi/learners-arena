@@ -10,12 +10,8 @@ const EditHandout = () => {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
-  const [week, setWeek] = useState("");
-  const [course, setCourse] = useState("");
   const [selectedPdf, setSelectedPdf] = useState("");
   const [pdfUrl, setPdfUrl] = useState(null);
-  const [courses, setCourses] = useState([]);
-  const [totalWeeks, setTotalWeeks] = useState([]);
 
   useEffect(() => {
     if (selectedPdf) {
@@ -25,20 +21,12 @@ const EditHandout = () => {
     }
   }, [selectedPdf]);
 
-  const handleChange = (event) => {
-    setCourse(event.target.value);
-    const course = courses.find((c) => c.id === event.target.value);
-    setTotalWeeks(course.total_weeks);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const handout = new FormData();
     handout.append("handout[display_name]", displayName);
     handout.append("handout[description]", description);
     handout.append("handout[pdf]", selectedPdf);
-    handout.append("handout[course_id]", course);
-    handout.append("handout[week_no]", week);
 
     axios
       .put(`/api/v1/handouts/${id}`, handout)
@@ -47,8 +35,6 @@ const EditHandout = () => {
         setDisplayName("");
         setDescription("");
         setSelectedPdf("");
-        setCourse("");
-        setWeek("");
         navigate("/handouts");
       })
       .catch((error) => {
@@ -62,17 +48,7 @@ const EditHandout = () => {
       .then(({ data }) => {
         setDisplayName(data.display_name);
         setDescription(data.description);
-        setCourse(data.course.id);
-        setTotalWeeks(data.course.total_weeks);
-        setWeek(data.week_no);
         setPdfUrl("http://localhost:3000" + data.pdf);
-      })
-      .catch((error) => {});
-
-    axios
-      .get("/api/v1/courses")
-      .then((response) => {
-        setCourses(response.data);
       })
       .catch((error) => {});
   };
@@ -101,36 +77,6 @@ const EditHandout = () => {
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
-          <TextField
-            margin="normal"
-            select
-            required
-            fullWidth
-            label="Course"
-            value={course}
-            onChange={(e) => handleChange(e)}
-          >
-            {courses.map((course) => (
-              <MenuItem key={course.id} value={course.id}>
-                {course.display_name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            margin="normal"
-            select
-            required
-            fullWidth
-            label="Week"
-            value={week}
-            onChange={(e) => setWeek(e.target.value)}
-          >
-            {[...Array(totalWeeks)].map((x, i) => (
-              <MenuItem key={i + 1} value={i + 1}>
-                {"Week " + (i + 1)}
-              </MenuItem>
-            ))}
-          </TextField>
           <TextField
             margin="normal"
             required
