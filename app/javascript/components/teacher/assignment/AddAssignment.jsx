@@ -12,10 +12,12 @@ const AddAssignment = () => {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
+  const [week, setWeek] = useState("");
   const [course, setCourse] = useState("");
   const [courses, setCourses] = useState([]);
   const [formValues, setFormValues] = useState([{ title: "", question_type: "short_question" }]);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showWeek, SetShowWeek] = useState(true);
   const open = Boolean(anchorEl);
   const theme = useTheme();
 
@@ -36,8 +38,9 @@ const AddAssignment = () => {
     const assignment = new FormData();
     assignment.append("assignment[display_name]", displayName);
     assignment.append("assignment[description]", description);
-    assignment.append("assignment[course_id]", course);
+    assignment.append("assignment[course_id]", course.id);
     assignment.append("questions", JSON.stringify(formValues));
+    assignment.append("assignment[week_no]", week);
 
     axios
       .post("/api/v1/assignments", assignment)
@@ -57,7 +60,7 @@ const AddAssignment = () => {
     axios
       .get("/api/v1/courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.draft_courses);
       })
       .catch((error) => {});
   };
@@ -88,6 +91,11 @@ const AddAssignment = () => {
     let newFormValues = [...formValues];
     newFormValues.splice(i, 1);
     setFormValues(newFormValues);
+  };
+
+  const handleSelectChange = (event) => {
+    setCourse(event.target.value);
+    SetShowWeek(false);
   };
 
   return (
@@ -133,11 +141,27 @@ const AddAssignment = () => {
             fullWidth
             label="Course"
             value={course}
-            onChange={(e) => setCourse(e.target.value)}
+            onChange={(e) => handleSelectChange(e)}
           >
             {courses.map((course) => (
-              <MenuItem key={course.id} value={course.id}>
+              <MenuItem key={course.id} value={course}>
                 {course.display_name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            margin="normal"
+            disabled={showWeek}
+            select
+            required
+            fullWidth
+            label="Week"
+            value={week}
+            onChange={(e) => setWeek(e.target.value)}
+          >
+            {[...Array(course.total_weeks)].map((x, i) => (
+              <MenuItem key={i + 1} value={i + 1}>
+                {"Week " + (i + 1)}
               </MenuItem>
             ))}
           </TextField>

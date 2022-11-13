@@ -1,5 +1,5 @@
 class Assignment < ApplicationRecord
-  validates :display_name, :description, presence: true
+  validates :display_name, :description, :week_no, presence: true
 
   belongs_to :course
   belongs_to :user

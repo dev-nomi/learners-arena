@@ -36,7 +36,6 @@ const AddCourse = () => {
     course.append("course[image]", selectedImage);
     course.append("course[level]", level);
     course.append("course[total_hours]", totalHours);
-    course.append("course[total_weeks]", totalWeeks);
     course.append("course[outline]", editorRef.current.getContent());
 
     axios
@@ -47,7 +46,6 @@ const AddCourse = () => {
         setDescription("");
         setSelectedImage("");
         setTotalHours("");
-        setTotalWeeks("");
         setLevel("");
         navigate("/home");
       })
@@ -116,17 +114,6 @@ const AddCourse = () => {
             id="total_hours"
             value={totalHours}
             onChange={(e) => setTotalHours(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="total_weeks"
-            label="Total Weeks"
-            type="number"
-            id="total_weeks"
-            value={totalWeeks}
-            onChange={(e) => setTotalWeeks(e.target.value)}
           />
           <Editor
             apiKey="1ng284s517ux8frzhkttvwkv4uk1qkiu8kebp5uddx6o8wuc"

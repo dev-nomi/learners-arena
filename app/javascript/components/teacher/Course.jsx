@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -10,12 +10,17 @@ import {
   Button,
   Typography,
   Container,
+  Chip,
 } from "@mui/material";
+import { toast } from "react-toastify";
+import { useTheme } from "@mui/material/styles";
 
 const Course = () => {
   let { id } = useParams();
   const [course, setCourse] = useState([]);
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     initialize();
@@ -30,6 +35,14 @@ const Course = () => {
       })
       .catch((error) => {});
   };
+
+  const publishCourse = (id) => {
+    axios.post(`/api/v1/courses/${id}/publish`).then(() => {
+      toast.success("Successfully publish the course.");
+      navigate("/home");
+    });
+  };
+
   return (
     <Container>
       <Box
@@ -53,6 +66,15 @@ const Course = () => {
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {course.display_name}
+              {course.draft === true ? (
+                <Chip label="draft" color="warning" size="small" sx={{ ml: 1 }} />
+              ) : (
+                <Chip
+                  label="published"
+                  sx={{ bgcolor: theme.palette.secondary.dark, color: "white", ml: 1 }}
+                  size="small"
+                />
+              )}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
               {course.description}
@@ -68,6 +90,16 @@ const Course = () => {
             </Typography>
           </CardContent>
           <CardActions>
+            {course.draft === true && (
+              <Button
+                size="small"
+                onClick={() => publishCourse(course.id)}
+                variant="contained"
+                sx={{ mr: 1 }}
+              >
+                Publish
+              </Button>
+            )}
             <Button
               size="small"
               to={`/course/${course.id}/edit`}

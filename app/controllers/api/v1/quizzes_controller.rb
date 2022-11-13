@@ -52,6 +52,6 @@ class Api::V1::QuizzesController < ApplicationController
 
   private
     def quiz_params
-      params.require(:quiz).permit(:display_name, :description, :course_id)
+      params.require(:quiz).permit(:display_name, :description, :week_no, :course_id)
     end
 end

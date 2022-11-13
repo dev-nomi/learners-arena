@@ -14,6 +14,7 @@ const AddVideo = () => {
   const [courses, setCourses] = useState([]);
   const [selectedFile, setSelectedFile] = useState("");
   const [fileUrl, setFileUrl] = useState(null);
+  const [showWeek, SetShowWeek] = useState(true);
 
   useEffect(() => {
     initialize();
@@ -51,10 +52,16 @@ const AddVideo = () => {
     axios
       .get("/api/v1/courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.draft_courses);
       })
       .catch((error) => {});
   };
+
+  const handleSelectChange = (event) => {
+    setCourse(event.target.value);
+    SetShowWeek(false);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -87,7 +94,7 @@ const AddVideo = () => {
             fullWidth
             label="Course"
             value={course}
-            onChange={(e) => setCourse(e.target.value)}
+            onChange={(e) => handleSelectChange(e)}
           >
             {courses.map((course) => (
               <MenuItem key={course.id} value={course}>
@@ -97,6 +104,7 @@ const AddVideo = () => {
           </TextField>
           <TextField
             margin="normal"
+            disabled={showWeek}
             select
             required
             fullWidth

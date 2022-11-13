@@ -13,6 +13,7 @@ const AddReferenceLink = () => {
   const [week, setWeek] = useState("");
   const [course, setCourse] = useState("");
   const [courses, setCourses] = useState([]);
+  const [showWeek, SetShowWeek] = useState(true);
 
   useEffect(() => {
     initialize();
@@ -46,10 +47,16 @@ const AddReferenceLink = () => {
     axios
       .get("/api/v1/courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.draft_courses);
       })
       .catch((error) => {});
   };
+
+  const handleSelectChange = (event) => {
+    setCourse(event.target.value);
+    SetShowWeek(false);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -82,7 +89,7 @@ const AddReferenceLink = () => {
             fullWidth
             label="Course"
             value={course}
-            onChange={(e) => setCourse(e.target.value)}
+            onChange={(e) => handleSelectChange(e)}
           >
             {courses.map((course) => (
               <MenuItem key={course.id} value={course}>
@@ -92,6 +99,7 @@ const AddReferenceLink = () => {
           </TextField>
           <TextField
             margin="normal"
+            disabled={showWeek}
             select
             required
             fullWidth

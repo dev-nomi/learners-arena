@@ -14,6 +14,7 @@ import {
   DialogTitle,
   Box,
   IconButton,
+  Chip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -43,7 +44,7 @@ const TeacherDashboard = () => {
     axios
       .get("/api/v1/courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.courses);
       })
       .catch((error) => {});
   };
@@ -81,6 +82,7 @@ const TeacherDashboard = () => {
               <TableCell sx={{ color: "white" }}>ID</TableCell>
               <TableCell sx={{ color: "white" }}>Name</TableCell>
               <TableCell sx={{ color: "white" }}>Description</TableCell>
+              <TableCell sx={{ color: "white" }}>Status</TableCell>
               <TableCell align="center" sx={{ color: "white" }}>
                 Action
               </TableCell>
@@ -93,6 +95,17 @@ const TeacherDashboard = () => {
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.display_name}</TableCell>
                   <TableCell>{truncate(row.description)}</TableCell>
+                  <TableCell>
+                    {row.draft === true ? (
+                      <Chip label="draft" color="warning" size="small" />
+                    ) : (
+                      <Chip
+                        label="published"
+                        sx={{ bgcolor: theme.palette.secondary.dark, color: "white" }}
+                        size="small"
+                      />
+                    )}
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       size="small"

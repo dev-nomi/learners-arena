@@ -1,7 +1,8 @@
 class Api::V1::CoursesController < ApplicationController
   def index
     @courses = current_user.courses.with_attached_image.order(created_at: :desc).includes(:users, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
-    render json: @courses
+    @draft_courses = current_user.courses.draft.with_attached_image.order(created_at: :desc).includes(:users, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
+    render json: { courses: @courses, draft_courses: @draft_courses }
   end
 
   def show
@@ -33,6 +34,15 @@ class Api::V1::CoursesController < ApplicationController
     @course = Course.find_by_id(params[:id])
     @course.destroy
     render json: { message: 'Successfully delete the course.' }
+  end
+
+  def publish
+    @course = Course.find_by_id(params[:id])
+    resourses_count = @course.assignments.size + @course.quizzes.size + @course.videos.size
+    progress_increment = 100 / resourses_count.to_f
+    
+    @course.update(draft: false, progress_increment: progress_increment)
+    render json: { message: 'Successfully publish the course.' }
   end
 
   private

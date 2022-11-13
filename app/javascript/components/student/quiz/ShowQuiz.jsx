@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Button,
@@ -28,6 +28,7 @@ const ShowQuiz = () => {
     option4: false,
   });
   const theme = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => {
     initialize();
@@ -49,13 +50,10 @@ const ShowQuiz = () => {
       .catch((error) => {});
   };
 
-  const attempted = () => {
-    return todoQuiz?.attempted === false ? true : false;
-  };
-
-  const attempt = (todo_quiz_id) => {
+  const attempt = (todo_quiz_id, course_id) => {
     const todo_quiz = new FormData();
     todo_quiz.append("id", todo_quiz_id);
+    todo_quiz.append("course_id", course_id);
 
     axios
       .post("/api/v1/user_quizzes/attempt", todo_quiz)
@@ -116,6 +114,20 @@ const ShowQuiz = () => {
     setFormValues(newFormValues);
   };
 
+  const submitQuiz = (todo_quiz_id) => {
+    const quiz = new FormData();
+    quiz.append("id", todo_quiz_id);
+    quiz.append("ansKeys", JSON.stringify(formValues));
+
+    axios
+      .post(`/api/v1/user_quizzes/submit`, quiz)
+      .then(({ data }) => {
+        toast.success("You! successfully submit quiz.");
+        navigate(-1);
+      })
+      .catch((error) => {});
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       {todoQuiz.attempted === false && (
@@ -127,7 +139,11 @@ const ShowQuiz = () => {
             alignItems: "center",
           }}
         >
-          <Button variant="contained" color="success" onClick={() => attempt(todoQuiz.id)}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => attempt(todoQuiz.id, quiz.course.id)}
+          >
             Attempt
           </Button>
         </Box>
@@ -253,7 +269,12 @@ const ShowQuiz = () => {
             ))}
           </CardContent>
         </Card>
-        <Button sx={{ marginBottom: 2 }} disabled={attempted()} variant="contained">
+        <Button
+          sx={{ marginBottom: 2 }}
+          disabled={todoQuiz?.attempted === false ? true : false}
+          variant="contained"
+          onClick={() => submitQuiz(todoQuiz.id)}
+        >
           Submit
         </Button>
       </Box>

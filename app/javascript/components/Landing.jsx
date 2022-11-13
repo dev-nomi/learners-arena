@@ -84,13 +84,7 @@ const Landing = () => {
       <Grid container spacing={2} mt={2} mb={4}>
         {courses.map((course) => (
           <Grid item xs={4} key={course.id}>
-            <Card
-              sx={{ maxWidth: 345 }}
-              onClick={() => {
-                handleOpen();
-                setModalData(course);
-              }}
-            >
+            <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 component="img"
                 height="140"
@@ -107,14 +101,27 @@ const Landing = () => {
               </CardContent>
               <CardActions>
                 {isLoggedIn && user?.role === "student" ? (
-                  <Button
-                    size="small"
-                    variant="contained"
-                    sx={{ bgcolor: theme.palette.primary.light }}
-                    onClick={() => enroll(course.id)}
-                  >
-                    Enroll
-                  </Button>
+                  <>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="success"
+                      onClick={() => {
+                        handleOpen();
+                        setModalData(course);
+                      }}
+                    >
+                      View
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      sx={{ bgcolor: theme.palette.primary.light }}
+                      onClick={() => enroll(course.id)}
+                    >
+                      Enroll
+                    </Button>
+                  </>
                 ) : (
                   <div></div>
                 )}

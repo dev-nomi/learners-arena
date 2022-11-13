@@ -14,6 +14,7 @@ const AddHandout = () => {
   const [courses, setCourses] = useState([]);
   const [selectedPdf, setSelectedPdf] = useState("");
   const [pdfUrl, setPdfUrl] = useState(null);
+  const [showWeek, SetShowWeek] = useState(true);
 
   useEffect(() => {
     initialize();
@@ -51,10 +52,16 @@ const AddHandout = () => {
     axios
       .get("/api/v1/courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.draft_courses);
       })
       .catch((error) => {});
   };
+
+  const handleChange = (event) => {
+    setCourse(event.target.value);
+    SetShowWeek(false);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -87,7 +94,7 @@ const AddHandout = () => {
             fullWidth
             label="Course"
             value={course}
-            onChange={(e) => setCourse(e.target.value)}
+            onChange={(e) => handleChange(e)}
           >
             {courses.map((course) => (
               <MenuItem key={course.id} value={course}>
@@ -100,6 +107,7 @@ const AddHandout = () => {
             select
             required
             fullWidth
+            disabled={showWeek}
             label="Week"
             value={week}
             onChange={(e) => setWeek(e.target.value)}

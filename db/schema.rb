@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_30_094843) do
+ActiveRecord::Schema.define(version: 2022_11_13_200124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 2022_10_30_094843) do
     t.integer "level"
     t.integer "total_hours"
     t.integer "total_weeks"
+    t.boolean "draft", default: true
+    t.float "progress_increment", default: 0.0
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
@@ -73,6 +75,7 @@ ActiveRecord::Schema.define(version: 2022_10_30_094843) do
     t.bigint "course_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "progress", default: 0.0
     t.index ["course_id"], name: "index_enrolled_courses_on_course_id"
     t.index ["user_id"], name: "index_enrolled_courses_on_user_id"
   end

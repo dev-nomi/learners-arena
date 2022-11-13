@@ -7,6 +7,7 @@ import {
   CardActions,
   Typography,
   Container,
+  LinearProgress,
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -59,6 +60,11 @@ const StudentDashboard = () => {
                 </Typography>
               </CardContent>
               <CardActions></CardActions>
+              <LinearProgress
+                variant="determinate"
+                color="success"
+                value={course.enrolled_course.progress}
+              />
             </Card>
           </Grid>
         ))}

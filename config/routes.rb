@@ -12,7 +12,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :courses
+      resources :courses do
+        member do
+          post 'publish'
+        end
+      end
       resources :handouts
       resources :enrolled_courses, only: [:index] do
         collection do
@@ -26,6 +30,7 @@ Rails.application.routes.draw do
       resources :user_quizzes, only: [:index] do
         collection do
           post 'attempt'
+          post 'submit'
         end
       end
     end
