@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_13_232035) do
+ActiveRecord::Schema.define(version: 2022_11_20_195721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,20 @@ ActiveRecord::Schema.define(version: 2022_11_13_232035) do
     t.index ["user_id"], name: "index_reference_links_on_user_id"
   end
 
+  create_table "user_assignments", force: :cascade do |t|
+    t.boolean "attempted", default: false
+    t.boolean "submitted", default: false
+    t.integer "status"
+    t.integer "marks", default: 0
+    t.text "ans_keys"
+    t.bigint "user_id"
+    t.bigint "assignment_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assignment_id"], name: "index_user_assignments_on_assignment_id"
+    t.index ["user_id"], name: "index_user_assignments_on_user_id"
+  end
+
   create_table "user_quizzes", force: :cascade do |t|
     t.boolean "attempted", default: false
     t.integer "status"
@@ -147,6 +161,7 @@ ActiveRecord::Schema.define(version: 2022_11_13_232035) do
     t.bigint "quiz_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "submitted", default: false
     t.index ["quiz_id"], name: "index_user_quizzes_on_quiz_id"
     t.index ["user_id"], name: "index_user_quizzes_on_user_id"
   end

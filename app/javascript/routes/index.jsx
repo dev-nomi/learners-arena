@@ -33,11 +33,15 @@ import EditVideo from "../components/teacher/video/EditVideo";
 import AddAssignment from "../components/teacher/assignment/AddAssignment";
 import Assignments from "../components/teacher/assignment/Assignments";
 
+import ShowStudent from "../components/teacher/student/ShowStudent";
+import CheckAssignment from "../components/teacher/student/CheckAssignment";
+
 import ShowCourse from "../components/student/course/ShowCourse";
 import ShowVideo from "../components/student/video/ShowVideo";
 import ShowQuiz from "../components/student/quiz/ShowQuiz";
 import ShowAssignment from "../components/student/assignment/ShowAssignment";
 import AllQuizzes from "../components/student/quiz/AllQuizzes";
+import AllAssignments from "../components/student/assignment/AllAssignments";
 import CourseContent from "../components/student/course/CourseContent";
 
 const AllRoutes = () => {
@@ -78,6 +82,9 @@ const AllRoutes = () => {
 
         <Route path="/add_assignment" element={<AddAssignment />} />
         <Route path="/assignments" element={<Assignments />} />
+
+        <Route path="/show_student/:id" element={<ShowStudent />} />
+        <Route path="/check_assignment/:id" element={<CheckAssignment />} />
       </Route>
 
       <Route element={<ProtectedRoute isAllowed={user && user.role == "student"} />}>
@@ -86,6 +93,7 @@ const AllRoutes = () => {
         <Route path="/show_quiz/:id" element={<ShowQuiz />} />
         <Route path="/show_assignment/:id" element={<ShowAssignment />} />
         <Route path="/all_quizzes" element={<AllQuizzes />} />
+        <Route path="/all_assignments" element={<AllAssignments />} />
         <Route path="/course/:course_id/week/:week_id" element={<CourseContent />} />
       </Route>
 

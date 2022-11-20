@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
+import QuizIcon from "@mui/icons-material/Quiz";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import {
   Box,
   ListItemIcon,
@@ -43,9 +45,17 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
         <ListItem disablePadding>
           <ListItemButton to="/all_quizzes" component={Link}>
             <ListItemIcon>
-              <CategoryIcon />
+              <QuizIcon />
             </ListItemIcon>
             <ListItemText primary={"All Quizzes"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/all_assignments" component={Link}>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Assignments"} />
           </ListItemButton>
         </ListItem>
       </List>

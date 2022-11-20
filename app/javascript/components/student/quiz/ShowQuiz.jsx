@@ -1,17 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {
-  Button,
-  Chip,
-  TextField,
-  Box,
-  Typography,
-  Container,
-  Card,
-  CardContent,
-  Avatar,
-} from "@mui/material";
+import { Button, TextField, Box, Typography, Container, Card, CardContent } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { toast } from "react-toastify";
 
@@ -50,10 +40,9 @@ const ShowQuiz = () => {
       .catch((error) => {});
   };
 
-  const attempt = (todo_quiz_id, course_id) => {
+  const attempt = (todo_quiz_id) => {
     const todo_quiz = new FormData();
     todo_quiz.append("id", todo_quiz_id);
-    todo_quiz.append("course_id", course_id);
 
     axios
       .post("/api/v1/user_quizzes/attempt", todo_quiz)
@@ -66,11 +55,6 @@ const ShowQuiz = () => {
       });
   };
 
-  const formValue = (id) => {
-    formValue = formValues.find((a) => a.q_id === id);
-    return formValue.ans;
-  };
-
   const handleChange = (id, e) => {
     const newFormValues = [...formValues];
     const formValue = newFormValues.find((a) => a.q_id === id);
@@ -81,7 +65,7 @@ const ShowQuiz = () => {
   const handleChip = (name, id, e) => {
     const newFormValues = [...formValues];
     const formValue = newFormValues.find((a) => a.q_id === id);
-    formValue["ans"] = e.target?.children[0]?.textContent;
+    formValue["ans"] = e.target.textContent;
     switch (name) {
       case "option1":
         chipColor.option1 = false;
@@ -123,6 +107,10 @@ const ShowQuiz = () => {
       .post(`/api/v1/user_quizzes/submit`, quiz)
       .then(({ data }) => {
         toast.success("You! successfully submit quiz.");
+        setTodoQuiz((prevState) => ({
+          ...prevState,
+          submitted: true,
+        }));
         navigate(-1);
       })
       .catch((error) => {});
@@ -139,17 +127,13 @@ const ShowQuiz = () => {
             alignItems: "center",
           }}
         >
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => attempt(todoQuiz.id, quiz.course.id)}
-          >
+          <Button variant="contained" color="success" onClick={() => attempt(todoQuiz.id)}>
             Attempt
           </Button>
         </Box>
       )}
       <Box
-        className={todoQuiz.attempted === false ? "blur-quiz" : ""}
+        className={todoQuiz.attempted === false ? "blur-effect" : ""}
         sx={{
           marginTop: 2,
           display: "flex",
@@ -173,110 +157,160 @@ const ShowQuiz = () => {
           }}
         >
           <CardContent>
-            {questions.map((question, index) => (
-              <Fragment key={question.id}>
-                {question.question_type === "short_question" ? (
-                  <>
-                    <Typography
-                      variant="h6"
-                      component="h2"
-                      sx={{ mt: 1, color: theme.palette.primary.main }}
-                    >
-                      <strong>Question {index + 1} :</strong>
-                    </Typography>
-                    <Typography variant="body2" sx={{ mt: 2, color: theme.palette.primary.main }}>
-                      {question.title}
-                    </Typography>
-                    <TextField
-                      sx={{ mt: 1 }}
-                      fullWidth
-                      id="ans"
-                      label="Answer"
-                      name="ans"
-                      variant="standard"
-                      onChange={(e) => handleChange(question.id, e)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Typography
-                      variant="h6"
-                      component="h2"
-                      sx={{ mt: 1, color: theme.palette.primary.main }}
-                    >
-                      <strong>Question {index + 1} :</strong>
-                    </Typography>
-                    <Typography variant="body2" sx={{ mt: 2, color: theme.palette.primary.main }}>
-                      {question.title}
-                    </Typography>
-                    <Box
-                      sx={{
-                        mt: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-around",
-                      }}
-                    >
-                      1.
-                      <Chip
-                        sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
-                        label={question.options.option1}
-                        variant={chipColor?.option1 ? "outlined" : "contained"}
-                        disabled={chipColor?.option1}
-                        color="primary"
-                        onClick={(e) => handleChip("option1", question.id, e)}
-                      />
-                      2.
-                      <Chip
-                        sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
-                        label={question.options.option2}
-                        variant={chipColor?.option2 ? "outlined" : "contained"}
-                        disabled={chipColor?.option2}
-                        color="primary"
-                        onClick={(e) => handleChip("option2", question.id, e)}
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        mt: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-around",
-                      }}
-                    >
-                      3.
-                      <Chip
-                        sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
-                        label={question.options.option3}
-                        disabled={chipColor?.option3}
-                        variant={chipColor?.option3 ? "outlined" : "contained"}
-                        color="primary"
-                        onClick={(e) => handleChip("option3", question.id, e)}
-                      />
-                      4.
-                      <Chip
-                        sx={{ marginLeft: 2, marginRight: 2, width: "100%" }}
-                        label={question.options.option4}
-                        disabled={chipColor?.option4}
-                        variant={chipColor?.option4 ? "outlined" : "contained"}
-                        color="primary"
-                        onClick={(e) => handleChip("option4", question.id, e)}
-                      />
-                    </Box>
-                  </>
-                )}
-              </Fragment>
-            ))}
+            {todoQuiz.submitted === false ? (
+              <>
+                {questions.map((question, index) => (
+                  <Fragment key={question.id}>
+                    {question.question_type === "short_question" ? (
+                      <>
+                        <Typography
+                          variant="h6"
+                          component="h2"
+                          sx={{ mt: 1, color: theme.palette.primary.main }}
+                        >
+                          <strong>Question {index + 1} :</strong>
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{ mt: 2, color: theme.palette.primary.main }}
+                        >
+                          {question.title}
+                        </Typography>
+                        <TextField
+                          sx={{ mt: 1 }}
+                          fullWidth
+                          id="ans"
+                          label="Answer"
+                          name="ans"
+                          variant="standard"
+                          onChange={(e) => handleChange(question.id, e)}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Typography
+                          variant="h6"
+                          component="h2"
+                          sx={{ mt: 1, color: theme.palette.primary.main }}
+                        >
+                          <strong>Question {index + 1} :</strong>
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{ mt: 2, color: theme.palette.primary.main }}
+                        >
+                          {question.title}
+                        </Typography>
+                        <Box
+                          sx={{
+                            mt: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          1.
+                          <Button
+                            sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
+                            size="small"
+                            variant={chipColor?.option1 ? "outlined" : "contained"}
+                            disabled={chipColor?.option1}
+                            color="primary"
+                            onClick={(e) => handleChip("option1", question.id, e)}
+                          >
+                            {question.options.option1}
+                          </Button>
+                          2.
+                          <Button
+                            sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
+                            size="small"
+                            variant={chipColor?.option2 ? "outlined" : "contained"}
+                            disabled={chipColor?.option2}
+                            color="primary"
+                            onClick={(e) => handleChip("option2", question.id, e)}
+                          >
+                            {question.options.option2}
+                          </Button>
+                        </Box>
+                        <Box
+                          sx={{
+                            mt: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          3.
+                          <Button
+                            sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
+                            size="small"
+                            disabled={chipColor?.option3}
+                            variant={chipColor?.option3 ? "outlined" : "contained"}
+                            color="primary"
+                            onClick={(e) => handleChip("option3", question.id, e)}
+                          >
+                            {question.options.option3}
+                          </Button>
+                          4.
+                          <Button
+                            sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
+                            size="small"
+                            disabled={chipColor?.option4}
+                            variant={chipColor?.option4 ? "outlined" : "contained"}
+                            color="primary"
+                            onClick={(e) => handleChip("option4", question.id, e)}
+                          >
+                            {question.options.option4}
+                          </Button>
+                        </Box>
+                      </>
+                    )}
+                  </Fragment>
+                ))}
+              </>
+            ) : (
+              <>
+                <Box sx={{ textAlign: "center" }}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="icon icon-tabler icon-tabler-confetti"
+                    width="56"
+                    height="56"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="#406882"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 5h2" />
+                    <path d="M5 4v2" />
+                    <path d="M11.5 4l-.5 2" />
+                    <path d="M18 5h2" />
+                    <path d="M19 4v2" />
+                    <path d="M15 9l-1 1" />
+                    <path d="M18 13l2 -.5" />
+                    <path d="M18 19h2" />
+                    <path d="M19 18v2" />
+                    <path d="M14 16.518l-6.518 -6.518l-4.39 9.58a1.003 1.003 0 0 0 1.329 1.329l9.579 -4.39z" />
+                  </svg>
+                  <Typography>You have submitted this quiz!</Typography>
+                </Box>
+              </>
+            )}
           </CardContent>
         </Card>
-        <Button
-          sx={{ marginBottom: 2 }}
-          disabled={todoQuiz?.attempted === false ? true : false}
-          variant="contained"
-          onClick={() => submitQuiz(todoQuiz.id)}
-        >
-          Submit
-        </Button>
+        {todoQuiz.submitted === false && (
+          <Button
+            sx={{ marginBottom: 2 }}
+            disabled={todoQuiz?.attempted === false ? true : false}
+            variant="contained"
+            onClick={() => submitQuiz(todoQuiz.id)}
+          >
+            Submit
+          </Button>
+        )}
       </Box>
     </Container>
   );

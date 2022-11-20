@@ -1,13 +1,13 @@
 class Api::V1::CoursesController < ApplicationController
   def index
-    @courses = current_user.courses.with_attached_image.order(created_at: :desc).includes(:users, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
-    @draft_courses = current_user.courses.draft.with_attached_image.order(created_at: :desc).includes(:users, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
+    @courses = current_user.courses.with_attached_image.order(created_at: :desc).includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
+    @draft_courses = current_user.courses.draft.with_attached_image.order(created_at: :desc).includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
     render json: { courses: @courses, draft_courses: @draft_courses }
   end
 
   def show
     @course = Course.with_attached_image.find_by_id(params[:id])
-    render json: @course, include: [:users, :handouts, :quizzes, :reference_links, :videos, :assignments]
+    render json: @course, include: [:students, :handouts, :quizzes, :reference_links, :videos, :assignments]
   end
 
   def create
@@ -39,7 +39,7 @@ class Api::V1::CoursesController < ApplicationController
   def publish
     @course = Course.find_by_id(params[:id])
     resourses_count = @course.assignments.size + @course.quizzes.size + @course.videos.size
-    progress_increment = 100 / resourses_count.to_f
+    progress_increment = (100 / resourses_count.to_f).round(2)
     
     @course.update(draft: false, progress_increment: progress_increment)
     render json: { message: 'Successfully publish the course.' }

@@ -8,5 +8,5 @@ class Video < ApplicationRecord
   belongs_to :course
   belongs_to :user
   has_many :user_videos, dependent: :destroy
-  has_many :users, through: :user_videos, source: :user
+  has_many :students, through: :user_videos, source: :user
 end

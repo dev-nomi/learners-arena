@@ -37,6 +37,14 @@ Rails.application.routes.draw do
           post 'submit'
         end
       end
+      resources :user_assignments, only: [:show, :index] do
+        collection do
+          post 'attempt'
+          post 'submit'
+          post 'check'
+        end
+      end
+      resources :students, only: [:show]
     end
   end
 

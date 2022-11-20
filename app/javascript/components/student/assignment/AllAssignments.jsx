@@ -18,10 +18,10 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
 import { toast } from "react-toastify";
-import quizReportGenerator from "../../../services/quizReportGenerator";
+import assignmentReportGenerator from "../../../services/assignmentReportGenerator";
 
-const AllQuizzes = () => {
-  const [quizzes, setQuizzes] = useState([]);
+const AllAssignments = () => {
+  const [assignments, setAssignments] = useState([]);
   const theme = useTheme();
 
   useEffect(() => {
@@ -30,22 +30,23 @@ const AllQuizzes = () => {
 
   const initialize = () => {
     axios
-      .get("/api/v1/user_quizzes")
+      .get("/api/v1/user_assignments")
       .then((response) => {
-        setQuizzes(response.data);
+        setAssignments(response.data);
       })
       .catch((error) => {});
   };
 
   const generateReport = () => {
     axios
-      .post(`/api/v1/user_quizzes/generate_report`)
+      .post(`/api/v1/user_assignments/generate_report`)
       .then(({ data }) => {
-        toast.success("You! successfully generate quiz report.");
+        toast.success("You! successfully generate assignment report.");
       })
       .catch((error) => {});
   };
-  const checkedQuizzes = quizzes.filter((quiz) => quiz.status === "checked");
+
+  const checkedAssignments = assignments.filter((assignment) => assignment.status === "checked");
 
   return (
     <Container>
@@ -59,9 +60,9 @@ const AllQuizzes = () => {
         }}
       >
         <Typography component="h1" variant="h4">
-          List of Quizzes
+          List of Assignments
         </Typography>
-        <Button variant="contained" onClick={() => quizReportGenerator(checkedQuizzes)}>
+        <Button variant="contained" onClick={() => assignmentReportGenerator(checkedAssignments)}>
           Download report
         </Button>
       </Box>
@@ -78,11 +79,11 @@ const AllQuizzes = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {quizzes.map((row) => (
+            {assignments.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell>{row.quiz.id}</TableCell>
-                  <TableCell>{row.quiz.display_name}</TableCell>
+                  <TableCell>{row.assignment.id}</TableCell>
+                  <TableCell>{row.assignment.display_name}</TableCell>
                   <TableCell>
                     {row.status === "in_progress" ? (
                       <Chip label="In progress" color="warning" size="small" />
@@ -113,4 +114,4 @@ const AllQuizzes = () => {
   );
 };
 
-export default AllQuizzes;
+export default AllAssignments;

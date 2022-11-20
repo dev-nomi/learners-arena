@@ -6,6 +6,6 @@ class QuizSerializer < ActiveModel::Serializer
 
   def todo_quiz 
     object.user_quizzes.where(quiz_id: object.id).
-                        select(:id, :attempted, :status, :marks, :ans_keys).first
+                        select(:id, :attempted, :status, :marks, :submitted, :ans_keys).first
   end
 end

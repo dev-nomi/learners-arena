@@ -64,7 +64,7 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbolinks:load", function () {
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

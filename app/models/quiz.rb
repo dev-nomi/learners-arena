@@ -5,5 +5,5 @@ class Quiz < ApplicationRecord
   belongs_to :course
   has_many :questions, dependent: :destroy
   has_many :user_quizzes, dependent: :destroy
-  has_many :users, through: :user_quizzes, source: :user
+  has_many :students, through: :user_quizzes, source: :user
 end
