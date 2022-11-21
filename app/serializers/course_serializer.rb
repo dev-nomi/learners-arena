@@ -1,5 +1,5 @@
 class CourseSerializer < ActiveModel::Serializer
-  attributes :id, :display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :draft, :enrolled_course
+  attributes :id, :display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :draft, :enrolled_course, :student_quizzes, :student_assignments
 
   has_many :handouts
   has_many :students
@@ -17,5 +17,15 @@ class CourseSerializer < ActiveModel::Serializer
   def enrolled_course
     object.enrolled_courses.where(course_id: object.id, user_id: current_user.id).
                             select(:id, :progress).first
+  end
+
+  def student_quizzes
+    current_user.user_quizzes.joins(:quiz).
+                              where(quizzes: { course_id: object.id })
+  end
+
+  def student_assignments
+    current_user.user_assignments.joins(:assignment).
+                                  where(assignments: { course_id: object.id })
   end
 end

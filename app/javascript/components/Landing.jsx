@@ -72,7 +72,7 @@ const Landing = () => {
     axios
       .post("/api/v1/enrolled_courses/enroll", enroll_course)
       .then((response) => {
-        toast.success("Successfully Enrolled a course.");
+        toast.success("Successfully enrolled into a course.");
         navigate("/home");
       })
       .catch((error) => {

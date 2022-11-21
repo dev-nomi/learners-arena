@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import CategoryIcon from "@mui/icons-material/Category";
+import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import QuizIcon from "@mui/icons-material/Quiz";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import {
@@ -37,7 +37,7 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
         <ListItem disablePadding>
           <ListItemButton to="/" component={Link}>
             <ListItemIcon>
-              <CategoryIcon />
+              <SchoolRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"All courses"} />
           </ListItemButton>

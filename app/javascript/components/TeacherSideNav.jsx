@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import InsertLinkRoundedIcon from "@mui/icons-material/InsertLinkRounded";
+import VideoLibraryRoundedIcon from "@mui/icons-material/VideoLibraryRounded";
+import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
+import QuizRoundedIcon from "@mui/icons-material/QuizRounded";
+import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
 import {
   Box,
   ListItemIcon,
@@ -25,100 +28,50 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
         <ListItem disablePadding>
           <ListItemButton to="/home" component={Link}>
             <ListItemIcon>
-              <DashboardIcon />
+              <DashboardRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"Dashboard"} />
           </ListItemButton>
         </ListItem>
+        <Divider />
         <ListItem disablePadding>
           <ListItemButton to="/handouts" component={Link}>
             <ListItemIcon>
-              <FormatListBulletedIcon />
+              <ArticleRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"All handouts "} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton to="/quizzes" component={Link}>
-            <ListItemIcon>
-              <FormatListBulletedIcon />
-            </ListItemIcon>
-            <ListItemText primary={"All Quizzes"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/reference_links" component={Link}>
-            <ListItemIcon>
-              <FormatListBulletedIcon />
-            </ListItemIcon>
-            <ListItemText primary={"All Reference Links"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
           <ListItemButton to="/videos" component={Link}>
             <ListItemIcon>
-              <FormatListBulletedIcon />
+              <VideoLibraryRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"All Videos"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
+          <ListItemButton to="/reference_links" component={Link}>
+            <ListItemIcon>
+              <InsertLinkRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Reference Links"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/quizzes" component={Link}>
+            <ListItemIcon>
+              <QuizRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"All Quizzes"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
           <ListItemButton to="/assignments" component={Link}>
             <ListItemIcon>
-              <FormatListBulletedIcon />
+              <AssignmentRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"All Assignments"} />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton to="/add_course" component={Link}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Add Course"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/add_handout" component={Link}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Add Handout"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/add_quiz" component={Link}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Add Quiz"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/add_reference_link" component={Link}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Add Reference Link"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/add_video" component={Link}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Add Video"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton to="/add_assignment" component={Link}>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Add Assignment"} />
           </ListItemButton>
         </ListItem>
       </List>

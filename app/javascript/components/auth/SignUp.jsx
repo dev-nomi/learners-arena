@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Avatar,
   Button,
-  CssBaseline,
   TextField,
   Grid,
   Box,
@@ -42,7 +41,7 @@ const SignUp = () => {
     axios
       .post("users", user)
       .then((response) => {
-        toast.success("Successfully Signed Up.");
+        toast.success("Successfully signed up.");
         setEmail("");
         setPassword("");
         setPasswordConfirmation("");
@@ -59,7 +58,6 @@ const SignUp = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 3,
