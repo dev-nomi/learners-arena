@@ -15,16 +15,19 @@ class CourseSerializer < ActiveModel::Serializer
   end
 
   def enrolled_course
+    return if current_user.nil?
     object.enrolled_courses.where(course_id: object.id, user_id: current_user.id).
                             select(:id, :progress).first
   end
 
   def student_quizzes
+    return if current_user.nil?
     current_user.user_quizzes.joins(:quiz).
                               where(quizzes: { course_id: object.id })
   end
 
   def student_assignments
+    return if current_user.nil?
     current_user.user_assignments.joins(:assignment).
                                   where(assignments: { course_id: object.id })
   end

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import AllRoutes from "../routes/index";
 import { ToastContainer } from "react-toastify";
@@ -13,6 +13,9 @@ import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { red, green } from "@mui/material/colors";
+import ChatBot from "react-simple-chatbot";
+import { ThemeProvider as BotTheme } from "styled-components";
+import { useSelector } from "react-redux";
 
 const theme = createTheme({
   typography: {
@@ -39,13 +42,52 @@ const theme = createTheme({
     },
   },
 });
+
 const App = () => {
+  const user = useSelector((state) => state.auth.user);
+
+  const botTheme = {
+    background: "#f5f8fb",
+    fontFamily: "Ubuntu",
+    headerBgColor: "#6998AB",
+    headerFontColor: "#fff",
+    headerFontSize: "15px",
+    botBubbleColor: "#6998AB",
+    botFontColor: "#fff",
+    userBubbleColor: "#fff",
+    userFontColor: "#4a4a4a",
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer theme="colored" />
       <Router>
         <NavBar />
         <AllRoutes />
+        {user?.role == "student" && (
+          <BotTheme theme={botTheme}>
+            <ChatBot
+              steps={[
+                {
+                  id: "0",
+                  message: `Welcome, ${user?.first_name} to learners arena chatbot!`,
+                  trigger: "1",
+                },
+                {
+                  id: "1",
+                  user: true,
+                  trigger: "2",
+                },
+                {
+                  id: "2",
+                  message: "Bye!",
+                  end: true,
+                },
+              ]}
+              floating="true"
+            />
+          </BotTheme>
+        )}
       </Router>
     </ThemeProvider>
   );
@@ -63,7 +105,7 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
-document.addEventListener("turbolinks:load", function () {
+document.addEventListener("turbolinks:load", function() {
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
