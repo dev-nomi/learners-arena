@@ -75,11 +75,29 @@ const App = () => {
                 },
                 {
                   id: "1",
-                  user: true,
-                  trigger: "2",
+                  options: [
+                    { value: 1, label: "Feedback?", trigger: "2" },
+                    { value: 2, label: "Complain?", trigger: "3" },
+                    { value: 3, label: "Query?", trigger: "4" },
+                  ],
                 },
                 {
                   id: "2",
+                  message: "This is feedback content",
+                  trigger: "5",
+                },
+                {
+                  id: "3",
+                  message: "This is complain content",
+                  trigger: "5",
+                },
+                {
+                  id: "4",
+                  message: "This is query content",
+                  trigger: "5",
+                },
+                {
+                  id: "5",
                   message: "Bye!",
                   end: true,
                 },

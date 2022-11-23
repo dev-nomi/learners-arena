@@ -27,9 +27,12 @@ import { Link as MuiLink } from "@mui/material";
 const Quizzes = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [open, setOpen] = useState(false);
+  const [quizID, setQuizID] = useState("");
   const theme = useTheme();
-  const handleClickOpen = () => {
+
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setQuizID(id);
   };
 
   const handleClose = () => {
@@ -53,8 +56,8 @@ const Quizzes = () => {
       .catch((error) => {});
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`/api/v1/quizzes/${id}`).then(() => {
+  const handleDelete = () => {
+    axios.delete(`/api/v1/quizzes/${quizID}`).then(() => {
       toast.success("Successfully delete the quiz.");
       initialize();
       setOpen(false);
@@ -118,7 +121,7 @@ const Quizzes = () => {
                       sx={{ color: theme.palette.error.main }}
                       size="small"
                       color="error"
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(row.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -134,11 +137,7 @@ const Quizzes = () => {
                     {"Are you sure you want to delete this quiz?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button
-                      onClick={() => handleDelete(row.id)}
-                      variant="contained"
-                      color="success"
-                    >
+                    <Button onClick={handleDelete} variant="contained" color="success">
                       Yes
                     </Button>
                     <Button onClick={handleClose} autoFocus variant="contained" color="error">

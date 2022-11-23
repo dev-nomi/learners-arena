@@ -28,9 +28,12 @@ import EditIcon from "@mui/icons-material/Edit";
 const Handouts = () => {
   const [handouts, setHandouts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [handoutID, setHandoutID] = useState("");
   const theme = useTheme();
-  const handleClickOpen = () => {
+
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setHandoutID(id);
   };
 
   const handleClose = () => {
@@ -54,8 +57,8 @@ const Handouts = () => {
       .catch((error) => {});
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`/api/v1/handouts/${id}`).then(() => {
+  const handleDelete = () => {
+    axios.delete(`/api/v1/handouts/${handoutID}`).then(() => {
       toast.success("Successfully delete the handout.");
       initialize();
       setOpen(false);
@@ -127,7 +130,7 @@ const Handouts = () => {
                       sx={{ color: theme.palette.error.main }}
                       size="small"
                       color="error"
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(row.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -143,11 +146,7 @@ const Handouts = () => {
                     {"Are you sure you want to delete this handout?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button
-                      onClick={() => handleDelete(row.id)}
-                      variant="contained"
-                      color="success"
-                    >
+                    <Button onClick={handleDelete} variant="contained" color="success">
                       Yes
                     </Button>
                     <Button onClick={handleClose} autoFocus variant="contained" color="error">

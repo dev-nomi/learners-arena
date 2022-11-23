@@ -26,10 +26,14 @@ import { useTheme } from "@mui/material/styles";
 
 const TeacherDashboard = () => {
   const [courses, setCourses] = useState([]);
+  const [courseID, setCourseID] = useState("");
   const [open, setOpen] = useState(false);
   const theme = useTheme();
 
-  const handleClickOpen = () => setOpen(true);
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setCourseID(id);
+  };
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
@@ -49,9 +53,9 @@ const TeacherDashboard = () => {
       .catch((error) => {});
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`/api/v1/courses/${id}`).then(() => {
-      toast.success("Successfully Delete the course.");
+  const handleDelete = () => {
+    axios.delete(`/api/v1/courses/${courseID}`).then(() => {
+      toast.success("Successfully delete the course.");
       initialize();
       setOpen(false);
     });
@@ -126,7 +130,7 @@ const TeacherDashboard = () => {
                     <IconButton
                       size="small"
                       sx={{ color: theme.palette.error.main }}
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(row.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -142,11 +146,7 @@ const TeacherDashboard = () => {
                     {"Are you sure you want to delete this course?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button
-                      onClick={() => handleDelete(row.id)}
-                      variant="contained"
-                      color="success"
-                    >
+                    <Button onClick={handleDelete} variant="contained" color="success">
                       Yes
                     </Button>
                     <Button onClick={handleClose} autoFocus variant="contained" color="error">

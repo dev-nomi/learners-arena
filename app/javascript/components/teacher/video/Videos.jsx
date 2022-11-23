@@ -28,9 +28,12 @@ import EditIcon from "@mui/icons-material/Edit";
 const Videos = () => {
   const [videos, setVideos] = useState([]);
   const [open, setOpen] = useState(false);
+  const [videoID, setVideoID] = useState("");
   const theme = useTheme();
-  const handleClickOpen = () => {
+
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setVideoID(id);
   };
 
   const handleClose = () => {
@@ -54,8 +57,8 @@ const Videos = () => {
       .catch((error) => {});
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`/api/v1/videos/${id}`).then(() => {
+  const handleDelete = () => {
+    axios.delete(`/api/v1/videos/${videoID}`).then(() => {
       toast.success("Successfully delete the video.");
       initialize();
       setOpen(false);
@@ -128,7 +131,7 @@ const Videos = () => {
                       sx={{ color: theme.palette.error.main }}
                       size="small"
                       color="error"
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(row.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -144,11 +147,7 @@ const Videos = () => {
                     {"Are you sure you want to delete this video?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button
-                      onClick={() => handleDelete(row.id)}
-                      variant="contained"
-                      color="success"
-                    >
+                    <Button onClick={handleDelete} variant="contained" color="success">
                       Yes
                     </Button>
                     <Button onClick={handleClose} autoFocus variant="contained" color="error">

@@ -28,10 +28,12 @@ import EditIcon from "@mui/icons-material/Edit";
 const ReferenceLinks = () => {
   const [referenceLinks, setReferenceLinks] = useState([]);
   const [open, setOpen] = useState(false);
+  const [referenceLinkID, setReferenceLinkID] = useState("");
   const theme = useTheme();
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setReferenceLinkID(id);
   };
 
   const handleClose = () => {
@@ -55,8 +57,8 @@ const ReferenceLinks = () => {
       .catch((error) => {});
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`/api/v1/reference_links/${id}`).then(() => {
+  const handleDelete = () => {
+    axios.delete(`/api/v1/reference_links/${referenceLinkID}`).then(() => {
       toast.success("Successfully delete the reference link.");
       initialize();
       setOpen(false);
@@ -131,7 +133,7 @@ const ReferenceLinks = () => {
                       sx={{ color: theme.palette.error.main }}
                       size="small"
                       color="error"
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(row.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -147,11 +149,7 @@ const ReferenceLinks = () => {
                     {"Are you sure you want to delete this reference link?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button
-                      onClick={() => handleDelete(row.id)}
-                      variant="contained"
-                      color="success"
-                    >
+                    <Button onClick={handleDelete} variant="contained" color="success">
                       Yes
                     </Button>
                     <Button onClick={handleClose} autoFocus variant="contained" color="error">

@@ -27,9 +27,12 @@ import { Link as MuiLink } from "@mui/material";
 const Assignments = () => {
   const [assignments, setAssignments] = useState([]);
   const [open, setOpen] = useState(false);
+  const [assignmentID, setAssignmentID] = useState("");
   const theme = useTheme();
-  const handleClickOpen = () => {
+
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setAssignmentID(id);
   };
 
   const handleClose = () => {
@@ -54,7 +57,7 @@ const Assignments = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`/api/v1/assignments/${id}`).then(() => {
+    axios.delete(`/api/v1/assignments/${assignmentID}`).then(() => {
       toast.success("Successfully delete the assignment.");
       initialize();
       setOpen(false);
@@ -118,7 +121,7 @@ const Assignments = () => {
                       sx={{ color: theme.palette.error.main }}
                       size="small"
                       color="error"
-                      onClick={handleClickOpen}
+                      onClick={() => handleClickOpen(row.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -134,11 +137,7 @@ const Assignments = () => {
                     {"Are you sure you want to delete this assignment?"}
                   </DialogTitle>
                   <DialogActions>
-                    <Button
-                      onClick={() => handleDelete(row.id)}
-                      variant="contained"
-                      color="success"
-                    >
+                    <Button onClick={handleDelete} variant="contained" color="success">
                       Yes
                     </Button>
                     <Button onClick={handleClose} autoFocus variant="contained" color="error">
