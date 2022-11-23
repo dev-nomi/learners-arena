@@ -11,12 +11,6 @@ const ShowQuiz = () => {
   const [questions, setQuestions] = useState([]);
   const [todoQuiz, setTodoQuiz] = useState("");
   const [formValues, setFormValues] = useState([]);
-  const [chipColor, setChipColor] = useState({
-    option1: false,
-    option2: false,
-    option3: false,
-    option4: false,
-  });
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -36,6 +30,7 @@ const ShowQuiz = () => {
             formValues.push({ q_id: data.questions[i].id, ans: "" });
           }
         }
+        setLoading(false);
       })
       .catch((error) => {});
   };
@@ -66,35 +61,6 @@ const ShowQuiz = () => {
     const newFormValues = [...formValues];
     const formValue = newFormValues.find((a) => a.q_id === id);
     formValue["ans"] = e.target.textContent;
-    switch (name) {
-      case "option1":
-        chipColor.option1 = false;
-        chipColor.option2 = true;
-        chipColor.option3 = true;
-        chipColor.option4 = true;
-        break;
-      case "option2":
-        chipColor.option2 = false;
-        chipColor.option1 = true;
-        chipColor.option3 = true;
-        chipColor.option4 = true;
-        break;
-      case "option3":
-        chipColor.option3 = false;
-        chipColor.option2 = true;
-        chipColor.option1 = true;
-        chipColor.option4 = true;
-        break;
-      case "option4":
-        chipColor.option4 = false;
-        chipColor.option2 = true;
-        chipColor.option3 = true;
-        chipColor.option1 = true;
-        break;
-      default:
-        break;
-    }
-    setChipColor(chipColor);
     setFormValues(newFormValues);
   };
 
@@ -213,8 +179,11 @@ const ShowQuiz = () => {
                           <Button
                             sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
                             size="small"
-                            variant={chipColor?.option1 ? "outlined" : "contained"}
-                            disabled={chipColor?.option1}
+                            variant={
+                              formValues.find((a) => a.ans === question.options.option1)
+                                ? "outlined"
+                                : "contained"
+                            }
                             color="primary"
                             onClick={(e) => handleChip("option1", question.id, e)}
                           >
@@ -224,8 +193,11 @@ const ShowQuiz = () => {
                           <Button
                             sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
                             size="small"
-                            variant={chipColor?.option2 ? "outlined" : "contained"}
-                            disabled={chipColor?.option2}
+                            variant={
+                              formValues.find((a) => a.ans === question.options.option2)
+                                ? "outlined"
+                                : "contained"
+                            }
                             color="primary"
                             onClick={(e) => handleChip("option2", question.id, e)}
                           >
@@ -244,8 +216,11 @@ const ShowQuiz = () => {
                           <Button
                             sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
                             size="small"
-                            disabled={chipColor?.option3}
-                            variant={chipColor?.option3 ? "outlined" : "contained"}
+                            variant={
+                              formValues.find((a) => a.ans === question.options.option3)
+                                ? "outlined"
+                                : "contained"
+                            }
                             color="primary"
                             onClick={(e) => handleChip("option3", question.id, e)}
                           >
@@ -255,8 +230,11 @@ const ShowQuiz = () => {
                           <Button
                             sx={{ marginLeft: 2, marginRight: 2, width: "100%", borderRadius: 5 }}
                             size="small"
-                            disabled={chipColor?.option4}
-                            variant={chipColor?.option4 ? "outlined" : "contained"}
+                            variant={
+                              formValues.find((a) => a.ans === question.options.option4)
+                                ? "outlined"
+                                : "contained"
+                            }
                             color="primary"
                             onClick={(e) => handleChip("option4", question.id, e)}
                           >
