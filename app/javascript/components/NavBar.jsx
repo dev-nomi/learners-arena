@@ -178,7 +178,9 @@ const Navbar = () => {
                     <Typography fontSize={15} fontWeight={600}>
                       {user?.first_name + " " + user?.last_name}
                     </Typography>
-                    <Typography fontSize={15}>{user?.email}</Typography>
+                    <Typography fontSize={15} sx={{ wordBreak: "break-all" }}>
+                      {user?.email}
+                    </Typography>
                     <Typography fontSize={15} color={theme.palette.primary.main}>
                       {user?.role}
                     </Typography>

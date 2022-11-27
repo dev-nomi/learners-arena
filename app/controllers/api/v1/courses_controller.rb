@@ -42,6 +42,7 @@ class Api::V1::CoursesController < ApplicationController
     progress_increment = (100 / resourses_count.to_f).round(2)
     
     @course.update(draft: false, progress_increment: progress_increment)
+    CourseMailer.new_course_message(@course).deliver_later
     render json: { message: 'Successfully publish the course.' }
   end
 

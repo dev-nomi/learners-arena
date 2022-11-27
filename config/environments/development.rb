@@ -79,4 +79,6 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   routes.default_url_options[:host] = 'http//:localhost:3000'
+
+  config.action_mailer.delivery_method = :smtp
 end

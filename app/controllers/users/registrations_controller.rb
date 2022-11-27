@@ -11,6 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def register_success
+    UserMailer.registration_confirmation(current_user).deliver_later
     render json: {
       message: 'Signed up sucessfully.',
       user: current_user
