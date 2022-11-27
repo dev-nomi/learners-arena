@@ -4,7 +4,7 @@ class Handout < ApplicationRecord
     presence: true
   }
 
-  has_one_attached :pdf
+  has_one_attached :pdf, dependent: :purge
   belongs_to :course
   belongs_to :user
 end

@@ -24,6 +24,7 @@ import PowerSettingsNewRoundedIcon from "@mui/icons-material/PowerSettingsNewRou
 import MenuIcon from "@mui/icons-material/Menu";
 import TeacherSideNav from "./TeacherSideNav";
 import StudentSideNav from "./StudentSideNav";
+import AdminSideNav from "./AdminSideNav";
 import { useTheme } from "@mui/material/styles";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
@@ -95,6 +96,8 @@ const Navbar = () => {
 
   const teacherList = (anchor) => <TeacherSideNav anchor={anchor} toggleDrawer={toggleDrawer} />;
   const studentList = (anchor) => <StudentSideNav anchor={anchor} toggleDrawer={toggleDrawer} />;
+  const adminList = (anchor) => <AdminSideNav anchor={anchor} toggleDrawer={toggleDrawer} />;
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -173,11 +176,11 @@ const Navbar = () => {
                 >
                   <Box sx={{ paddingLeft: 2, paddingRight: 1, paddingBottom: 1 }}>
                     <Typography fontSize={15} fontWeight={600}>
-                      {user.first_name + " " + user.last_name}
+                      {user?.first_name + " " + user?.last_name}
                     </Typography>
-                    <Typography fontSize={15}>{user.email}</Typography>
+                    <Typography fontSize={15}>{user?.email}</Typography>
                     <Typography fontSize={15} color={theme.palette.primary.main}>
-                      {user.role}
+                      {user?.role}
                     </Typography>
                   </Box>
                   <Divider />
@@ -293,7 +296,9 @@ const Navbar = () => {
                   open={state["drawer"]}
                   onClose={toggleDrawer("drawer", false)}
                 >
-                  {user?.role === "teacher" ? teacherList("drawer") : studentList("drawer")}
+                  {user?.role === "teacher" && teacherList("drawer")}
+                  {user?.role === "student" && studentList("drawer")}
+                  {user?.role === "admin" && adminList("drawer")}
                 </Drawer>
               </Fragment>
             ) : (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -16,6 +16,7 @@ import { red, green } from "@mui/material/colors";
 import ChatBot from "react-simple-chatbot";
 import { ThemeProvider as BotTheme } from "styled-components";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const theme = createTheme({
   typography: {
@@ -58,6 +59,25 @@ const App = () => {
     userFontColor: "#4a4a4a",
   };
 
+  function SendResponse(data) {
+    const response = new FormData();
+    response.append("response[title]", data.previousStep.message);
+    response.append("response[resp_type]", data.type);
+
+    axios
+      .post("/api/v1/responses", response)
+      .then((response) => {})
+      .catch((error) => {});
+
+    if (data.type === "feedback") {
+      return "🎊 Thankyou submiting the feedback.";
+    } else if (data.type === "complain") {
+      return "Sorry, to hear about it soon we will respond you.";
+    } else {
+      return "Will get back to you.";
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer theme="colored" />
@@ -83,22 +103,55 @@ const App = () => {
                 },
                 {
                   id: "2",
-                  message: "This is feedback content",
+                  message: "Kindly write your feedback?",
                   trigger: "5",
                 },
                 {
                   id: "3",
-                  message: "This is complain content",
-                  trigger: "5",
+                  options: [
+                    { value: 1, label: "Assignment?", trigger: "11" },
+                    { value: 2, label: "Content?", trigger: "11" },
+                    { value: 3, label: "Application?", trigger: "11" },
+                  ],
+                },
+                {
+                  id: "11",
+                  message: "Kindly write your complain?",
+                  trigger: "6",
                 },
                 {
                   id: "4",
-                  message: "This is query content",
-                  trigger: "5",
+                  message: "Kindly write your query?",
+                  trigger: "7",
                 },
                 {
                   id: "5",
-                  message: "Bye!",
+                  user: true,
+                  trigger: "8",
+                },
+                {
+                  id: "6",
+                  user: true,
+                  trigger: "9",
+                },
+                {
+                  id: "7",
+                  user: true,
+                  trigger: "10",
+                },
+                {
+                  id: "8",
+                  component: <SendResponse value={`previousValue`} type="feedback" />,
+                  end: true,
+                },
+                {
+                  id: "9",
+                  component: <SendResponse value={`previousValue`} type="complain" />,
+                  end: true,
+                },
+                {
+                  id: "10",
+                  component: <SendResponse value={`previousValue`} type="query" />,
                   end: true,
                 },
               ]}

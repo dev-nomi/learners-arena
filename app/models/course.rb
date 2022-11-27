@@ -7,7 +7,7 @@ class Course < ApplicationRecord
 
   enum level: [:beginner, :intermediate, :advanced]
 
-  has_one_attached :image
+  has_one_attached :image, dependent: :purge
   belongs_to :user
   has_many :handouts, dependent: :destroy
   has_many :enrolled_courses, dependent: :destroy

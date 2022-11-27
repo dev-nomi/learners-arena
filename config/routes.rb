@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   
   get '/member-data', to: 'members#show'
   get '/all_courses', to: 'pages#index'
+  get '/all_teachers', to: 'pages#teachers'
+  get '/all_students', to: 'pages#students'
 
   namespace :api do
     namespace :v1 do
@@ -44,7 +46,9 @@ Rails.application.routes.draw do
           post 'check'
         end
       end
-      resources :students, only: [:show]
+      resources :teachers, only: [:destroy]
+      resources :students, only: [:show, :destroy]
+      resources :responses
     end
   end
 

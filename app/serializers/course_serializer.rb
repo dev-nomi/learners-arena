@@ -1,5 +1,5 @@
 class CourseSerializer < ActiveModel::Serializer
-  attributes :id, :display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :draft, :enrolled_course, :student_quizzes, :student_assignments
+  attributes :id, :display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :draft, :enrolled_course, :student_quizzes, :student_assignments, :teacher
 
   has_many :handouts
   has_many :students
@@ -30,5 +30,9 @@ class CourseSerializer < ActiveModel::Serializer
     return if current_user.nil?
     current_user.user_assignments.joins(:assignment).
                                   where(assignments: { course_id: object.id })
+  end
+
+  def teacher
+    object.user
   end
 end
