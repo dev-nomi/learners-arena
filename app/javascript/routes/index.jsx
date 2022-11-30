@@ -8,6 +8,16 @@ const timeout = () => {
   return new Promise((resolve) => setTimeout(resolve, 300));
 };
 
+const CheckoutSuccess = lazy(async () => {
+  await timeout();
+  return import("../checkout/CheckoutSuccess");
+});
+
+const CheckoutCancel = lazy(async () => {
+  await timeout();
+  return import("../checkout/CheckoutCancel");
+});
+
 const AllResponses = lazy(async () => {
   await timeout();
   return import("../components/admin/response/AllResponses");
@@ -222,6 +232,8 @@ const AllRoutes = () => {
           <Route path="/all_quizzes" element={<AllQuizzes />} />
           <Route path="/all_assignments" element={<AllAssignments />} />
           <Route path="/course/:course_id/week/:week_id" element={<CourseContent />} />
+          <Route path="/checkout_success" element={<CheckoutSuccess />} />
+          <Route path="/checkout_cancel" element={<CheckoutCancel />} />
         </Route>
 
         <Route element={<ProtectedRoute isAllowed={user && user.role == "admin"} />}>

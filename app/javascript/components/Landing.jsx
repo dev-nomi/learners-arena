@@ -20,7 +20,7 @@ import Errors from "../components/Errors";
 import { useTheme } from "@mui/material/styles";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
 
 const style = {
   position: "absolute",
@@ -79,6 +79,16 @@ const Landing = () => {
         toast.error(<Errors errors={error.response.data} />);
       });
   };
+
+  const checkout = () => {
+    axios
+      .post("/checkout")
+      .then(({ data }) => {
+        window.open(data.url, "_blank").focus();
+      })
+      .catch((error) => {});
+  };
+
   return (
     <Container>
       <Grid container spacing={2} mt={2} mb={4}>
@@ -120,6 +130,14 @@ const Landing = () => {
                       onClick={() => enroll(course.id)}
                     >
                       Enroll
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      startIcon={<ShoppingCartCheckoutRoundedIcon />}
+                      onClick={checkout}
+                    >
+                      Buy
                     </Button>
                   </>
                 ) : (

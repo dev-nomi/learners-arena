@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/all_courses', to: 'pages#index'
   get '/all_teachers', to: 'pages#teachers'
   get '/all_students', to: 'pages#students'
+  post 'checkout', to: 'pages#checkout'
 
   namespace :api do
     namespace :v1 do
