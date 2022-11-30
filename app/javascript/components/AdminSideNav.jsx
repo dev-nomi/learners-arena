@@ -4,6 +4,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import PersonIcon from "@mui/icons-material/Person";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
+import DiscountRoundedIcon from "@mui/icons-material/DiscountRounded";
 import {
   Box,
   ListItemIcon,
@@ -39,7 +41,7 @@ const AdminSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <SchoolRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary={"All Courses"} />
+            <ListItemText primary={"Courses"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -47,7 +49,7 @@ const AdminSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={"All Students"} />
+            <ListItemText primary={"Students"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -55,7 +57,7 @@ const AdminSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={"All Teachers"} />
+            <ListItemText primary={"Teachers"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -63,7 +65,23 @@ const AdminSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <FeedbackIcon />
             </ListItemIcon>
-            <ListItemText primary={"All Responses"} />
+            <ListItemText primary={"Responses"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/admin/all_payment_plans" component={Link}>
+            <ListItemIcon>
+              <AttachMoneyRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Payment Plans"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton to="/admin/all_coupons" component={Link}>
+            <ListItemIcon>
+              <DiscountRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Coupons"} />
           </ListItemButton>
         </ListItem>
       </List>

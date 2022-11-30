@@ -80,9 +80,12 @@ const Landing = () => {
       });
   };
 
-  const checkout = () => {
+  const checkout = (course_id) => {
+    const course = new FormData();
+    course.append("course_id", course_id);
+
     axios
-      .post("/checkout")
+      .post("/checkout", course)
       .then(({ data }) => {
         window.open(data.url, "_blank").focus();
       })
@@ -123,22 +126,25 @@ const Landing = () => {
                     >
                       View
                     </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      sx={{ bgcolor: theme.palette.primary.light }}
-                      onClick={() => enroll(course.id)}
-                    >
-                      Enroll
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      startIcon={<ShoppingCartCheckoutRoundedIcon />}
-                      onClick={checkout}
-                    >
-                      Buy
-                    </Button>
+                    {course.payment_plan.payment_price === 0 || course.bougth === true ? (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        sx={{ bgcolor: theme.palette.primary.light }}
+                        onClick={() => enroll(course.id)}
+                      >
+                        Enroll
+                      </Button>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        startIcon={<ShoppingCartCheckoutRoundedIcon />}
+                        onClick={() => checkout(course.id)}
+                      >
+                        Buy
+                      </Button>
+                    )}
                   </>
                 ) : (
                   <div></div>

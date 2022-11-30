@@ -5,10 +5,15 @@ class Course < ApplicationRecord
     presence: true
   }
 
+  delegate :payment_id, to: :payment_plan
+  delegate :payment_price, to: :payment_plan
+  delegate :price_id, to: :payment_plan
+
   enum level: [:beginner, :intermediate, :advanced]
 
   has_one_attached :image, dependent: :purge
   belongs_to :user
+  belongs_to :payment_plan
   has_many :handouts, dependent: :destroy
   has_many :enrolled_courses, dependent: :destroy
   has_many :students, through: :enrolled_courses, source: :user

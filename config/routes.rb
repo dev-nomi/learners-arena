@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       resources :teachers, only: [:destroy]
       resources :students, only: [:show, :destroy]
       resources :responses
+      resources :payment_plans
+      resources :coupons
     end
   end
 

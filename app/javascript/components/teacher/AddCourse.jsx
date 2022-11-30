@@ -14,15 +14,12 @@ const AddCourse = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [level, setLevel] = useState("");
   const [totalHours, setTotalHours] = useState("");
-  const [totalWeeks, setTotalWeeks] = useState("");
+  const [paymentPlan, setPaymentPlan] = useState("");
+  const [paymentPlans, setPaymentPlans] = useState([]);
   const editorRef = useRef(null);
 
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
   useEffect(() => {
+    initialize();
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
@@ -36,6 +33,7 @@ const AddCourse = () => {
     course.append("course[image]", selectedImage);
     course.append("course[level]", level);
     course.append("course[total_hours]", totalHours);
+    course.append("course[payment_plan_id]", paymentPlan);
     course.append("course[outline]", editorRef.current.getContent());
 
     axios
@@ -47,11 +45,21 @@ const AddCourse = () => {
         setSelectedImage("");
         setTotalHours("");
         setLevel("");
+        setPaymentPlan("");
         navigate("/home");
       })
       .catch((error) => {
         toast.error(<Errors errors={error.response.data} />);
       });
+  };
+
+  const initialize = () => {
+    axios
+      .get("/api/v1/payment_plans")
+      .then((response) => {
+        setPaymentPlans(response.data);
+      })
+      .catch((error) => {});
   };
 
   return (
@@ -115,10 +123,24 @@ const AddCourse = () => {
             value={totalHours}
             onChange={(e) => setTotalHours(e.target.value)}
           />
+          <TextField
+            select
+            required
+            fullWidth
+            margin="normal"
+            label="Payment Plan"
+            value={paymentPlan}
+            onChange={(e) => setPaymentPlan(e.target.value)}
+          >
+            {paymentPlans.map((paymentPlan) => (
+              <MenuItem key={paymentPlan.id} value={paymentPlan.id}>
+                {paymentPlan.payment_name}
+              </MenuItem>
+            ))}
+          </TextField>
           <Editor
             apiKey="1ng284s517ux8frzhkttvwkv4uk1qkiu8kebp5uddx6o8wuc"
             onInit={(evt, editor) => (editorRef.current = editor)}
-            initialValue="<p>This is the initial content of the editor.</p>"
             init={{
               height: 300,
               menubar: false,

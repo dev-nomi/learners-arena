@@ -28,7 +28,7 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary={"Dashboard"} />
+            <ListItemText primary={"My courses"} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -39,7 +39,7 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <SchoolRoundedIcon />
             </ListItemIcon>
-            <ListItemText primary={"All courses"} />
+            <ListItemText primary={"Courses"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -47,7 +47,7 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <QuizIcon />
             </ListItemIcon>
-            <ListItemText primary={"All Quizzes"} />
+            <ListItemText primary={"Quizzes"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -55,7 +55,7 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
-            <ListItemText primary={"All Assignments"} />
+            <ListItemText primary={"Assignments"} />
           </ListItemButton>
         </ListItem>
       </List>

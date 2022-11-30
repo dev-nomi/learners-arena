@@ -153,7 +153,6 @@ const ShowAssignment = () => {
                             handleChange(question.id, editor, "tiny");
                           }}
                           onInit={(evt, editor) => (textEditorRef.current = editor)}
-                          initialValue="<p>This is the initial content of the editor.</p>"
                           init={{
                             height: 300,
                             menubar: false,

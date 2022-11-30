@@ -48,6 +48,6 @@ class Api::V1::CoursesController < ApplicationController
 
   private
     def course_params
-      params.require(:course).permit(:display_name, :description, :image, :level, :total_hours, :outline, :total_weeks).select {|x,v| v.present?}
+      params.require(:course).permit(:display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :payment_plan_id).select {|x,v| v.present?}
     end
 end

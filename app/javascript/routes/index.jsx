@@ -8,14 +8,34 @@ const timeout = () => {
   return new Promise((resolve) => setTimeout(resolve, 300));
 };
 
+const AllCoupons = lazy(async () => {
+  await timeout();
+  return import("../components/admin/coupon/AllCoupons");
+});
+
+const AddCoupon = lazy(async () => {
+  await timeout();
+  return import("../components/admin/coupon/AddCoupon");
+});
+
+const AllPaymentPlans = lazy(async () => {
+  await timeout();
+  return import("../components/admin/payment_plan/AllPaymentPlans");
+});
+
+const AddPaymentPlan = lazy(async () => {
+  await timeout();
+  return import("../components/admin/payment_plan/AddPaymentPlan");
+});
+
 const CheckoutSuccess = lazy(async () => {
   await timeout();
-  return import("../checkout/CheckoutSuccess");
+  return import("../components/checkout/CheckoutSuccess");
 });
 
 const CheckoutCancel = lazy(async () => {
   await timeout();
-  return import("../checkout/CheckoutCancel");
+  return import("../components/checkout/CheckoutCancel");
 });
 
 const AllResponses = lazy(async () => {
@@ -241,6 +261,10 @@ const AllRoutes = () => {
           <Route path="/admin/all_students" element={<AllStudents />} />
           <Route path="/admin/all_teachers" element={<AllTeachers />} />
           <Route path="/admin/all_responses" element={<AllResponses />} />
+          <Route path="/admin/all_payment_plans" element={<AllPaymentPlans />} />
+          <Route path="/admin/add_payment_plan" element={<AddPaymentPlan />} />
+          <Route path="/admin/all_coupons" element={<AllCoupons />} />
+          <Route path="/admin/add_coupon" element={<AddCoupon />} />
         </Route>
 
         <Route element={<ProtectedRoute isAllowed={!user || user.id === null} />}>

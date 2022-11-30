@@ -18,12 +18,16 @@ class PagesController < ApplicationController
   end
 
   def checkout
+    course = Course.find_by_id(params[:course_id])
+
     Stripe.api_key = 'sk_test_51M8k8uDrsSBJWVANctSn2Y0S9F9hA3kKA5JkmWXBMg1wNJH2401sk2ELFaOL2jaugVhJHpjxfyMkIigBa0J3y0vK00LFfO9YDr'
+
+    price_id = Stripe::Product.retrieve(course.payment_id)
 
     session_hash = {
       payment_method_types: ['card'],
       line_items: [{
-        price: 'price_1M9pVIDrsSBJWVANZ7NQSpSi',
+        price: price_id[:default_price],
         quantity: 1,
       }],
       mode: 'payment',
@@ -32,11 +36,11 @@ class PagesController < ApplicationController
     }
 
     session_hash.merge!(discounts: [{
-      coupon: 'qWG6oHcx',
+      coupon: 'TiZsCs0F',
     }]) if true
 
     session = Stripe::Checkout::Session.create(session_hash)
-
+    
     render json: { url: session.url }
   end
 end

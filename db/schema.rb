@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_26_174919) do
+ActiveRecord::Schema.define(version: 2022_11_30_185423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 2022_11_26_174919) do
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
+  create_table "coupons", force: :cascade do |t|
+    t.string "coupon_id"
+    t.string "coupon_name"
+    t.integer "price_off"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string "display_name"
     t.string "description"
@@ -67,6 +75,9 @@ ActiveRecord::Schema.define(version: 2022_11_26_174919) do
     t.integer "total_weeks"
     t.boolean "draft", default: true
     t.float "progress_increment", default: 0.0
+    t.bigint "payment_plan_id"
+    t.boolean "bought", default: false
+    t.index ["payment_plan_id"], name: "index_courses_on_payment_plan_id"
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
@@ -98,6 +109,15 @@ ActiveRecord::Schema.define(version: 2022_11_26_174919) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "payment_plans", force: :cascade do |t|
+    t.string "payment_id"
+    t.string "payment_name"
+    t.integer "payment_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "price_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -216,6 +236,7 @@ ActiveRecord::Schema.define(version: 2022_11_26_174919) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "courses"
   add_foreign_key "assignments", "users"
+  add_foreign_key "courses", "payment_plans"
   add_foreign_key "courses", "users"
   add_foreign_key "handouts", "courses"
   add_foreign_key "handouts", "users"
