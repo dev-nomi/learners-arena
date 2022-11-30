@@ -59,7 +59,7 @@ const App = () => {
     userFontColor: "#4a4a4a",
   };
 
-  function SendResponse(data) {
+  const SendResponse = (data) => {
     const response = new FormData();
     response.append("response[title]", data.previousStep.message);
     response.append("response[resp_type]", data.type);
@@ -73,10 +73,10 @@ const App = () => {
       return "🎊 Thankyou submiting the feedback.";
     } else if (data.type === "complain") {
       return "Sorry, to hear about it soon we will respond you.";
-    } else {
+    } else if (data.type === "query") {
       return "Will get back to you.";
     }
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>

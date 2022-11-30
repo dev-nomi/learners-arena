@@ -55,6 +55,7 @@ const AllResponses = () => {
               <TableCell sx={{ color: "white" }}>Title</TableCell>
               <TableCell sx={{ color: "white" }}>Type</TableCell>
               <TableCell sx={{ color: "white" }}>Submitted by</TableCell>
+              <TableCell sx={{ color: "white" }}>Submitted at</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,6 +76,9 @@ const AllResponses = () => {
                     )}
                   </TableCell>
                   <TableCell>{row.user.full_name}</TableCell>
+                  <TableCell>
+                    <Chip label={row.submitted_at} color="info" size="small" />
+                  </TableCell>
                 </TableRow>
               </Fragment>
             ))}
