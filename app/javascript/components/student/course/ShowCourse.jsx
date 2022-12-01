@@ -36,6 +36,7 @@ const ShowCourse = () => {
   const [course, setCourse] = useState([]);
   const [studentQuizzes, setStudentQuizzes] = useState([]);
   const [studentAssignments, setStudentAssignments] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [value, setValue] = useState("1");
   const [certificate, setCertificate] = useState(null);
   const user = useSelector((state) => state.auth.user);
@@ -52,6 +53,7 @@ const ShowCourse = () => {
         setCourse(data);
         setStudentQuizzes(data.student_quizzes);
         setStudentAssignments(data.student_assignments);
+        setVideos(data.videos);
       })
       .catch((error) => {});
   };
@@ -66,6 +68,9 @@ const ShowCourse = () => {
     (assignment) => assignment.attempted === false
   );
 
+  const viewed_videos = videos.filter((video) => video.viewed !== null);
+  const unviewed_videos = videos.filter((video) => video.viewed === null);
+
   const quizzes_data = [
     ["Quiz", "Count"],
     ["attempted", attempted_quizzes.length],
@@ -76,6 +81,12 @@ const ShowCourse = () => {
     ["Assignment", "Count"],
     ["attempted", attempted_assignments.length],
     ["unattempted", unattempted_assignments.length],
+  ];
+
+  const videos_data = [
+    ["Video", "Count"],
+    ["viewed", viewed_videos.length],
+    ["unviewed", unviewed_videos.length],
   ];
 
   const handleChange = (event, newValue) => {
@@ -249,6 +260,15 @@ const ShowCourse = () => {
                   chartType="PieChart"
                   data={assignments_data}
                   options={{ title: "Assignments", colors: ["#66bb6a", "#ef5350"] }}
+                  width={"100%"}
+                  height={"400px"}
+                />
+              </Card>
+              <Card sx={{ width: "100%", marginLeft: 1 }}>
+                <Chart
+                  chartType="PieChart"
+                  data={videos_data}
+                  options={{ title: "Videos", colors: ["#66bb6a", "#ef5350"] }}
                   width={"100%"}
                   height={"400px"}
                 />

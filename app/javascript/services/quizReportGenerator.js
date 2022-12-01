@@ -21,8 +21,8 @@ const quizReportGenerator = (user_quizzes) => {
 
   doc.autoTable(tableColumn, tableRows, {
     startY: 20,
-    styles: { fillColor: "#1A374D" },
   });
+
   doc.setFont("helvetica");
   doc.setFontSize(23);
   const date = Date().split(" ");

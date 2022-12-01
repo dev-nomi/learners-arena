@@ -11,6 +11,14 @@ import {
   Box,
   Modal,
   Stack,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Chip,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -21,6 +29,7 @@ import { useTheme } from "@mui/material/styles";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
+import DiscountRoundedIcon from "@mui/icons-material/DiscountRounded";
 
 const style = {
   position: "absolute",
@@ -36,13 +45,25 @@ const style = {
 };
 
 const Landing = () => {
-  const [courses, setCourses] = useState([]);
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const navigate = useNavigate();
-  const theme = useTheme();
+  const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [couponCode, setCouponCode] = useState("");
+  const navigate = useNavigate();
+  const theme = useTheme();
+
+  const handleDialogOpen = (course) => {
+    setOpenDialog(true);
+    setSelectedCourse(course);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -80,14 +101,18 @@ const Landing = () => {
       });
   };
 
-  const checkout = (course_id) => {
-    const course = new FormData();
-    course.append("course_id", course_id);
+  const checkout = () => {
+    setOpenDialog(false);
+
+    const data = new FormData();
+    data.append("course_id", selectedCourse.id);
+    data.append("coupon_code", couponCode);
 
     axios
-      .post("/checkout", course)
+      .post("/checkout", data)
       .then(({ data }) => {
-        window.open(data.url, "_blank").focus();
+        window.open(data.url, "_self").focus();
+        setCouponCode("");
       })
       .catch((error) => {});
   };
@@ -111,6 +136,12 @@ const Landing = () => {
                 <Typography variant="body2" color="text.secondary">
                   {truncate(course.description)}
                 </Typography>
+                <Stack direction="row" alignItems="center" gap={1} sx={{ marginTop: 1 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Rs: <strong>{course.payment_plan.payment_price}</strong>
+                  </Typography>
+                  <Chip label={course.payment_plan.payment_name} color="secondary" size="small" />
+                </Stack>
               </CardContent>
               <CardActions>
                 {isLoggedIn && user?.role === "student" ? (
@@ -126,13 +157,8 @@ const Landing = () => {
                     >
                       View
                     </Button>
-                    {course.payment_plan.payment_price === 0 || course.bougth === true ? (
-                      <Button
-                        size="small"
-                        variant="contained"
-                        sx={{ bgcolor: theme.palette.primary.light }}
-                        onClick={() => enroll(course.id)}
-                      >
+                    {course.payment_plan.payment_price === 0 || course.bought === true ? (
+                      <Button size="small" variant="contained" onClick={() => enroll(course.id)}>
                         Enroll
                       </Button>
                     ) : (
@@ -140,7 +166,7 @@ const Landing = () => {
                         size="small"
                         variant="contained"
                         startIcon={<ShoppingCartCheckoutRoundedIcon />}
-                        onClick={() => checkout(course.id)}
+                        onClick={() => handleDialogOpen(course)}
                       >
                         Buy
                       </Button>
@@ -154,6 +180,46 @@ const Landing = () => {
           </Grid>
         ))}
       </Grid>
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          You want to buy {selectedCourse?.display_name}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Price: {selectedCourse?.payment_plan?.payment_price}
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="normal"
+            id="coupon_code"
+            label="Enter coupon code"
+            type="text"
+            fullWidth
+            value={couponCode}
+            onChange={(e) => setCouponCode(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <DiscountRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={checkout} autoFocus variant="contained">
+            Checkout
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         open={open}
         onClose={handleClose}

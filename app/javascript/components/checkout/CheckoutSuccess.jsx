@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import Box from "@mui/material/Box";
-import { Container, Card, Typography } from "@mui/material";
+import { Container, Box, Typography, Button } from "@mui/material";
 
 const CheckoutSuccess = () => {
   return (
@@ -11,6 +11,9 @@ const CheckoutSuccess = () => {
         <Typography component="h1" variant="h4" color="primary">
           Successfully Buy!
         </Typography>
+        <Button sx={{ mt: 4 }} to="/landing" component={Link} variant="contained">
+          Back
+        </Button>
       </Box>
     </Container>
   );

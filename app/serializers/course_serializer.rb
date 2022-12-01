@@ -1,5 +1,8 @@
 class CourseSerializer < ActiveModel::Serializer
-  attributes :id, :display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :draft, :enrolled_course, :student_quizzes, :student_assignments, :teacher, :bought
+  attributes :id, :display_name, :description, 
+             :image, :level, :total_hours, :outline, :total_weeks, 
+             :draft, :enrolled_course, :student_quizzes, :student_assignments,
+             :teacher, :bought
 
   has_many :handouts
   has_many :students

@@ -20,7 +20,7 @@ module StripeServices
       {
         payment_id: s_product[:id],
         payment_name: s_product[:name],
-        payment_price: s_product[:default_price][:unit_amount]
+        payment_price: s_product[:default_price][:unit_amount],
         price_id: s_product[:default_price][:id]
       }
     end
