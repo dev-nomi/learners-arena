@@ -1,5 +1,5 @@
 class UserQuizSerializer < ActiveModel::Serializer
-  attributes :id, :status, :marks, :attempted, :submitted, :course
+  attributes :id, :status, :marks, :attempted, :submitted, :course, :quiz
 
   belongs_to :quiz
 

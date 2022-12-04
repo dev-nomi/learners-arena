@@ -27,4 +27,6 @@ class User < ApplicationRecord
   has_many :user_assignments, dependent: :destroy
   has_many :todo_assignments, through: :user_assignments, source: :assignment
   has_many :responses, dependent: :destroy
+  has_many :student_payments, dependent: :destroy
+  has_many :payment_course, through: :student_payments, source: :course
 end

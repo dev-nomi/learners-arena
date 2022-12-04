@@ -134,7 +134,7 @@ const AddCourse = () => {
           >
             {paymentPlans.map((paymentPlan) => (
               <MenuItem key={paymentPlan.id} value={paymentPlan.id}>
-                {paymentPlan.payment_name}
+                {`${paymentPlan.payment_name} (Rs. ${paymentPlan.payment_price})`}
               </MenuItem>
             ))}
           </TextField>

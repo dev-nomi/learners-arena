@@ -140,7 +140,7 @@ const Landing = () => {
                 </Typography>
                 <Stack direction="row" alignItems="center" gap={1} sx={{ marginTop: 1 }}>
                   <Typography variant="body2" color="text.secondary">
-                    Rs: <strong>{course.payment_plan.payment_price}</strong>
+                    Rs: <strong>{course.payment_plan?.payment_price}</strong>
                   </Typography>
                   <Chip label={course.payment_plan.payment_name} color="secondary" size="small" />
                 </Stack>
@@ -159,7 +159,8 @@ const Landing = () => {
                     >
                       View
                     </Button>
-                    {course.payment_plan.payment_price === 0 || course.bought === true ? (
+                    {course?.payment_plan?.payment_price === 0 ||
+                    course?.student_payment?.bought === true ? (
                       <Button size="small" variant="contained" onClick={() => enroll(course.id)}>
                         Enroll
                       </Button>

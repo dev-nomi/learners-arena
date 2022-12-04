@@ -15,7 +15,7 @@ const AddAssignment = () => {
   const [week, setWeek] = useState("");
   const [course, setCourse] = useState("");
   const [courses, setCourses] = useState([]);
-  const [formValues, setFormValues] = useState([{ title: "", question_type: "short_question" }]);
+  const [formValues, setFormValues] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showWeek, SetShowWeek] = useState(true);
   const open = Boolean(anchorEl);
@@ -174,7 +174,7 @@ const AddAssignment = () => {
                     required
                     fullWidth
                     name="title"
-                    label="Question"
+                    label="Short Question"
                     type="title"
                     id="title"
                     value={element.title || ""}
@@ -188,7 +188,7 @@ const AddAssignment = () => {
                     required
                     fullWidth
                     name="title"
-                    label="Question"
+                    label="Coding Question"
                     type="title"
                     id="title"
                     value={element.title || ""}
@@ -197,7 +197,7 @@ const AddAssignment = () => {
                 </>
               )}
 
-              {index ? (
+              {
                 <Button
                   color="error"
                   sx={{ mt: 2 }}
@@ -206,7 +206,7 @@ const AddAssignment = () => {
                 >
                   Remove
                 </Button>
-              ) : null}
+              }
             </div>
           ))}
           <Button

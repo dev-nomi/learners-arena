@@ -55,7 +55,7 @@ class PagesController < ApplicationController
     )
 
     course = Course.find_by_id(session[:metadata][:course_id].to_i)
-    course.update(bought: true)
+    course.student_payments.create(user_id: current_user.id, bought: true)
 
     redirect_to "#{request.base_url}/checkout_success"
   end

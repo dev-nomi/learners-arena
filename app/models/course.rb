@@ -21,6 +21,8 @@ class Course < ApplicationRecord
   has_many :reference_links, dependent: :destroy
   has_many :videos, dependent: :destroy
   has_many :assignments, dependent: :destroy
+  has_many :student_payments, dependent: :destroy
+  has_many :payment_students, through: :student_payments, source: :user
 
   before_create :add_total_weeks
 

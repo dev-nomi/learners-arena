@@ -64,7 +64,7 @@ const Course = () => {
           sx={{
             margin: 2,
             width: "50%",
-            height: "420px",
+            height: "435px",
           }}
         >
           <CardMedia
@@ -98,6 +98,9 @@ const Course = () => {
             <Typography variant="body2" color="text.secondary">
               <strong>Total Hours</strong> {course.total_hours}
             </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <strong>Total Income</strong> {course.total_income}
+            </Typography>
           </CardContent>
           <CardActions>
             {course.draft === true && (
@@ -126,7 +129,7 @@ const Course = () => {
           sx={{
             margin: 2,
             width: "50%",
-            height: "420px",
+            height: "435px",
             overflowY: "auto",
           }}
         >

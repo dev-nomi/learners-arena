@@ -15,9 +15,7 @@ const AddQuiz = () => {
   const [week, setWeek] = useState("");
   const [course, setCourse] = useState("");
   const [courses, setCourses] = useState([]);
-  const [formValues, setFormValues] = useState([
-    { title: "", ans_key: "", question_type: "short_question" },
-  ]);
+  const [formValues, setFormValues] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
@@ -278,16 +276,14 @@ const AddQuiz = () => {
                 </>
               )}
 
-              {index ? (
-                <Button
-                  color="error"
-                  sx={{ mt: 2 }}
-                  variant="contained"
-                  onClick={() => removeFormFields(index)}
-                >
-                  Remove
-                </Button>
-              ) : null}
+              <Button
+                color="error"
+                sx={{ mt: 2 }}
+                variant="contained"
+                onClick={() => removeFormFields(index)}
+              >
+                Remove
+              </Button>
             </div>
           ))}
           <Button

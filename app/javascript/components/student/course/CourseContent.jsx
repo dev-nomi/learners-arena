@@ -120,12 +120,30 @@ const CourseContent = () => {
 
   return (
     <Container sx={{ marginTop: 3 }}>
-      <Typography component="h1" variant="h4">
-        {course.display_name}
-      </Typography>
-      <Typography component="h6" variant="h6">
-        Course Content: Week {week_id}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          alignContent: "center",
+          marginTop: 3,
+        }}
+      >
+        <Box>
+          {" "}
+          <Typography component="h1" variant="h4">
+            {course.display_name}
+          </Typography>
+          <Typography component="h6" variant="h6">
+            Course Content: Week {week_id}
+          </Typography>
+        </Box>
+
+        <Button variant="contained" to={`/show_course/${course.id}`} component={Link}>
+          Back
+        </Button>
+      </Box>
+
       <Box sx={{ width: "100%", typography: "body1", marginTop: 2 }}>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-import {
-  Avatar,
-  Button,
-  TextField,
-  Box,
-  Typography,
-  Container,
-  Link as MuiLink,
-} from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import { Button, TextField, Box, Typography, Container, Link as MuiLink } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { signInUser } from "../../actions";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import Logo from "../../assests/learners.svg";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -49,15 +41,13 @@ const SignIn = () => {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
-          <PersonIcon />
-        </Avatar>
+        <img src={Logo} style={{ width: "120px" }} />
+
         <Typography component="h1" variant="h4">
           Sign in
         </Typography>

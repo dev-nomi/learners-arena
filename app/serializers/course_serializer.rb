@@ -2,7 +2,7 @@ class CourseSerializer < ActiveModel::Serializer
   attributes :id, :display_name, :description, 
              :image, :level, :total_hours, :outline, :total_weeks, 
              :draft, :enrolled_course, :student_quizzes, :student_assignments,
-             :teacher, :bought
+             :teacher, :student_payment, :total_income
 
   has_many :handouts
   has_many :students
@@ -25,6 +25,12 @@ class CourseSerializer < ActiveModel::Serializer
                             select(:id, :progress).first
   end
 
+  def student_payment
+    return if current_user.nil?
+    object.student_payments.where(course_id: object.id, user_id: current_user.id).
+                            select(:id, :bought).first
+  end
+
   def student_quizzes
     return if current_user.nil?
     current_user.user_quizzes.joins(:quiz).
@@ -39,5 +45,10 @@ class CourseSerializer < ActiveModel::Serializer
 
   def teacher
     object.user
+  end
+
+  def total_income
+    price = (object.student_payments.count * object.payment_plan.payment_price / 2).to_s
+    price.slice(0, price.length - 2) || 0
   end
 end

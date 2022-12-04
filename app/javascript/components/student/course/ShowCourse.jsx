@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Typography,
@@ -39,6 +39,7 @@ const ShowCourse = () => {
   const user = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
   const reportTemplateRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     initialize();
@@ -113,6 +114,10 @@ const ShowCourse = () => {
     });
   };
 
+  const weekWiseNavigation = (week_id, course_id) => {
+    navigate();
+  };
+
   return (
     <Container sx={{ marginTop: 3 }}>
       <Box
@@ -150,17 +155,19 @@ const ShowCourse = () => {
                     <Typography gutterBottom variant="h6" component="div">
                       Course content
                     </Typography>
-                    {[...Array(course.total_weeks)].map((x, i) => (
-                      <ListItem key={i} sx={{ display: "list-item" }}>
-                        <MuiLink
-                          underline="hover"
+                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}>
+                      {[...Array(course.total_weeks)].map((x, i) => (
+                        <Button
+                          key={i}
+                          variant="contained"
                           to={`/course/${course.id}/week/${i + 1}`}
                           component={Link}
+                          sx={{ marginTop: 1, width: "200px" }}
                         >
                           Week {i + 1}
-                        </MuiLink>
-                      </ListItem>
-                    ))}
+                        </Button>
+                      ))}
+                    </Box>
                   </CardContent>
                 </Card>
               </Grid>
