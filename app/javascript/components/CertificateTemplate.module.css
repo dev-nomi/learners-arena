@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Poppins:wght@800&display=swap");
+
+:root {
+  --blue: #6998ab;
+  --light-blue: #1a374d;
+  --white: #fff;
+}
+
+.App {
+  width: 75vw;
+  height: 75vh;
+  position: relative;
+  overflow: hidden;
+  color: var(--light-blue);
+  background-color: var(--blue);
+  background-size: 160%;
+  background-position: 90% 150%;
+  background-repeat: no-repeat;
+  padding: 2.5rem;
+}
+
+.appLogo {
+  position: absolute;
+  top: 0;
+  max-width: 12%;
+}
+
+.content {
+  position: absolute;
+  top: 12rem;
+  right: 2.5rem;
+  width: 65%;
+}
+
+.content * {
+  margin-bottom: 1rem;
+}
+
+.content h1 {
+  font-family: "Poppins", sans-serif;
+  color: var(--white);
+  font-size: 3rem !important;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.content h2 {
+  font-size: 2rem !important;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.byline {
+  position: absolute;
+  right: 2.5rem;
+}
+
+.date {
+  position: absolute;
+  bottom: 2.5rem;
+  font-size: 0.75rem;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.certificateNo {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  font-size: 1rem;
+}

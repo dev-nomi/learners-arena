@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import {
@@ -26,10 +26,8 @@ import InsightsIcon from "@mui/icons-material/Insights";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
-import { Document, Page, pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+import jsPDF from "jspdf";
+import CertificateTemplate from "../../CertificateTemplate";
 
 const ShowCourse = () => {
   let { id } = useParams();
@@ -38,9 +36,9 @@ const ShowCourse = () => {
   const [studentAssignments, setStudentAssignments] = useState([]);
   const [videos, setVideos] = useState([]);
   const [value, setValue] = useState("1");
-  const [certificate, setCertificate] = useState(null);
   const user = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
+  const reportTemplateRef = useRef(null);
 
   useEffect(() => {
     initialize();
@@ -89,56 +87,31 @@ const ShowCourse = () => {
     ["unviewed", unviewed_videos.length],
   ];
 
+  const total = attempted_quizzes?.reduce(
+    (prevValue, currentValue) => prevValue + currentValue.marks,
+    0
+  );
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  function generateCertificate() {
+  const handleGeneratePdf = () => {
     setIsLoading(true);
 
-    const url = "https://api.make.cm/make/t/ecd11561-eedc-4a57-ad43-09985ae11f7a/sync";
+    const doc = new jsPDF({
+      orientation: "l",
+      unit: "px",
+      format: [1100, 480],
+    });
 
-    const headers = {
-      "Content-Type": "application/json",
-      "X-MAKE-API-KEY": "367211b1416ee5c7ed8d7d328c48191e7f112657",
-    };
-
-    const data = {
-      customSize: {
-        width: 1200,
-        height: 600,
-        unit: "px",
+    doc.html(reportTemplateRef.current, {
+      async callback(doc) {
+        await doc.save("document");
+        setIsLoading(false);
       },
-      format: "pdf",
-      data: {
-        name: user?.first_name + " " + user?.last_name,
-        course: course.display_name,
-        date: new Date()
-          .toDateString()
-          .split(" ")
-          .slice(1)
-          .join(" "),
-      },
-      postProcessing: {
-        optimize: true,
-      },
-    };
-
-    axios
-      .post(url, data, {
-        headers: headers,
-      })
-      .then(
-        (response) => {
-          setIsLoading(false);
-          setCertificate(response.data.resultUrl);
-        },
-        (error) => {
-          setIsLoading(false);
-          console.log(error);
-        }
-      );
-  }
+    });
+  };
 
   return (
     <Container sx={{ marginTop: 3 }}>
@@ -153,11 +126,6 @@ const ShowCourse = () => {
         <Typography component="h1" variant="h4">
           {course.display_name}
         </Typography>
-        {course?.enrolled_course?.progress > 90 && (
-          <Button variant="contained" disabled={isLoading} onClick={generateCertificate}>
-            {isLoading ? "Making..." : "Generate Certificate"}
-          </Button>
-        )}
       </Box>
       <Box sx={{ width: "100%", typography: "body1", marginTop: 2 }}>
         <TabContext value={value}>
@@ -240,77 +208,56 @@ const ShowCourse = () => {
           <TabPanel value="2">
             <Box
               sx={{
+                marginTop: 1,
+                marginBottom: 1,
+                textAlign: "center",
                 display: "flex",
-                justifyContent: "space-between",
-                marginTop: 2,
-                marginBottom: 2,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Card sx={{ width: "100%", marginRight: 1 }}>
+              <Card sx={{ width: "70%", margin: 2 }}>
                 <Chart
                   chartType="PieChart"
                   data={quizzes_data}
                   options={{ title: "Quizzes", colors: ["#66bb6a", "#ef5350"] }}
                   width={"100%"}
-                  height={"400px"}
+                  height={"300px"}
                 />
+                <Typography sx={{ margin: 1 }}>
+                  Predicted quiz marks: {total / attempted_quizzes.length || 0}
+                </Typography>
               </Card>
-              <Card sx={{ width: "100%", marginLeft: 1 }}>
+              <Card sx={{ width: "70%", margin: 2 }}>
                 <Chart
                   chartType="PieChart"
                   data={assignments_data}
                   options={{ title: "Assignments", colors: ["#66bb6a", "#ef5350"] }}
                   width={"100%"}
-                  height={"400px"}
+                  height={"300px"}
                 />
               </Card>
-              <Card sx={{ width: "100%", marginLeft: 1 }}>
+              <Card sx={{ width: "70%", margin: 2 }}>
                 <Chart
                   chartType="PieChart"
                   data={videos_data}
                   options={{ title: "Videos", colors: ["#66bb6a", "#ef5350"] }}
                   width={"100%"}
-                  height={"400px"}
+                  height={"300px"}
                 />
               </Card>
             </Box>
           </TabPanel>
           <TabPanel value="3">
-            {!certificate && (
-              <Box
-                sx={{
-                  textAlign: "center",
-                }}
-              >
-                {isLoading ? (
-                  <>
-                    <CircularProgress />
-                    <Typography component="h6" variant="h6" color="primary">
-                      Generating certificate...
-                    </Typography>
-                  </>
-                ) : (
-                  <>
-                    <ErrorOutlineIcon sx={{ fontSize: "60px" }} color="warning" />
-                    <Typography component="h1" variant="h4" color="primary">
-                      No certificate!
-                    </Typography>
-                  </>
-                )}
-              </Box>
-            )}
-            {certificate && (
+            {course?.enrolled_course?.progress > 90 ? (
               <>
                 <Box sx={{ display: "flex", justifyContent: "end" }}>
-                  <Button
-                    variant="contained"
-                    startIcon={<DownloadRoundedIcon />}
-                    href={certificate}
-                    target="_blank"
-                  >
-                    Download
+                  <Button variant="contained" disabled={isLoading} onClick={handleGeneratePdf}>
+                    {isLoading ? "Making..." : "Generate Certificate"}
                   </Button>
                 </Box>
+
                 <Box
                   sx={{
                     display: "flex",
@@ -318,26 +265,31 @@ const ShowCourse = () => {
                     marginTop: 2,
                   }}
                 >
-                  <Document
-                    file={certificate}
-                    loading={
-                      <Box
-                        sx={{
-                          textAlign: "center",
-                          marginTop: 2,
-                        }}
-                      >
-                        <CircularProgress />
-                        <Typography component="h6" variant="h6" color="primary">
-                          Loading certificate...
-                        </Typography>
-                      </Box>
-                    }
-                  >
-                    <Page pageNumber={1} />
-                  </Document>
+                  <div ref={reportTemplateRef}>
+                    <CertificateTemplate
+                      name={user?.first_name + " " + user?.last_name}
+                      course={course.display_name}
+                      date={new Date()
+                        .toDateString()
+                        .split(" ")
+                        .slice(1)
+                        .join(" ")}
+                      certificateNo={Math.floor(100000000 + Math.random() * 900000000)}
+                    />
+                  </div>
                 </Box>
               </>
+            ) : (
+              <Box
+                sx={{
+                  textAlign: "center",
+                }}
+              >
+                <ErrorOutlineIcon sx={{ fontSize: "60px" }} color="warning" />
+                <Typography component="h1" variant="h4" color="primary">
+                  No certificate!
+                </Typography>
+              </Box>
             )}
           </TabPanel>
         </TabContext>

@@ -36,12 +36,14 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 600,
+  height: 400,
   bgcolor: "background.paper",
   border: "2px solid #1A374D",
   boxShadow: 24,
   borderRadius: 1,
   p: 4,
+  overflowY: "auto",
 };
 
 const Landing = () => {

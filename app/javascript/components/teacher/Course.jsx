@@ -64,6 +64,7 @@ const Course = () => {
           sx={{
             margin: 2,
             width: "50%",
+            height: "420px",
           }}
         >
           <CardMedia
@@ -125,6 +126,8 @@ const Course = () => {
           sx={{
             margin: 2,
             width: "50%",
+            height: "420px",
+            overflowY: "auto",
           }}
         >
           <Typography variant="h5" sx={{ marginTop: 2, marginLeft: 2 }} component="div">
