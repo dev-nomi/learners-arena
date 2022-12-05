@@ -109,15 +109,6 @@ const Quizzes = () => {
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
-                      size="small"
-                      color="info"
-                      to={`/quiz/${row.id}`}
-                      sx={{ color: theme.palette.primary.light }}
-                      component={Link}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton
                       sx={{ color: theme.palette.error.main }}
                       size="small"
                       color="error"

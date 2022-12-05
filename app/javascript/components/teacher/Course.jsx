@@ -65,6 +65,7 @@ const Course = () => {
             margin: 2,
             width: "50%",
             height: "435px",
+            overflowY: "auto",
           }}
         >
           <CardMedia
