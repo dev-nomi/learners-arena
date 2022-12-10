@@ -8,6 +8,21 @@ const timeout = () => {
   return new Promise((resolve) => setTimeout(resolve, 300));
 };
 
+const ListOfCourses = lazy(async () => {
+  await timeout();
+  return import("../components/ListOfCourses");
+});
+
+const ContactUs = lazy(async () => {
+  await timeout();
+  return import("../components/ContactUs");
+});
+
+const About = lazy(async () => {
+  await timeout();
+  return import("../components/About");
+});
+
 const AllCoupons = lazy(async () => {
   await timeout();
   return import("../components/admin/coupon/AllCoupons");
@@ -209,6 +224,9 @@ const AllRoutes = () => {
         <Route index element={<Landing />} />
         <Route path="landing" element={<Landing />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/courses_list" element={<ListOfCourses />} />
+        <Route path="/contact_us" element={<ContactUs />} />
 
         <Route element={<ProtectedRoute isAllowed={user} />}>
           <Route path="/home" element={<Home />} />

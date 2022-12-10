@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./CertificateTemplate.module.css";
-import logo from "../assests/learners.svg";
+import logo from "../assests/logo-learners-white";
 
 const CertificateTemplate = ({ name, course, date, certificateNo }) => {
   return (

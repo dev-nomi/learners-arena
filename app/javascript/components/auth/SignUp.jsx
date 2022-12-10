@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Errors from "../Errors";
 import { useTheme } from "@mui/material/styles";
-import Logo from "../../assests/learners.svg";
+import Logo from "../../assests/logo-learners-black";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -56,6 +56,7 @@ const SignUp = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: 2,
         }}
       >
         <img src={Logo} style={{ width: "120px" }} />

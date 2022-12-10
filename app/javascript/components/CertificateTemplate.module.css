@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Poppins:wght@800&display=swap");
 
 :root {
-  --blue: #6998ab;
   --light-blue: #1a374d;
   --white: #fff;
 }
@@ -11,18 +10,20 @@
   height: 75vh;
   position: relative;
   overflow: hidden;
-  color: var(--light-blue);
-  background-color: var(--blue);
+  color: var(--white);
+  background-color: var(--light-blue);
   background-size: 160%;
   background-position: 90% 150%;
   background-repeat: no-repeat;
   padding: 2.5rem;
+  border-radius: 5px;
 }
 
 .appLogo {
   position: absolute;
   top: 0;
-  max-width: 12%;
+  max-width: 10%;
+  margin-top: 10px;
 }
 
 .content {

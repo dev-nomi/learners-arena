@@ -34,6 +34,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import QuizIcon from "@mui/icons-material/Quiz";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
+import Logo from "../assests/logo-learners-white";
 
 const Navbar = () => {
   const auth_token = useSelector((state) => state.auth.auth_token);
@@ -117,9 +118,53 @@ const Navbar = () => {
             ) : (
               <></>
             )}
+            {isLoggedIn ? (
+              <></>
+            ) : (
+              <Box>
+                <img src={Logo} style={{ width: "110px", marginTop: "2px" }} />
+              </Box>
+            )}
+
             <Typography variant="h6" sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}>
               Learners arena
             </Typography>
+            {isLoggedIn ? (
+              <></>
+            ) : (
+              <>
+                {" "}
+                <Typography
+                  to="/"
+                  component={Link}
+                  sx={{ padding: 2, color: "white", textDecoration: "none" }}
+                >
+                  Home
+                </Typography>
+                <Typography
+                  to="/about"
+                  component={Link}
+                  sx={{ padding: 2, color: "white", textDecoration: "none" }}
+                >
+                  About
+                </Typography>
+                <Typography
+                  to="/courses_list"
+                  component={Link}
+                  sx={{ padding: 2, color: "white", textDecoration: "none" }}
+                >
+                  Courses
+                </Typography>
+                <Typography
+                  to="/contact_us"
+                  component={Link}
+                  sx={{ padding: 2, color: "white", textDecoration: "none" }}
+                >
+                  Contact us
+                </Typography>
+              </>
+            )}
+
             {isLoggedIn ? (
               <Fragment>
                 <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -305,8 +350,23 @@ const Navbar = () => {
               </Fragment>
             ) : (
               <Fragment>
-                <Button to="/sign_in" component={Link} color="secondary" variant="contained">
+                <Button
+                  to="/sign_in"
+                  component={Link}
+                  color="secondary"
+                  variant="contained"
+                  sx={{ mr: 1, borderRadius: 4 }}
+                >
                   Sign In
+                </Button>
+                <Button
+                  to="/sign_up"
+                  component={Link}
+                  color="secondary"
+                  variant="contained"
+                  sx={{ borderRadius: 4 }}
+                >
+                  Register
                 </Button>
               </Fragment>
             )}

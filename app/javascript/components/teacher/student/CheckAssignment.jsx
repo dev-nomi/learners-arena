@@ -9,10 +9,10 @@ const CheckAssignment = () => {
   let { id } = useParams();
   const [assignment, setAssignment] = useState([]);
   const [detail, setDetail] = useState("");
-  const [marks, setMarks] = useState("");
   const [questions, setQuestions] = useState([]);
   const theme = useTheme();
   const navigate = useNavigate();
+  const [formValues, setFormValues] = useState([]);
 
   useEffect(() => {
     initialize();
@@ -33,6 +33,11 @@ const CheckAssignment = () => {
     return assignment["ans_keys"].filter((ans_key) => ans_key.q_id === question_id)[0].ans;
   };
 
+  const marks = formValues?.reduce(
+    (previousScore, currentScore) => previousScore + currentScore,
+    0
+  );
+
   const checkAssignment = (id) => {
     const data = new FormData();
     data.append("id", id);
@@ -45,6 +50,12 @@ const CheckAssignment = () => {
         navigate(`/show_student/${assignment.user.id}`);
       })
       .catch((error) => {});
+  };
+
+  let handleChange = (i, e) => {
+    let newFormValues = [...formValues];
+    newFormValues[i] = parseInt(e.target.value, 10);
+    setFormValues(newFormValues);
   };
 
   return (
@@ -72,17 +83,6 @@ const CheckAssignment = () => {
               alignItems: "center",
             }}
           >
-            <TextField
-              size="small"
-              name="marks"
-              label="Marks"
-              type="number"
-              id="marks"
-              placeholder={`[1-${questions.length * 5}]`}
-              InputProps={{ inputProps: { min: 1, max: questions.length * 5 } }}
-              value={marks}
-              onChange={(e) => setMarks(e.target.value)}
-            />
             <Button
               sx={{ marginLeft: 2, padding: 1 }}
               variant="contained"
@@ -107,13 +107,33 @@ const CheckAssignment = () => {
             <Fragment key={question.id}>
               {question.question_type === "short_question" ? (
                 <>
-                  <Typography
-                    variant="h6"
-                    component="h2"
-                    sx={{ mt: 1, color: theme.palette.primary.main }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
                   >
-                    <strong>Question {index + 1} :</strong>
-                  </Typography>
+                    <Typography
+                      variant="h6"
+                      component="h2"
+                      sx={{ mt: 1, color: theme.palette.primary.main }}
+                    >
+                      <strong>Question {index + 1} :</strong>
+                    </Typography>
+                    <TextField
+                      size="small"
+                      name="marks"
+                      label="Marks"
+                      type="number"
+                      id="marks"
+                      placeholder={"[1-5]"}
+                      InputProps={{ inputProps: { min: 1, max: 5 } }}
+                      value={formValues[index] || ""}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  </Box>
                   <Typography variant="body2">{question.title}</Typography>
                   <Typography
                     variant="h6"
@@ -128,13 +148,33 @@ const CheckAssignment = () => {
                 </>
               ) : (
                 <>
-                  <Typography
-                    variant="h6"
-                    component="h2"
-                    sx={{ mt: 1, color: theme.palette.primary.main }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignContent: "center",
+                      alignItems: "center",
+                    }}
                   >
-                    <strong>Question {index + 1} :</strong>
-                  </Typography>
+                    <Typography
+                      variant="h6"
+                      component="h2"
+                      sx={{ mt: 1, color: theme.palette.primary.main }}
+                    >
+                      <strong>Question {index + 1} :</strong>
+                    </Typography>
+                    <TextField
+                      size="small"
+                      name="marks"
+                      label="Marks"
+                      type="number"
+                      id="marks"
+                      placeholder={"[1-5]"}
+                      InputProps={{ inputProps: { min: 1, max: 5 } }}
+                      value={formValues[index] || ""}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  </Box>
                   <Typography variant="body2">{question.title}</Typography>
                   <Typography
                     variant="h6"

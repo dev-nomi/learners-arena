@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import Logo from "../../assests/learners.svg";
+import Logo from "../../assests/logo-learners-black";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -44,6 +44,7 @@ const SignIn = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: 2,
         }}
       >
         <img src={Logo} style={{ width: "120px" }} />
