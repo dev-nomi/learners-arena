@@ -50,6 +50,7 @@ const AllTeachers = () => {
     axios.delete(`/api/v1/teachers/${teacherID}`).then(() => {
       toast.success("Successfully delete the teacher.");
       initialize();
+      setOpen(false);
     });
   };
 

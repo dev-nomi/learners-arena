@@ -20,7 +20,7 @@ class PagesController < ApplicationController
   def checkout
     course = Course.find_by_id(params[:course_id])
 
-    Stripe.api_key = 'sk_test_51M8k8uDrsSBJWVANctSn2Y0S9F9hA3kKA5JkmWXBMg1wNJH2401sk2ELFaOL2jaugVhJHpjxfyMkIigBa0J3y0vK00LFfO9YDr'
+    Stripe.api_key = 'sk_test_51MFzU3B9k6jfn1J6vhnbKnfQYTgYjIZnRuRhuIjtwaOTldEEmDFz6bgA9NnIDMtnWFYEh69EcXh6gNnle7Lxwg7N000GTgjwoK'
 
     price_id = Stripe::Product.retrieve(course.payment_id)
 
@@ -48,7 +48,7 @@ class PagesController < ApplicationController
   end
 
   def success
-    Stripe.api_key = 'sk_test_51M8k8uDrsSBJWVANctSn2Y0S9F9hA3kKA5JkmWXBMg1wNJH2401sk2ELFaOL2jaugVhJHpjxfyMkIigBa0J3y0vK00LFfO9YDr'
+    Stripe.api_key = 'sk_test_51MFzU3B9k6jfn1J6vhnbKnfQYTgYjIZnRuRhuIjtwaOTldEEmDFz6bgA9NnIDMtnWFYEh69EcXh6gNnle7Lxwg7N000GTgjwoK'
 
     session = Stripe::Checkout::Session.retrieve(
       params[:session_id],

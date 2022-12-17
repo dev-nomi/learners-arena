@@ -1,6 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Typography, Box, Card, CardContent, Grid } from "@mui/material";
 import axios from "axios";
+import TeacherLogo from "../../assests/teacher.png"
+import StudentLogo from "../../assests/student.png"
+import CourseLogo from "../../assests/graduation-cap.png"
 
 const AdminDashboard = () => {
   const [teachers, setTeachers] = useState([]);
@@ -53,17 +56,15 @@ const AdminDashboard = () => {
         <Grid item xs={4}>
           <Card sx={{ maxWidth: 300 }}>
             <CardContent sx={{ textAlign: "center" }}>
+            <img src={CourseLogo} width="100" />
               <Typography
                 gutterBottom
                 color="primary"
                 variant="h5"
                 component="div"
-                fontSize={"5.5rem"}
+                fontSize={"2.5rem"}
               >
-                {courses.length}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Courses
+                {courses.length} Courses
               </Typography>
             </CardContent>
           </Card>
@@ -71,17 +72,15 @@ const AdminDashboard = () => {
         <Grid item xs={4}>
           <Card sx={{ maxWidth: 300 }}>
             <CardContent sx={{ textAlign: "center" }}>
+            <img src={TeacherLogo} width="100" />
               <Typography
                 gutterBottom
                 color="primary"
                 variant="h5"
                 component="div"
-                fontSize={"5.5rem"}
+                fontSize={"2.5rem"}
               >
-                {teachers.length}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Teachers
+                {teachers.length} Teachers
               </Typography>
             </CardContent>
           </Card>
@@ -89,17 +88,15 @@ const AdminDashboard = () => {
         <Grid item xs={4}>
           <Card sx={{ maxWidth: 300 }}>
             <CardContent sx={{ textAlign: "center" }}>
+            <img src={StudentLogo} width="100" />
               <Typography
                 gutterBottom
                 color="primary"
                 variant="h5"
                 component="div"
-                fontSize={"5.5rem"}
+                fontSize={"2.5rem"}
               >
-                {students.length}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Students
+                {students.length} Students
               </Typography>
             </CardContent>
           </Card>

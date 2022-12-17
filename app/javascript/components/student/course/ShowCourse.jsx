@@ -103,7 +103,7 @@ const ShowCourse = () => {
     const doc = new jsPDF({
       orientation: "l",
       unit: "px",
-      format: [1100, 480],
+      format: [1130, 522],
     });
 
     doc.html(reportTemplateRef.current, {
@@ -112,10 +112,6 @@ const ShowCourse = () => {
         setIsLoading(false);
       },
     });
-  };
-
-  const weekWiseNavigation = (week_id, course_id) => {
-    navigate();
   };
 
   return (

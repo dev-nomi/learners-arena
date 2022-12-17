@@ -76,7 +76,7 @@ const AllCourses = () => {
           Courses
         </Typography>
       </Box>
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <TableContainer component={Paper} sx={{ marginTop: 4, marginBottom: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>

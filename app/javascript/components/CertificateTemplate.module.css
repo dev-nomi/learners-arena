@@ -17,6 +17,7 @@
   background-repeat: no-repeat;
   padding: 2.5rem;
   border-radius: 5px;
+  border: 10px solid cadetblue;
 }
 
 .appLogo {

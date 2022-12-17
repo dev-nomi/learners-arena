@@ -2,7 +2,7 @@ module StripeServices
   class Coupon
 
     def initialize
-      Stripe.api_key = 'sk_test_51M8k8uDrsSBJWVANctSn2Y0S9F9hA3kKA5JkmWXBMg1wNJH2401sk2ELFaOL2jaugVhJHpjxfyMkIigBa0J3y0vK00LFfO9YDr'
+      Stripe.api_key = 'sk_test_51MFzU3B9k6jfn1J6vhnbKnfQYTgYjIZnRuRhuIjtwaOTldEEmDFz6bgA9NnIDMtnWFYEh69EcXh6gNnle7Lxwg7N000GTgjwoK'
     end
 
     def add(name, price_off)

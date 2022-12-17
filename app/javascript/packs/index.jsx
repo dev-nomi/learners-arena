@@ -47,6 +47,7 @@ const theme = createTheme({
 const App = () => {
   const user = useSelector((state) => state.auth.user);
 
+  //chat bot theme
   const botTheme = {
     background: "#f5f8fb",
     fontFamily: "Ubuntu",
@@ -59,6 +60,7 @@ const App = () => {
     userFontColor: "#4a4a4a",
   };
 
+  //send response from chatbot to backend
   const SendResponse = (data) => {
     const response = new FormData();
     response.append("response[title]", data.previousStep.message);

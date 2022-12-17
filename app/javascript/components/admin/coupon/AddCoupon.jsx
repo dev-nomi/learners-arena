@@ -54,7 +54,7 @@ const AddCoupon = () => {
             required
             fullWidth
             id="name"
-            label="Name"
+            label="Name "
             name="name"
             autoFocus
             value={name}

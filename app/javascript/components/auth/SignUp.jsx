@@ -43,7 +43,6 @@ const SignUp = () => {
         navigate("/home");
       })
       .catch((error) => {
-        toast.error(error.response);
         toast.error(<Errors errors={error.response.data} />);
       });
   };

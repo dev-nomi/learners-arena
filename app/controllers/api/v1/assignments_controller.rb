@@ -1,16 +1,19 @@
 class Api::V1::AssignmentsController < ApplicationController
   respond_to :json
 
+  #/api/v1/assignmnets get
   def index
     @assignments = current_user.assignments.all.order(created_at: :desc)
     render json: @assignments
   end
 
+  #api/v1/assignmnets/1 get
   def show
     @assignment = Assignment.find_by_id(params[:id])
     render json: @assignment
   end
 
+  #api/v1/assignmnets post
   def create
     @assignment = Assignment.new(assignment_params)
     @assignment.user = current_user
@@ -27,6 +30,7 @@ class Api::V1::AssignmentsController < ApplicationController
     end
   end
 
+  #api/v1/assignmnets/1 put/patch
   def update
     @assignment = Assignment.find_by_id(params[:id])
 
@@ -37,6 +41,7 @@ class Api::V1::AssignmentsController < ApplicationController
     end
   end
 
+  #ap1/v1/assignmets/1 delete
   def destroy
     @assignment = Assignment.find_by_id(params[:id])
     @assignment.destroy
