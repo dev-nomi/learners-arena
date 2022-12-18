@@ -23,6 +23,7 @@ import {
 import { toast } from "react-toastify";
 import { useTheme } from "@mui/material/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useSelector } from "react-redux";
 
 const Course = () => {
   let { id } = useParams();
@@ -30,6 +31,7 @@ const Course = () => {
   const [students, setStudents] = useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
+  const role = useSelector((state) => state.auth.user.role);
 
   useEffect(() => {
     initialize();
@@ -104,26 +106,30 @@ const Course = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            {course.draft === true && (
-              <Button
-                size="small"
-                onClick={() => publishCourse(course.id)}
-                variant="contained"
-                sx={{ mr: 1 }}
-              >
-                Publish
-              </Button>
+            {role === "teacher" && (
+              <>
+                {course.draft === true && (
+                  <Button
+                    size="small"
+                    onClick={() => publishCourse(course.id)}
+                    variant="contained"
+                    sx={{ mr: 1 }}
+                  >
+                    Publish
+                  </Button>
+                )}
+                <Button
+                  size="small"
+                  to={`/course/${course.id}/edit`}
+                  color="success"
+                  variant="contained"
+                  component={Link}
+                  sx={{ mr: 1 }}
+                >
+                  Edit
+                </Button>
+              </>
             )}
-            <Button
-              size="small"
-              to={`/course/${course.id}/edit`}
-              color="success"
-              variant="contained"
-              component={Link}
-              sx={{ mr: 1 }}
-            >
-              Edit
-            </Button>
           </CardActions>
         </Card>
         <Card
@@ -142,51 +148,55 @@ const Course = () => {
           </CardContent>
         </Card>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography component="h1" variant="h4" sx={{ margin: 2 }}>
-          Enrolled Students
-        </Typography>
-      </Box>
-      <TableContainer component={Paper} sx={{ margin: 2, marginBottom: 4 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
-            <TableRow>
-              <TableCell sx={{ color: "white" }}>ID</TableCell>
-              <TableCell sx={{ color: "white" }}>Name</TableCell>
-              <TableCell sx={{ color: "white" }}>Email</TableCell>
-              <TableCell align="center" sx={{ color: "white" }}>
-                Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {students.map((row, index) => (
-              <Fragment key={row.id}>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{row.full_name}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      sx={{ color: theme.palette.primary.light }}
-                      to={`/show_student/${row.id}`}
-                      component={Link}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
+      {role === "teacher" && (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography component="h1" variant="h4" sx={{ margin: 2 }}>
+              Enrolled Students
+            </Typography>
+          </Box>
+          <TableContainer component={Paper} sx={{ margin: 2, marginBottom: 4 }}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>ID</TableCell>
+                  <TableCell sx={{ color: "white" }}>Name</TableCell>
+                  <TableCell sx={{ color: "white" }}>Email</TableCell>
+                  <TableCell align="center" sx={{ color: "white" }}>
+                    Action
                   </TableCell>
                 </TableRow>
-              </Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              </TableHead>
+              <TableBody>
+                {students.map((row, index) => (
+                  <Fragment key={row.id}>
+                    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{row.full_name}</TableCell>
+                      <TableCell>{row.email}</TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          size="small"
+                          sx={{ color: theme.palette.primary.light }}
+                          to={`/show_student/${row.id}`}
+                          component={Link}
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </Fragment>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
+      )}
     </Container>
   );
 };

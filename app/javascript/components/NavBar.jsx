@@ -126,14 +126,18 @@ const Navbar = () => {
               </Box>
             )}
 
-            <Typography variant="h6" sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}>
+            <Typography
+              to="/"
+              component={Link}
+              variant="h6"
+              sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}
+            >
               Learners arena
             </Typography>
             {isLoggedIn ? (
               <></>
             ) : (
               <>
-                {" "}
                 <Typography
                   to="/"
                   component={Link}

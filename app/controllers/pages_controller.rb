@@ -59,4 +59,8 @@ class PagesController < ApplicationController
 
     redirect_to "#{request.base_url}/checkout_success"
   end
+
+  def send_coupons
+    CouponMailer.send_coupon(params[:coupon_code]).deliver_later
+  end
 end

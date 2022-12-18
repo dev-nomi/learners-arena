@@ -11,7 +11,7 @@ const CheckoutSuccess = () => {
         <Typography component="h1" variant="h4" color="primary">
           Successfully Buy!
         </Typography>
-        <Button sx={{ mt: 4 }} to="/landing" component={Link} variant="contained">
+        <Button sx={{ mt: 4 }} to="/courses_list" component={Link} variant="contained">
           Back
         </Button>
       </Box>

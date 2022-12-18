@@ -276,6 +276,7 @@ const AllRoutes = () => {
 
         <Route element={<ProtectedRoute isAllowed={user && user.role == "admin"} />}>
           <Route path="/admin/all_courses" element={<AllCourses />} />
+          <Route path="/admin/course/:id" element={<Course />} />
           <Route path="/admin/all_students" element={<AllStudents />} />
           <Route path="/admin/all_teachers" element={<AllTeachers />} />
           <Route path="/admin/all_responses" element={<AllResponses />} />

@@ -197,6 +197,7 @@ const ListOfCourses = () => {
             Price: {selectedCourse?.payment_plan?.payment_price}
           </DialogContentText>
           <TextField
+            helperText="If you have coupon code please enter"
             autoFocus
             margin="normal"
             id="coupon_code"
@@ -215,7 +216,7 @@ const ListOfCourses = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} variant="outlined">
+          <Button onClick={handleDialogClose} variant="contained" color="error">
             Cancel
           </Button>
           <Button onClick={checkout} autoFocus variant="contained">

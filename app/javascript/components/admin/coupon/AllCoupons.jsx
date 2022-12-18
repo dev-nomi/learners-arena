@@ -12,10 +12,14 @@ import {
   Box,
   Container,
   Chip,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import MailRoundedIcon from "@mui/icons-material/MailRounded";
+import { toast } from "react-toastify";
 
 const AllCoupons = () => {
   const [coupons, setCoupons] = useState([]);
@@ -30,6 +34,18 @@ const AllCoupons = () => {
       .get("/api/v1/coupons")
       .then((response) => {
         setCoupons(response.data);
+      })
+      .catch((error) => {});
+  };
+
+  const sendCoupon = (couponCode) => {
+    const data = new FormData();
+    data.append("coupon_code", couponCode);
+
+    axios
+      .post("/send_coupons", data)
+      .then((response) => {
+        toast.success("Successfully send the coupon.");
       })
       .catch((error) => {});
   };
@@ -60,6 +76,9 @@ const AllCoupons = () => {
               <TableCell sx={{ color: "white" }}>Name</TableCell>
               <TableCell sx={{ color: "white" }}>Code</TableCell>
               <TableCell sx={{ color: "white" }}>Price Off</TableCell>
+              <TableCell align="center" sx={{ color: "white" }}>
+                Action
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,6 +92,17 @@ const AllCoupons = () => {
                   </TableCell>
                   <TableCell>
                     <Chip label={"Rs. " + row.price_off} color="info" size="small" />
+                  </TableCell>
+                  <TableCell align="center">
+                    <Tooltip title="Send Coupon">
+                      <IconButton
+                        size="small"
+                        color="success"
+                        onClick={() => sendCoupon(row.coupon_id)}
+                      >
+                        <MailRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               </Fragment>

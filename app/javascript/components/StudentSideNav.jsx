@@ -35,7 +35,7 @@ const TeacherSideNav = ({ anchor, toggleDrawer }) => {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton to="/" component={Link}>
+          <ListItemButton to="/courses_list" component={Link}>
             <ListItemIcon>
               <SchoolRoundedIcon />
             </ListItemIcon>

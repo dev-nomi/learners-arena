@@ -197,19 +197,19 @@ const Landing = () => {
                   </Stack>
                 </CardContent>
                 <CardActions>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      handleOpen();
+                      setModalData(course);
+                    }}
+                  >
+                    View
+                  </Button>
                   {isLoggedIn && user?.role === "student" ? (
                     <>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        color="success"
-                        onClick={() => {
-                          handleOpen();
-                          setModalData(course);
-                        }}
-                      >
-                        View
-                      </Button>
                       {course?.payment_plan?.payment_price === 0 ||
                       course?.student_payment?.bought === true ? (
                         <Button size="small" variant="contained" onClick={() => enroll(course.id)}>
@@ -248,6 +248,7 @@ const Landing = () => {
               Price: {selectedCourse?.payment_plan?.payment_price}
             </DialogContentText>
             <TextField
+              helperText="If you have coupon code please enter"
               autoFocus
               margin="normal"
               id="coupon_code"
@@ -266,7 +267,7 @@ const Landing = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleDialogClose} variant="outlined">
+            <Button onClick={handleDialogClose} variant="contained" color="error">
               Cancel
             </Button>
             <Button onClick={checkout} autoFocus variant="contained">

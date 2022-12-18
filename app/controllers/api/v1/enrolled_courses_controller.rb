@@ -18,6 +18,7 @@ class Api::V1::EnrolledCoursesController < ApplicationController
         todo_assignment = @user.user_assignments.create(assignment_id: assignment.id, status: 'in_progress')
       end
 
+      CourseMailer.course_enrollment(@course, @user).deliver_later
       render json: enroll_course
     else
       render json: enroll_course.errors.full_messages, status: :unprocessable_entity

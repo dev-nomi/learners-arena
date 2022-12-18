@@ -113,7 +113,7 @@ const AllCourses = () => {
                     <IconButton
                       size="small"
                       sx={{ color: theme.palette.primary.light }}
-                      to={`/course/${row.id}`}
+                      to={`/admin/course/${row.id}`}
                       component={Link}
                     >
                       <VisibilityIcon />
