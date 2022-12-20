@@ -122,7 +122,7 @@ const Navbar = () => {
               <></>
             ) : (
               <Box>
-                <img src={Logo} style={{ width: "110px", marginTop: "2px" }} />
+                <img src={Logo} style={{ width: "80px", marginTop: "2px" }} />
               </Box>
             )}
 

@@ -36,13 +36,48 @@ const StudentDashboard = () => {
   const showCourse = (id) => {
     navigate(`/show_course/${id}`);
   };
+
+  const completed_course = courses.filter((course) => course.enrolled_course.progress >= 90);
+  const un_completed_course = courses.filter((course) => course.enrolled_course.progress < 90);
+
   return (
     <Container sx={{ marginTop: 3 }}>
       <Typography component="h1" variant="h4">
         Student Dashboard
       </Typography>
       <Grid container spacing={2} mt={2} mb={4}>
-        {courses.map((course) => (
+        {un_completed_course.map((course) => (
+          <Grid item xs={4} key={course.id}>
+            <Card sx={{ maxWidth: 345 }} onClick={() => showCourse(course.id)}>
+              <CardMedia
+                component="img"
+                height="140"
+                image={`http://localhost:3000` + course.image}
+                alt="course image"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {course.display_name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {truncate(course.description)}
+                </Typography>
+              </CardContent>
+              <CardActions></CardActions>
+              <LinearProgress
+                variant="determinate"
+                color="success"
+                value={course.enrolled_course.progress}
+              />
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      <Typography component="h1" variant="h4" sx={{ textAlign: "center", marginTop: 2 }}>
+        Completed Courses
+      </Typography>
+      <Grid container spacing={2} mt={2} mb={4}>
+        {completed_course.map((course) => (
           <Grid item xs={4} key={course.id}>
             <Card sx={{ maxWidth: 345 }} onClick={() => showCourse(course.id)}>
               <CardMedia
