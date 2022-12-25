@@ -17,6 +17,7 @@ import {
   Container,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -146,14 +147,16 @@ const Quizzes = () => {
                     </MuiLink>
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      sx={{ color: theme.palette.error.main }}
-                      size="small"
-                      color="error"
-                      onClick={() => handleClickOpen(row.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="Delete quiz">
+                      <IconButton
+                        sx={{ color: theme.palette.error.main }}
+                        size="small"
+                        color="error"
+                        onClick={() => handleClickOpen(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
                 <Dialog

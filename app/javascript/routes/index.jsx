@@ -8,6 +8,11 @@ const timeout = () => {
   return new Promise((resolve) => setTimeout(resolve, 300));
 };
 
+const EditUser = lazy(async () => {
+  await timeout();
+  return import("../components/admin/student/EditUser");
+});
+
 const ListOfCourses = lazy(async () => {
   await timeout();
   return import("../components/ListOfCourses");
@@ -277,6 +282,7 @@ const AllRoutes = () => {
         <Route element={<ProtectedRoute isAllowed={user && user.role == "admin"} />}>
           <Route path="/admin/all_courses" element={<AllCourses />} />
           <Route path="/admin/course/:id" element={<Course />} />
+          <Route path="/admin/course/:id/edit" element={<EditCourse />} />
           <Route path="/admin/all_students" element={<AllStudents />} />
           <Route path="/admin/all_teachers" element={<AllTeachers />} />
           <Route path="/admin/all_responses" element={<AllResponses />} />
@@ -284,12 +290,14 @@ const AllRoutes = () => {
           <Route path="/admin/add_payment_plan" element={<AddPaymentPlan />} />
           <Route path="/admin/all_coupons" element={<AllCoupons />} />
           <Route path="/admin/add_coupon" element={<AddCoupon />} />
+          <Route path="/admin/student/:id/edit" element={<EditUser />} />
+          <Route path="/admin/teacher/:id/edit" element={<EditUser />} />
         </Route>
 
         <Route element={<ProtectedRoute isAllowed={!user || user?.id === null} />}>
           <Route path="/sign_up" element={<SignUp />} />
+          <Route path="/sign_in" element={<SignIn />} />
         </Route>
-        <Route path="/sign_in" element={<SignIn />} />
       </Routes>
     </Suspense>
   );

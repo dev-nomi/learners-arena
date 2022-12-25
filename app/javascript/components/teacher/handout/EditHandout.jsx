@@ -75,6 +75,9 @@ const EditHandout = () => {
             name="display_name"
             autoFocus
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -88,6 +91,9 @@ const EditHandout = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           {pdfUrl && selectedPdf && (

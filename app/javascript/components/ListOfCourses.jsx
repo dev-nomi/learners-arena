@@ -85,8 +85,8 @@ const ListOfCourses = () => {
     axios
       .get("/all_courses")
       .then((response) => {
-        setCourses(response.data.published_courses);
-        setRows(response.data.published_courses);
+        setCourses(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
   };

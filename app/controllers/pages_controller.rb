@@ -4,11 +4,12 @@ class PagesController < ApplicationController
   
   def index
     @published = Course.published.with_attached_image.includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
+    render json: @published
+  end
+
+  def admin_all_courses
     @courses = Course.with_attached_image.includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
-    render json: { 
-      courses: ActiveModel::Serializer::CollectionSerializer.new(@courses, serializer: AdminCourseSerializer), 
-      published_courses: @published 
-    }
+    render json: @courses
   end
 
   def students

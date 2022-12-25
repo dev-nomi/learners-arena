@@ -7,22 +7,19 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Dialog,
-  DialogActions,
-  DialogTitle,
   IconButton,
   Chip,
-  Button,
   Container,
   Box,
   Typography,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -80,17 +77,9 @@ const IOSSwitch = styled((props) => (
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
-  const [courseID, setCourseID] = useState("");
-  const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [searched, setSearched] = useState("");
   const theme = useTheme();
-
-  const handleClickOpen = (id) => {
-    setOpen(true);
-    setCourseID(id);
-  };
-  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     initialize();
@@ -102,20 +91,12 @@ const AllCourses = () => {
 
   const initialize = () => {
     axios
-      .get("/all_courses")
+      .get("/admin/courses")
       .then((response) => {
-        setCourses(response.data.courses);
-        setRows(response.data.courses);
+        setCourses(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
-  };
-
-  const handleDelete = () => {
-    axios.delete(`/api/v1/courses/${courseID}`).then(() => {
-      toast.success("Successfully delete the course.");
-      initialize();
-      setOpen(false);
-    });
   };
 
   const requestSearch = (searchedVal) => {
@@ -212,44 +193,38 @@ const AllCourses = () => {
                   </TableCell>
                   <TableCell>{`${row.teacher.first_name} ${row.teacher.last_name}`}</TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      size="large"
-                      sx={{ color: theme.palette.primary.light }}
-                      to={`/admin/course/${row.id}`}
-                      component={Link}
-                    >
-                      <VisibilityIcon size="large" />
-                    </IconButton>
-                    <FormControlLabel
-                      control={
-                        <IOSSwitch
-                          sx={{ m: 1 }}
-                          checked={!row.draft}
-                          onChange={(e) => handleChange(row.id)}
-                          inputProps={{ "aria-label": "controlled" }}
-                        />
-                      }
-                    />
+                    <Tooltip title="Edit course">
+                      <IconButton
+                        sx={{ color: theme.palette.success.main }}
+                        to={`/admin/course/${row.id}/edit`}
+                        component={Link}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="View course">
+                      <IconButton
+                        sx={{ color: theme.palette.primary.light }}
+                        to={`/admin/course/${row.id}`}
+                        component={Link}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title={row.draft ? "Publish course" : "Draft course"}>
+                      <FormControlLabel
+                        control={
+                          <IOSSwitch
+                            sx={{ m: 1 }}
+                            checked={!row.draft}
+                            onChange={(e) => handleChange(row.id)}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        }
+                      />
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete this course?"}
-                  </DialogTitle>
-                  <DialogActions>
-                    <Button onClick={handleDelete} variant="contained" color="success">
-                      Yes
-                    </Button>
-                    <Button onClick={handleClose} autoFocus variant="contained" color="error">
-                      No
-                    </Button>
-                  </DialogActions>
-                </Dialog>
               </Fragment>
             ))}
           </TableBody>

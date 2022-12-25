@@ -26,7 +26,7 @@ class Api::V1::VideosController < ApplicationController
     if @video.update(video_params)
       render json: @video
     else
-      render json: { message: 'Cannot update the video.' }
+      render json: @course.errors.full_messages, status: :unprocessable_entity
     end
   end
 

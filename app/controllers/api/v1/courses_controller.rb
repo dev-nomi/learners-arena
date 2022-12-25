@@ -26,7 +26,7 @@ class Api::V1::CoursesController < ApplicationController
     if @course.update(course_params)
       render json: @course
     else
-      render json: { message: 'Cannot update the course.' }
+      render json: @course.errors.full_messages, status: :unprocessable_entity
     end
   end
 

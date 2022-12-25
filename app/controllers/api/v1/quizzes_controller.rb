@@ -40,7 +40,7 @@ class Api::V1::QuizzesController < ApplicationController
     if @quiz.update(quiz_params)
       render json: @quiz
     else
-      render json: { message: 'Cannot update the quiz.' }
+      render json: @course.errors.full_messages, status: :unprocessable_entity
     end
   end
 

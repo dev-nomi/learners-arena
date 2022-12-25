@@ -30,9 +30,9 @@ const AdminDashboard = () => {
       .catch((error) => {});
 
     axios
-      .get("/all_courses")
+      .get("/admin/courses")
       .then((response) => {
-        setCourses(response.data.courses);
+        setCourses(response.data);
       })
       .catch((error) => {});
   };

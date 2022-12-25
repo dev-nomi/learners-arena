@@ -27,7 +27,7 @@ class Api::V1::HandoutsController < ApplicationController
     if @handout.update(handout_params)
       render json: @handout
     else
-      render json: { message: 'Cannot update the handout.' }
+      render json: @course.errors.full_messages, status: :unprocessable_entity
     end
   end
 

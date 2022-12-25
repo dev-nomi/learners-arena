@@ -90,7 +90,7 @@ const Landing = () => {
     axios
       .get("/all_courses")
       .then((response) => {
-        setCourses(response.data.published_courses);
+        setCourses(response.data);
       })
       .catch((error) => {});
   };

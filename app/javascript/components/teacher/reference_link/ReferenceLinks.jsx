@@ -17,6 +17,7 @@ import {
   Container,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -149,32 +150,38 @@ const ReferenceLinks = () => {
                     </MuiLink>
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      color="info"
-                      to={`/reference_link/${row.id}`}
-                      sx={{ color: theme.palette.primary.light }}
-                      component={Link}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      color="info"
-                      to={`/reference_link/${row.id}/edit`}
-                      sx={{ color: theme.palette.success.main }}
-                      component={Link}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      sx={{ color: theme.palette.error.main }}
-                      size="small"
-                      color="error"
-                      onClick={() => handleClickOpen(row.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="View reference link">
+                      <IconButton
+                        size="small"
+                        color="info"
+                        to={`/reference_link/${row.id}`}
+                        sx={{ color: theme.palette.primary.light }}
+                        component={Link}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit reference link">
+                      <IconButton
+                        size="small"
+                        color="info"
+                        to={`/reference_link/${row.id}/edit`}
+                        sx={{ color: theme.palette.success.main }}
+                        component={Link}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete reference link">
+                      <IconButton
+                        sx={{ color: theme.palette.error.main }}
+                        size="small"
+                        color="error"
+                        onClick={() => handleClickOpen(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
                 <Dialog

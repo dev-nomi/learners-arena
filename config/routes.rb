@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   post '/send_coupons', to: 'pages#send_coupons'
   get '/success', to: 'pages#success'
   get '/show_user/:sender', to: 'pages#show_user', constraints: { sender: /[^\/]+/}
+  get '/admin/courses', to: 'pages#admin_all_courses'
 
   namespace :api do
     namespace :v1 do
@@ -54,7 +55,7 @@ Rails.application.routes.draw do
       resources :teachers, only: [:destroy] do 
         post 'toggle_active'
       end
-      resources :students, only: [:show] do
+      resources :students, only: [:show, :update] do
         post 'toggle_active'
       end
       resources :responses

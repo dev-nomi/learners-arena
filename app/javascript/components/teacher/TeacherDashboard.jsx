@@ -17,6 +17,7 @@ import {
   Chip,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -149,29 +150,35 @@ const TeacherDashboard = () => {
                     )}
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      sx={{ color: theme.palette.primary.light }}
-                      to={`/course/${row.id}`}
-                      component={Link}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      sx={{ color: theme.palette.success.main }}
-                      to={`/course/${row.id}/edit`}
-                      component={Link}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      sx={{ color: theme.palette.error.main }}
-                      onClick={() => handleClickOpen(row.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="View course">
+                      <IconButton
+                        size="small"
+                        sx={{ color: theme.palette.primary.light }}
+                        to={`/course/${row.id}`}
+                        component={Link}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit course">
+                      <IconButton
+                        size="small"
+                        sx={{ color: theme.palette.success.main }}
+                        to={`/course/${row.id}/edit`}
+                        component={Link}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete course">
+                      <IconButton
+                        size="small"
+                        sx={{ color: theme.palette.error.main }}
+                        onClick={() => handleClickOpen(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
                 <Dialog

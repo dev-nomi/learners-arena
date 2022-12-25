@@ -10,4 +10,19 @@ class Api::V1::StudentsController < ApplicationController
 
     render json: { status: @student.active }    
   end
+
+  def update
+    @user = User.find_by_id(params[:id])
+
+    if @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def user_params
+      params.require(:user).permit(:first_name, :last_name, :email)
+    end
 end

@@ -17,6 +17,7 @@ import {
   Container,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -147,31 +148,37 @@ const Handouts = () => {
                     </MuiLink>
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      color="info"
-                      to={`/handout/${row.id}`}
-                      sx={{ color: theme.palette.primary.light }}
-                      component={Link}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      sx={{ color: theme.palette.success.main }}
-                      to={`/handout/${row.id}/edit`}
-                      component={Link}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      sx={{ color: theme.palette.error.main }}
-                      size="small"
-                      color="error"
-                      onClick={() => handleClickOpen(row.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="View handout">
+                      <IconButton
+                        size="small"
+                        color="info"
+                        to={`/handout/${row.id}`}
+                        sx={{ color: theme.palette.primary.light }}
+                        component={Link}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit handout">
+                      <IconButton
+                        size="small"
+                        sx={{ color: theme.palette.success.main }}
+                        to={`/handout/${row.id}/edit`}
+                        component={Link}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete handout">
+                      <IconButton
+                        sx={{ color: theme.palette.error.main }}
+                        size="small"
+                        color="error"
+                        onClick={() => handleClickOpen(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
                 <Dialog

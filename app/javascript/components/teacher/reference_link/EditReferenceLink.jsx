@@ -69,6 +69,9 @@ const EditReferenceLink = () => {
             name="display_name"
             autoFocus
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -81,6 +84,9 @@ const EditReferenceLink = () => {
             type="url"
             autoFocus
             value={url}
+            inputProps={{
+              maxLength: 100,
+            }}
             onChange={(e) => setUrl(e.target.value)}
           />
           <TextField
@@ -94,6 +100,9 @@ const EditReferenceLink = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

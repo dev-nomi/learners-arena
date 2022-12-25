@@ -7,25 +7,24 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  IconButton,
-  Button,
   Container,
   Box,
   Typography,
   TextField,
   InputAdornment,
   Chip,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import EditIcon from "@mui/icons-material/Edit";
 
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -185,16 +184,27 @@ const AllTeachers = () => {
                     )}
                   </TableCell>
                   <TableCell align="center">
-                    <FormControlLabel
-                      control={
-                        <IOSSwitch
-                          sx={{ m: 1 }}
-                          checked={row.active}
-                          onChange={(e) => handleChange(row.id)}
-                          inputProps={{ "aria-label": "controlled" }}
-                        />
-                      }
-                    />
+                    <Tooltip title="Edit teacher">
+                      <IconButton
+                        sx={{ color: theme.palette.success.main }}
+                        to={`/admin/teacher/${row.id}/edit`}
+                        component={Link}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title={!row.active ? "Active teacher" : "Disable teacher"}>
+                      <FormControlLabel
+                        control={
+                          <IOSSwitch
+                            sx={{ m: 1 }}
+                            checked={row.active}
+                            onChange={(e) => handleChange(row.id)}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        }
+                      />
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               </Fragment>

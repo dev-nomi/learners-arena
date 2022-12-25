@@ -28,7 +28,7 @@ class Api::V1::ReferenceLinksController < ApplicationController
     if @reference_link.update(reference_link_params)
       render json: @reference_link
     else
-      render json: { message: 'Cannot update the reference link.' }
+      render json: @course.errors.full_messages, status: :unprocessable_entity
     end
   end
 

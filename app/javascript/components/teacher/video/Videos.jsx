@@ -17,6 +17,7 @@ import {
   Container,
   TextField,
   InputAdornment,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -147,32 +148,38 @@ const Videos = () => {
                     </MuiLink>
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      color="info"
-                      to={`/video/${row.id}`}
-                      sx={{ color: theme.palette.primary.light }}
-                      component={Link}
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      color="info"
-                      to={`/video/${row.id}/edit`}
-                      sx={{ color: theme.palette.success.main }}
-                      component={Link}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      sx={{ color: theme.palette.error.main }}
-                      size="small"
-                      color="error"
-                      onClick={() => handleClickOpen(row.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="View video">
+                      <IconButton
+                        size="small"
+                        color="info"
+                        to={`/video/${row.id}`}
+                        sx={{ color: theme.palette.primary.light }}
+                        component={Link}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit video">
+                      <IconButton
+                        size="small"
+                        color="info"
+                        to={`/video/${row.id}/edit`}
+                        sx={{ color: theme.palette.success.main }}
+                        component={Link}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete video">
+                      <IconButton
+                        sx={{ color: theme.palette.error.main }}
+                        size="small"
+                        color="error"
+                        onClick={() => handleClickOpen(row.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
                 <Dialog

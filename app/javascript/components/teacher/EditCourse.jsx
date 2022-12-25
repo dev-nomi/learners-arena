@@ -14,8 +14,6 @@ const EditCourse = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const [level, setLevel] = useState("");
-  const [totalHours, setTotalHours] = useState("");
-  const [totalWeeks, setTotalWeeks] = useState("");
   const [outline, setOutline] = useState("");
   const editorRef = useRef(null);
 
@@ -26,8 +24,6 @@ const EditCourse = () => {
     course.append("course[description]", description);
     course.append("course[image]", selectedImage);
     course.append("course[level]", level);
-    course.append("course[total_hours]", totalHours);
-    course.append("course[total_weeks]", totalWeeks);
     course.append("course[outline]", editorRef.current.getContent());
 
     axios
@@ -37,8 +33,6 @@ const EditCourse = () => {
         setDisplayName("");
         setDescription("");
         setSelectedImage("");
-        setTotalHours("");
-        setTotalWeeks("");
         setLevel("");
         navigate("/home");
       })
@@ -62,8 +56,6 @@ const EditCourse = () => {
         setDisplayName(data.display_name);
         setDescription(data.description);
         setLevel(data.level);
-        setTotalHours(data.total_hours);
-        setTotalWeeks(data.total_weeks);
         setOutline(data.outline);
         setImageUrl(`http://localhost:3000` + data.image);
       })
@@ -94,6 +86,9 @@ const EditCourse = () => {
             name="display_name"
             autoFocus
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -105,6 +100,9 @@ const EditCourse = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           <TextField
@@ -120,28 +118,6 @@ const EditCourse = () => {
             <MenuItem value={"intermediate"}>Intermediate</MenuItem>
             <MenuItem value={"advanced"}>Advanced</MenuItem>
           </TextField>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="total_hours"
-            label="Total Hours"
-            type="number"
-            id="total_hours"
-            value={totalHours}
-            onChange={(e) => setTotalHours(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="total_weeks"
-            label="Total Weeks"
-            type="number"
-            id="total_weeks"
-            value={totalWeeks}
-            onChange={(e) => setTotalWeeks(e.target.value)}
-          />
           <Editor
             apiKey="1ng284s517ux8frzhkttvwkv4uk1qkiu8kebp5uddx6o8wuc"
             onInit={(evt, editor) => (editorRef.current = editor)}

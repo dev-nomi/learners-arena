@@ -129,6 +129,12 @@ const CheckAssignment = () => {
                       type="number"
                       id="marks"
                       placeholder={"[1-5]"}
+                      onInput={(e) => {
+                        e.target.value = Math.max(0, parseInt(e.target.value))
+                          .toString()
+                          .slice(0, 1);
+                      }}
+                      min={1}
                       InputProps={{ inputProps: { min: 1, max: 5 } }}
                       value={formValues[index] || ""}
                       onChange={(e) => handleChange(index, e)}
@@ -170,6 +176,12 @@ const CheckAssignment = () => {
                       type="number"
                       id="marks"
                       placeholder={"[1-5]"}
+                      onInput={(e) => {
+                        e.target.value = Math.max(0, parseInt(e.target.value))
+                          .toString()
+                          .slice(0, 1);
+                      }}
+                      min={1}
                       InputProps={{ inputProps: { min: 1, max: 5 } }}
                       value={formValues[index] || ""}
                       onChange={(e) => handleChange(index, e)}
