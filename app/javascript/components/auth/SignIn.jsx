@@ -70,6 +70,9 @@ const SignIn = () => {
             autoComplete="email"
             autoFocus
             value={email}
+            inputProps={{
+              maxLength: 100,
+            }}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
@@ -82,6 +85,9 @@ const SignIn = () => {
             id="password"
             autoComplete="current-password"
             value={password}
+            inputProps={{
+              maxLength: 100,
+            }}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

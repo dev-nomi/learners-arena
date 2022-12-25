@@ -74,6 +74,9 @@ const SignUp = () => {
                 label="First Name"
                 autoFocus
                 value={firstName}
+                inputProps={{
+                  maxLength: 50,
+                }}
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </Grid>
@@ -87,6 +90,9 @@ const SignUp = () => {
                 label="Last Name"
                 autoFocus
                 value={lastName}
+                inputProps={{
+                  maxLength: 50,
+                }}
                 onChange={(e) => setLastName(e.target.value)}
               />
             </Grid>
@@ -99,6 +105,9 @@ const SignUp = () => {
                 name="email"
                 autoComplete="email"
                 value={email}
+                inputProps={{
+                  maxLength: 100,
+                }}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
@@ -112,6 +121,9 @@ const SignUp = () => {
                 id="password"
                 autoComplete="new-password"
                 value={password}
+                inputProps={{
+                  maxLength: 100,
+                }}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
@@ -125,6 +137,9 @@ const SignUp = () => {
                 id="password-confirmation"
                 autoComplete="new-password"
                 value={passwordConfirmation}
+                inputProps={{
+                  maxLength: 100,
+                }}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
               />
             </Grid>

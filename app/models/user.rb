@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   validates :role, :last_name, :first_name, presence: true
-  validates_format_of :first_name, :last_name, with: /\A[A-Za-z]/, message: "can't start with digit"
+  validates_format_of :email, :first_name, :last_name, with: /\A[A-Za-z]/, message: "can't start with digit"
 
   scope :teachers, -> { where(role: 'teacher') }
   scope :students, -> { where(role: 'student') }
