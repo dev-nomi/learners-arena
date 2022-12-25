@@ -107,7 +107,7 @@ const AllStudents = () => {
                   aria-describedby="alert-dialog-description"
                 >
                   <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete this course?"}
+                    {"Are you sure you want to delete this student?"}
                   </DialogTitle>
                   <DialogActions>
                     <Button onClick={handleDelete} variant="contained" color="success">
