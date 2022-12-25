@@ -15,6 +15,8 @@ import {
   Box,
   IconButton,
   Container,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -24,8 +26,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const Handouts = () => {
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const [handouts, setHandouts] = useState([]);
   const [open, setOpen] = useState(false);
   const [handoutID, setHandoutID] = useState("");
@@ -53,6 +58,7 @@ const Handouts = () => {
       .get("/api/v1/handouts")
       .then((response) => {
         setHandouts(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
   };
@@ -63,6 +69,14 @@ const Handouts = () => {
       initialize();
       setOpen(false);
     });
+  };
+
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = handouts.filter((row) => {
+      return row.display_name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
   };
 
   return (
@@ -83,7 +97,31 @@ const Handouts = () => {
           Add Handout
         </Button>
       </Box>
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "end",
+          alignContent: "center",
+        }}
+      >
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+      <TableContainer component={Paper} sx={{ marginTop: 2, marginBottom: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
@@ -97,7 +135,7 @@ const Handouts = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {handouts.map((row) => (
+            {rows.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.id}</TableCell>

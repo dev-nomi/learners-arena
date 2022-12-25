@@ -3,6 +3,7 @@ class Handout < ApplicationRecord
   validates :pdf, {
     presence: true
   }
+  validates_format_of :display_name, :description, with: /\A[A-Za-z]/, message: "can't start with digit" 
 
   has_one_attached :pdf, dependent: :purge
   belongs_to :course

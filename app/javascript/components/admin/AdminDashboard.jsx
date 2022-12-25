@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Typography, Box, Card, CardContent, Grid } from "@mui/material";
 import axios from "axios";
-import TeacherLogo from "../../assests/teacher.png"
-import StudentLogo from "../../assests/student.png"
-import CourseLogo from "../../assests/graduation-cap.png"
+import TeacherLogo from "../../assests/teacher.png";
+import StudentLogo from "../../assests/student.png";
+import CourseLogo from "../../assests/graduation-cap.png";
 
 const AdminDashboard = () => {
   const [teachers, setTeachers] = useState([]);
@@ -32,7 +32,7 @@ const AdminDashboard = () => {
     axios
       .get("/all_courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.courses);
       })
       .catch((error) => {});
   };
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
         <Grid item xs={4}>
           <Card sx={{ maxWidth: 300 }}>
             <CardContent sx={{ textAlign: "center" }}>
-            <img src={CourseLogo} width="100" />
+              <img src={CourseLogo} width="100" />
               <Typography
                 gutterBottom
                 color="primary"
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
         <Grid item xs={4}>
           <Card sx={{ maxWidth: 300 }}>
             <CardContent sx={{ textAlign: "center" }}>
-            <img src={TeacherLogo} width="100" />
+              <img src={TeacherLogo} width="100" />
               <Typography
                 gutterBottom
                 color="primary"
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
         <Grid item xs={4}>
           <Card sx={{ maxWidth: 300 }}>
             <CardContent sx={{ textAlign: "center" }}>
-            <img src={StudentLogo} width="100" />
+              <img src={StudentLogo} width="100" />
               <Typography
                 gutterBottom
                 color="primary"

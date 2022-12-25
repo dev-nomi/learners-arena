@@ -14,12 +14,14 @@ Rails.application.routes.draw do
   post '/checkout', to: 'pages#checkout'
   post '/send_coupons', to: 'pages#send_coupons'
   get '/success', to: 'pages#success'
+  get '/show_user/:sender', to: 'pages#show_user', constraints: { sender: /[^\/]+/}
 
   namespace :api do
     namespace :v1 do
       resources :courses do
         member do
           post 'publish'
+          post 'toggle_publish'
         end
       end
       resources :handouts
@@ -49,8 +51,12 @@ Rails.application.routes.draw do
           post 'check'
         end
       end
-      resources :teachers, only: [:destroy]
-      resources :students, only: [:show, :destroy]
+      resources :teachers, only: [:destroy] do 
+        post 'toggle_active'
+      end
+      resources :students, only: [:show] do
+        post 'toggle_active'
+      end
       resources :responses
       resources :payment_plans
       resources :coupons

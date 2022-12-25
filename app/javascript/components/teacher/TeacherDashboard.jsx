@@ -15,6 +15,8 @@ import {
   Box,
   IconButton,
   Chip,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -23,8 +25,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import { useTheme } from "@mui/material/styles";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const TeacherDashboard = () => {
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const [courses, setCourses] = useState([]);
   const [courseID, setCourseID] = useState("");
   const [open, setOpen] = useState(false);
@@ -49,6 +54,7 @@ const TeacherDashboard = () => {
       .get("/api/v1/courses")
       .then((response) => {
         setCourses(response.data.courses);
+        setRows(response.data.courses);
       })
       .catch((error) => {});
   };
@@ -59,6 +65,14 @@ const TeacherDashboard = () => {
       initialize();
       setOpen(false);
     });
+  };
+
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = courses.filter((row) => {
+      return row.display_name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
   };
 
   return (
@@ -79,7 +93,31 @@ const TeacherDashboard = () => {
           Add Course
         </Button>
       </Box>
-      <TableContainer component={Paper} sx={{ marginTop: 4, marginBottom: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "end",
+          alignContent: "center",
+        }}
+      >
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+      <TableContainer component={Paper} sx={{ marginTop: 2, marginBottom: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
@@ -93,7 +131,7 @@ const TeacherDashboard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses.map((row) => (
+            {rows.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.id}</TableCell>

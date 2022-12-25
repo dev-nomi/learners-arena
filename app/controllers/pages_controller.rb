@@ -3,8 +3,12 @@ class PagesController < ApplicationController
   end
   
   def index
-    @courses = Course.published.with_attached_image.includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
-    render json: @courses 
+    @published = Course.published.with_attached_image.includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
+    @courses = Course.with_attached_image.includes(:students, :handouts, :quizzes, :user, :assignments, :videos, :reference_links)
+    render json: { 
+      courses: ActiveModel::Serializer::CollectionSerializer.new(@courses, serializer: AdminCourseSerializer), 
+      published_courses: @published 
+    }
   end
 
   def students
@@ -62,5 +66,15 @@ class PagesController < ApplicationController
 
   def send_coupons
     CouponMailer.send_coupon(params[:coupon_code]).deliver_later
+  end
+
+  def show_user
+    @user =  User.find_by(email: params[:sender])
+
+    if @user.active?
+      render json: { status: 'Your are currently active.' }, status: :ok
+    else
+      render json: { status: 'Your are currently disable by admin.' }, status: :unprocessable_entity
+    end
   end
 end

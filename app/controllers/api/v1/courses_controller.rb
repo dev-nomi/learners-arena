@@ -46,6 +46,13 @@ class Api::V1::CoursesController < ApplicationController
     render json: { message: 'Successfully publish the course.' }
   end
 
+  def toggle_publish
+    @course = Course.find_by_id(params[:id])
+    @course.update(draft: !@course.draft)
+
+    render json: { status: @course.draft }
+  end
+
   private
     def course_params
       params.require(:course).permit(:display_name, :description, :image, :level, :total_hours, :outline, :total_weeks, :payment_plan_id).select {|x,v| v.present?}

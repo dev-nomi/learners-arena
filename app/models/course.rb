@@ -4,6 +4,7 @@ class Course < ApplicationRecord
   validates :image, {
     presence: true
   }
+  validates_format_of :display_name, :description, with: /\A[A-Za-z]/, message: "can't start with digit" 
 
   delegate :payment_id, to: :payment_plan
   delegate :payment_price, to: :payment_plan

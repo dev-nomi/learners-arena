@@ -12,6 +12,8 @@ import {
   Button,
   Container,
   Chip,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -19,9 +21,12 @@ import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
 import { toast } from "react-toastify";
 import assignmentReportGenerator from "../../../services/assignmentReportGenerator";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const AllAssignments = () => {
   const [assignments, setAssignments] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const theme = useTheme();
 
   useEffect(() => {
@@ -33,17 +38,17 @@ const AllAssignments = () => {
       .get("/api/v1/user_assignments")
       .then((response) => {
         setAssignments(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
   };
 
-  const generateReport = () => {
-    axios
-      .post(`/api/v1/user_assignments/generate_report`)
-      .then(({ data }) => {
-        toast.success("You! successfully generate assignment report.");
-      })
-      .catch((error) => {});
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = assignments.filter((row) => {
+      return row.assignment.display_name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
   };
 
   const checkedAssignments = assignments.filter((assignment) => assignment.status === "checked");
@@ -66,7 +71,31 @@ const AllAssignments = () => {
           Download report
         </Button>
       </Box>
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "end",
+          alignContent: "center",
+        }}
+      >
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+      <TableContainer component={Paper} sx={{ marginTop: 2, marginBottom: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
@@ -79,7 +108,7 @@ const AllAssignments = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {assignments.map((row) => (
+            {rows.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.assignment.id}</TableCell>

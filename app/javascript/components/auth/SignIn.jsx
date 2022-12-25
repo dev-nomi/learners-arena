@@ -22,18 +22,25 @@ const SignIn = () => {
     user.append("user[password]", password);
 
     axios
-      .post("users/sign_in", user)
+      .get(`/show_user/${email}`)
       .then((response) => {
-        toast.success("Successfully signed in.");
-        setEmail("");
-        setPassword("");
-        dispatch(signInUser(response));
-        axios.defaults.headers.common["Authorization"] = response.headers.authorization;
-        localStorage.setItem("auth_token", response.headers.authorization);
-        navigate("/home");
+        axios
+          .post("users/sign_in", user)
+          .then((response) => {
+            toast.success("Successfully signed in.");
+            setEmail("");
+            setPassword("");
+            dispatch(signInUser(response));
+            axios.defaults.headers.common["Authorization"] = response.headers.authorization;
+            localStorage.setItem("auth_token", response.headers.authorization);
+            navigate("/home");
+          })
+          .catch((error) => {
+            toast.error(error.response.data.message);
+          });
       })
-      .catch((error) => {
-        toast.error(error.response.data.message);
+      .catch(({ response }) => {
+        toast.error(response.data.status);
       });
   };
 

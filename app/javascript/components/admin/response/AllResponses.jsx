@@ -11,23 +11,37 @@ import {
   Container,
   Box,
   Typography,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { useTheme } from "@mui/material/styles";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const AllResponses = () => {
   const [responses, setResponses] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const theme = useTheme();
 
   useEffect(() => {
     initialize();
   }, []);
 
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = responses.filter((row) => {
+      return row.title.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
+  };
+
   const initialize = () => {
     axios
       .get("/api/v1/responses")
       .then((response) => {
         setResponses(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
   };
@@ -46,6 +60,21 @@ const AllResponses = () => {
         <Typography component="h1" variant="h4">
           Responses
         </Typography>
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -59,7 +88,7 @@ const AllResponses = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {responses.map((row) => (
+            {rows.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.id}</TableCell>

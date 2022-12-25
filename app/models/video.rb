@@ -4,6 +4,8 @@ class Video < ApplicationRecord
     presence: true
   }
 
+  validates_format_of :display_name, :description, with: /\A[A-Za-z]/, message: "can't start with digit"
+
   has_one_attached :file, dependent: :purge
   belongs_to :course
   belongs_to :user

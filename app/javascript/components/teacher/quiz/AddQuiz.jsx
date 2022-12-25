@@ -125,6 +125,9 @@ const AddQuiz = () => {
             label="Display Name"
             name="display_name"
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -136,6 +139,9 @@ const AddQuiz = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           <TextField
@@ -182,6 +188,9 @@ const AddQuiz = () => {
                     label="Question"
                     type="title"
                     id="title"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
                     value={element.title || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
@@ -192,6 +201,9 @@ const AddQuiz = () => {
                     label="Answer"
                     type="ans_key"
                     id="ans_key"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
                     value={element.ans_key || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
@@ -206,6 +218,9 @@ const AddQuiz = () => {
                     label="Question"
                     type="title"
                     id="title"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
                     value={element.title || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
@@ -216,6 +231,9 @@ const AddQuiz = () => {
                     label="Answer"
                     type="ans_key"
                     id="ans_key"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
                     value={element.ans_key || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
@@ -229,6 +247,9 @@ const AddQuiz = () => {
                         id="option1"
                         label="Option 1"
                         autoFocus
+                        inputProps={{
+                          maxLength: 150,
+                        }}
                         value={element.option1 || ""}
                         onChange={(e) => handleChange(index, e)}
                       />
@@ -242,6 +263,9 @@ const AddQuiz = () => {
                         id="option2"
                         label="Option 2"
                         autoFocus
+                        inputProps={{
+                          maxLength: 150,
+                        }}
                         value={element.option2 || ""}
                         onChange={(e) => handleChange(index, e)}
                       />
@@ -255,6 +279,9 @@ const AddQuiz = () => {
                         id="option3"
                         label="Option 3"
                         autoFocus
+                        inputProps={{
+                          maxLength: 150,
+                        }}
                         value={element.option3 || ""}
                         onChange={(e) => handleChange(index, e)}
                       />
@@ -268,6 +295,9 @@ const AddQuiz = () => {
                         id="option4"
                         label="Option 4"
                         autoFocus
+                        inputProps={{
+                          maxLength: 150,
+                        }}
                         value={element.option4 || ""}
                         onChange={(e) => handleChange(index, e)}
                       />

@@ -86,6 +86,9 @@ const AddCourse = () => {
             name="display_name"
             autoFocus
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -97,6 +100,9 @@ const AddCourse = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           <TextField
@@ -121,6 +127,12 @@ const AddCourse = () => {
             type="number"
             id="total_hours"
             value={totalHours}
+            onInput={(e) => {
+              e.target.value = Math.max(0, parseInt(e.target.value))
+                .toString()
+                .slice(0, 10);
+            }}
+            min={0}
             onChange={(e) => setTotalHours(e.target.value)}
           />
           <TextField

@@ -120,6 +120,9 @@ const AddAssignment = () => {
             label="Display Name"
             name="display_name"
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -131,6 +134,9 @@ const AddAssignment = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           <TextField
@@ -177,6 +183,9 @@ const AddAssignment = () => {
                     label="Short Question"
                     type="title"
                     id="title"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
                     value={element.title || ""}
                     onChange={(e) => handleChange(index, e)}
                   />
@@ -191,6 +200,9 @@ const AddAssignment = () => {
                     label="Coding Question"
                     type="title"
                     id="title"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
                     value={element.title || ""}
                     onChange={(e) => handleChange(index, e)}
                   />

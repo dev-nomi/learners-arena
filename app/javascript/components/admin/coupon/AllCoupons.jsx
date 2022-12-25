@@ -14,14 +14,19 @@ import {
   Chip,
   IconButton,
   Tooltip,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import { toast } from "react-toastify";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const AllCoupons = () => {
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const [coupons, setCoupons] = useState([]);
   const theme = useTheme();
 
@@ -34,6 +39,7 @@ const AllCoupons = () => {
       .get("/api/v1/coupons")
       .then((response) => {
         setCoupons(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
   };
@@ -48,6 +54,14 @@ const AllCoupons = () => {
         toast.success("Successfully send the coupon.");
       })
       .catch((error) => {});
+  };
+
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = coupons.filter((row) => {
+      return row.coupon_name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
   };
 
   return (
@@ -68,7 +82,31 @@ const AllCoupons = () => {
           Add Coupon
         </Button>
       </Box>
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "end",
+          alignContent: "center",
+        }}
+      >
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
@@ -82,7 +120,7 @@ const AllCoupons = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {coupons.map((row, index) => (
+            {rows.map((row, index) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{index + 1}</TableCell>

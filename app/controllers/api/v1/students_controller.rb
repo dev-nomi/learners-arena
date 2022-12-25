@@ -4,10 +4,10 @@ class Api::V1::StudentsController < ApplicationController
     render json: @student
   end
 
-  def destroy
-    @student = User.find_by_id(params[:id])
-    @student.destroy
+  def toggle_active
+    @student = User.find_by_id(params[:student_id])
+    @student.update(active: !@student.active)
 
-    render json: { message: 'Successully delete the student.' }    
+    render json: { status: @student.active }    
   end
 end

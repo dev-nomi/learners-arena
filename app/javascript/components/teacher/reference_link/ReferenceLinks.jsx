@@ -15,6 +15,8 @@ import {
   Box,
   IconButton,
   Container,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -24,8 +26,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTheme } from "@mui/material/styles";
 import { Link as MuiLink } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const ReferenceLinks = () => {
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const [referenceLinks, setReferenceLinks] = useState([]);
   const [open, setOpen] = useState(false);
   const [referenceLinkID, setReferenceLinkID] = useState("");
@@ -53,6 +58,7 @@ const ReferenceLinks = () => {
       .get("/api/v1/reference_links")
       .then((response) => {
         setReferenceLinks(response.data);
+        setRows(response.data);
       })
       .catch((error) => {});
   };
@@ -63,6 +69,14 @@ const ReferenceLinks = () => {
       initialize();
       setOpen(false);
     });
+  };
+
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = referenceLinks.filter((row) => {
+      return row.display_name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
   };
 
   return (
@@ -83,7 +97,31 @@ const ReferenceLinks = () => {
           Add Reference Link
         </Button>
       </Box>
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+          alignItems: "end",
+          alignContent: "center",
+        }}
+      >
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+      <TableContainer component={Paper} sx={{ marginTop: 2, marginBottom: 4 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ bgcolor: theme.palette.primary.main }}>
             <TableRow>
@@ -98,7 +136,7 @@ const ReferenceLinks = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {referenceLinks.map((row) => (
+            {rows.map((row) => (
               <Fragment key={row.id}>
                 <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell>{row.id}</TableCell>

@@ -85,6 +85,9 @@ const AddVideo = () => {
             name="display_name"
             autoFocus
             value={displayName}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <TextField
@@ -129,6 +132,9 @@ const AddVideo = () => {
             type="description"
             id="description"
             value={description}
+            inputProps={{
+              maxLength: 250,
+            }}
             onChange={(e) => setDescription(e.target.value)}
           />
           {fileUrl && selectedFile && (

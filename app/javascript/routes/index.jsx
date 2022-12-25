@@ -286,10 +286,10 @@ const AllRoutes = () => {
           <Route path="/admin/add_coupon" element={<AddCoupon />} />
         </Route>
 
-        <Route element={<ProtectedRoute isAllowed={!user || user.id === null} />}>
+        <Route element={<ProtectedRoute isAllowed={!user || user?.id === null} />}>
           <Route path="/sign_up" element={<SignUp />} />
-          <Route path="/sign_in" element={<SignIn />} />
         </Route>
+        <Route path="/sign_in" element={<SignIn />} />
       </Routes>
     </Suspense>
   );

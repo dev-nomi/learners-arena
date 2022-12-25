@@ -30,6 +30,7 @@ import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded";
 import DiscountRoundedIcon from "@mui/icons-material/DiscountRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const style = {
   position: "absolute",
@@ -55,6 +56,8 @@ const ListOfCourses = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [couponCode, setCouponCode] = useState("");
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -82,7 +85,8 @@ const ListOfCourses = () => {
     axios
       .get("/all_courses")
       .then((response) => {
-        setCourses(response.data);
+        setCourses(response.data.published_courses);
+        setRows(response.data.published_courses);
       })
       .catch((error) => {});
   };
@@ -119,10 +123,46 @@ const ListOfCourses = () => {
       .catch((error) => {});
   };
 
+  const requestSearch = (searchedVal) => {
+    setSearched(searchedVal);
+    const filteredRows = courses.filter((row) => {
+      return row.display_name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
+  };
+
   return (
     <Container>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          alignContent: "center",
+          marginTop: 3,
+        }}
+      >
+        <Typography component="h1" variant="h4">
+          Courses
+        </Typography>
+        <TextField
+          margin="normal"
+          variant="outlined"
+          placeholder="search..."
+          type="search"
+          value={searched}
+          onChange={(e) => requestSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       <Grid container spacing={2} mt={2} mb={4}>
-        {courses.map((course) => (
+        {rows.map((course) => (
           <Grid item xs={4} key={course.id}>
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia

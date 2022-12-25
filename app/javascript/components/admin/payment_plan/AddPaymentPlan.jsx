@@ -58,6 +58,9 @@ const AddPaymentPlan = () => {
             name="name"
             autoFocus
             value={name}
+            inputProps={{
+              maxLength: 25,
+            }}
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
@@ -70,10 +73,15 @@ const AddPaymentPlan = () => {
             autoFocus
             type="number"
             value={price}
+            onInput={(e) => {
+              e.target.value = Math.max(0, parseInt(e.target.value))
+                .toString()
+                .slice(0, 10);
+            }}
+            min={0}
             InputProps={{
               startAdornment: <InputAdornment position="start">PK</InputAdornment>,
               endAdornment: <InputAdornment position="end">.00</InputAdornment>,
-              inputProps: { min: 0 },
             }}
             onChange={(e) => setPrice(e.target.value)}
           ></TextField>
